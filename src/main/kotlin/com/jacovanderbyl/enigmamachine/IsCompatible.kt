@@ -1,0 +1,4 @@
+package com.jacovanderbyl.enigmamachine
+
+interface CompatibleWithEnigmaI
+interface CompatibleWithEnigmaM3
