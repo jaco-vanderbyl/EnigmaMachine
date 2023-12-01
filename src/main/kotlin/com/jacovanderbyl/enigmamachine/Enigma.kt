@@ -55,8 +55,8 @@ abstract class Enigma(private val rotorUnit: RotorUnit, private val plugboard: P
         return rotorUnit.rotors.map { it.position }
     }
 
-    fun addPlugboardConnectors(unplugConnectors: Boolean, vararg connectors: Connector) {
-        if (unplugConnectors) plugboard.reset()
+    fun addPlugboardConnectors(unplugConnectorsFirst: Boolean, vararg connectors: Connector) {
+        if (unplugConnectorsFirst) plugboard.reset()
         plugboard.connectPlugs(*connectors)
     }
 

@@ -25,7 +25,6 @@ abstract class Rotor(
 
     fun reset() {
         position = Position('A')
-        ringSetting = RingSetting(1)
     }
 
     fun isInNotchedPosition() : Boolean = position.character in notchCharacters
