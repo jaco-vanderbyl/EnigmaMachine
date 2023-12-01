@@ -35,14 +35,12 @@ class CipherSetMapTest {
     }
 
     @TestFactory
-    fun `ensure each character in given cipher set can be mapped to character set`() {
-        bogusCipherSets.map {
-            DynamicTest.dynamicTest("Bogus cipher set input '${it}' should throw.") {
-                assertFailsWith<IllegalArgumentException>(
-                    message = "Failed to ensure each character in given cipher set can be mapped to character set.",
-                    block = { CipherSetMap(it) }
-                )
-            }
+    fun `ensure given cipher set maps to character set`() = bogusCipherSets.map { cipherSet ->
+        DynamicTest.dynamicTest("Bogus cipher set input '${cipherSet}' should throw.") {
+            assertFailsWith<IllegalArgumentException>(
+                message = "Failed to ensure given cipher set maps to character set.",
+                block = { CipherSetMap(cipherSet) }
+            )
         }
     }
 }
