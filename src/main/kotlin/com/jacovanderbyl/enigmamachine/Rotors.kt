@@ -1,31 +1,31 @@
 package com.jacovanderbyl.enigmamachine
 
-class RotorI :
-    Rotor(CipherSetMap("EKMFLGDQVZNTOWYHXUSPAIBRCJ"), Notch(setOf('Q'))),
+class RotorI(position: Position = Position('A'), ringSetting: RingSetting = RingSetting(1)) :
+    Rotor(CipherSetMap("EKMFLGDQVZNTOWYHXUSPAIBRCJ"), Notch(setOf('Q')), position, ringSetting),
     CompatibleWithEnigmaI,
     CompatibleWithEnigmaM3
-class RotorII :
-    Rotor(CipherSetMap("AJDKSIRUXBLHWTMCQGZNPYFVOE"), Notch(setOf('E'))),
+class RotorII(position: Position = Position('A'), ringSetting: RingSetting = RingSetting(1)) :
+    Rotor(CipherSetMap("AJDKSIRUXBLHWTMCQGZNPYFVOE"), Notch(setOf('E')), position, ringSetting),
     CompatibleWithEnigmaI,
     CompatibleWithEnigmaM3
-class RotorIII :
-    Rotor(CipherSetMap("BDFHJLCPRTXVZNYEIWGAKMUSQO"), Notch(setOf('V'))),
+class RotorIII(position: Position = Position('A'), ringSetting: RingSetting = RingSetting(1)) :
+    Rotor(CipherSetMap("BDFHJLCPRTXVZNYEIWGAKMUSQO"), Notch(setOf('V')), position, ringSetting),
     CompatibleWithEnigmaI,
     CompatibleWithEnigmaM3
-class RotorIV :
-    Rotor(CipherSetMap("ESOVPZJAYQUIRHXLNFTGKDCMWB"), Notch(setOf('J'))),
+class RotorIV(position: Position = Position('A'), ringSetting: RingSetting = RingSetting(1)) :
+    Rotor(CipherSetMap("ESOVPZJAYQUIRHXLNFTGKDCMWB"), Notch(setOf('J')), position, ringSetting),
     CompatibleWithEnigmaI,
     CompatibleWithEnigmaM3
-class RotorV :
-    Rotor(CipherSetMap("VZBRGITYUPSDNHLXAWMJQOFECK"), Notch(setOf('Z'))),
+class RotorV(position: Position = Position('A'), ringSetting: RingSetting = RingSetting(1)) :
+    Rotor(CipherSetMap("VZBRGITYUPSDNHLXAWMJQOFECK"), Notch(setOf('Z')), position, ringSetting),
     CompatibleWithEnigmaI,
     CompatibleWithEnigmaM3
-class RotorVI :
-    Rotor(CipherSetMap("JPGVOUMFYQBENHZRDKASXLICTW"), Notch(setOf('Z', 'M'))),
+class RotorVI(position: Position = Position('A'), ringSetting: RingSetting = RingSetting(1)) :
+    Rotor(CipherSetMap("JPGVOUMFYQBENHZRDKASXLICTW"), Notch(setOf('Z', 'M')), position, ringSetting),
     CompatibleWithEnigmaM3
-class RotorVII :
-    Rotor(CipherSetMap("NZJHGRCXMYSWBOUFAIVLPEKQDT"), Notch(setOf('Z', 'M'))),
+class RotorVII(position: Position = Position('A'), ringSetting: RingSetting = RingSetting(1)) :
+    Rotor(CipherSetMap("NZJHGRCXMYSWBOUFAIVLPEKQDT"), Notch(setOf('Z', 'M')), position, ringSetting),
     CompatibleWithEnigmaM3
-class RotorVIII :
-    Rotor(CipherSetMap("FKQHTLXOCBJSPDZRAMEWNIUYGV"), Notch(setOf('Z', 'M'))),
+class RotorVIII(position: Position = Position('A'), ringSetting: RingSetting = RingSetting(1)) :
+    Rotor(CipherSetMap("FKQHTLXOCBJSPDZRAMEWNIUYGV"), Notch(setOf('Z', 'M')), position, ringSetting),
     CompatibleWithEnigmaM3

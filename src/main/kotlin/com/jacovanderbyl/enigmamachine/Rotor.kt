@@ -10,14 +10,13 @@ package com.jacovanderbyl.enigmamachine
  */
 abstract class Rotor(
     cipherSetMap: CipherSetMap,
-    notch: Notch
+    notch: Notch,
+    var position: Position = Position('A'),
+    var ringSetting: RingSetting = RingSetting(1),
 ) : CanEncipherBidirectionally {
     private val characterSet: String = cipherSetMap.characterSet
     private val cipherSet: String = cipherSetMap.cipherSet
     private val notchCharacters: Set<Char> = notch.characters
-
-    var position: Position = Position('A')
-    var ringSetting: RingSetting = RingSetting(1)
 
     fun step() {
         position = Position(characterSet[shiftIndex(position.index, shiftBy = 1)])

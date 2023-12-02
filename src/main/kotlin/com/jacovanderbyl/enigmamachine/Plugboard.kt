@@ -11,8 +11,12 @@ package com.jacovanderbyl.enigmamachine
  * are connected with a cable, then only those two letters will be substituted. It was common to use ten cables,
  * connecting 20 letters.
  */
-class Plugboard : CanEncipher {
+class Plugboard(vararg connectors: Connector) : CanEncipher {
     private val connectorMap = mutableMapOf<Char,Char>()
+
+    init {
+        connectPlugs(*connectors)
+    }
 
     /**
      * Substitute character if it's connected with another, otherwise return original character.
