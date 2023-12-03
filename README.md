@@ -30,16 +30,19 @@ Alternatively, go to Build menu and choose Build Project.
 
 ## Usage
 
-### List supported Enigma Machines, Reflectors, and Rotors
+### List supported Enigma Machines, Reflectors, Rotors, Ring Settings, and Positions
 ```kotlin
 val supportedEnigmas = EnigmaFactory.entries.map { it.name }
 val supportedReflectors = ReflectorFactory.entries.map { it.name }
 val supportedRotors = RotorFactory.entries.map { it.name }
+val supportedRingSettings = Keys.CHARACTER_SET.map { Keys.CHARACTER_SET.indexOf(it) + 1 }
+val supportedPositions = Keys.CHARACTER_SET.map { it }
 
-println(supportedEnigmas)    // prints: [ENIGMA_I, ENIGMA_M3]
-println(supportedReflectors) // prints: [B, C]
-println(supportedRotors)     // prints: [I, II, III, IV, V, VI, VII, VIII]
-
+println(supportedEnigmas)      // prints: [ENIGMA_I, ENIGMA_M3]
+println(supportedReflectors)   // prints: [B, C]
+println(supportedRotors)       // prints: [I, II, III, IV, V, VI, VII, VIII]
+println(supportedRingSettings) // prints: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+println(supportedPositions)    // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
 ```
 
 ### Build 'stock' Enigma
