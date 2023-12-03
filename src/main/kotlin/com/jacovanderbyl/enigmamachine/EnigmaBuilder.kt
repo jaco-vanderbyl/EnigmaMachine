@@ -4,7 +4,7 @@ class EnigmaBuilder {
     companion object {
         /**
          * Example usage:
-         *     EnigmaBuilder.makeFromCsvValues(
+         *     EnigmaBuilder.makeFromCsv(
          *         type = "ENIGMA_I",
          *         reflector = "B",
          *         rotors = "I,V,III",
@@ -13,7 +13,7 @@ class EnigmaBuilder {
          *         plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
          *     )
          */
-        fun makeFromCsvValues(
+        fun makeFromCsv(
             type: String,
             reflector: String,
             rotors: String,

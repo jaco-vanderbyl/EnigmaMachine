@@ -51,7 +51,7 @@ println(supportedRotors)     // prints: [I, II, III, IV, V, VI, VII, VIII]
 * No plugboard connectors
 
 ```kotlin
-val enigmaI = EnigmaBuilder.makeFromCsvValues(
+val enigmaI = EnigmaBuilder.makeFromCsv(
     type = "ENIGMA_I",
     reflector = "B",
     rotors = "I,II,III",
@@ -59,7 +59,7 @@ val enigmaI = EnigmaBuilder.makeFromCsvValues(
     startingPositions = "A,A,A"
 )
 
-val enigmaM3 = EnigmaBuilder.makeFromCsvValues(
+val enigmaM3 = EnigmaBuilder.makeFromCsv(
     type = "ENIGMA_M3",
     reflector = "B",
     rotors = "I,II,III",
@@ -70,7 +70,7 @@ val enigmaM3 = EnigmaBuilder.makeFromCsvValues(
 
 ### Build Enigma with an arrangement of rotors, ring settings, starting positions, and reflector
 ```kotlin
-val enigmaI = EnigmaBuilder.makeFromCsvValues(
+val enigmaI = EnigmaBuilder.makeFromCsv(
     type = "ENIGMA_I",
     reflector = "C",
     rotors = "I,V,III",
@@ -81,7 +81,7 @@ val enigmaI = EnigmaBuilder.makeFromCsvValues(
 
 ### Build Enigma with plugboard connectors
 ```kotlin
-val enigmaI = EnigmaBuilder.makeFromCsvValues(
+val enigmaI = EnigmaBuilder.makeFromCsv(
     type = "ENIGMA_I",
     reflector = "C",
     rotors = "I,V,III",
@@ -93,7 +93,7 @@ val enigmaI = EnigmaBuilder.makeFromCsvValues(
 
 ### Encipher plaintext and 'decipher' ciphertext
 ```kotlin
-val enigmaI = EnigmaBuilder.makeFromCsvValues(
+val enigmaI = EnigmaBuilder.makeFromCsv(
     type = "ENIGMA_I",
     reflector = "B",
     rotors = "I,II,III",

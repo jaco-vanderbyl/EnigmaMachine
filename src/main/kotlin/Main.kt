@@ -1,7 +1,7 @@
 import com.jacovanderbyl.enigmamachine.*
 
 fun main() {
-    val enigma = EnigmaBuilder.makeFromCsvValues(
+    val enigma = EnigmaBuilder.makeFromCsv(
         type = EnigmaFactory.ENIGMA_I.name,
         reflector = "B",
         rotors = "I,II,III",
