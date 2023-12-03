@@ -79,7 +79,7 @@ val enigmaI = EnigmaBuilder.makeFromCsvValues(
 )
 ```
 
-### Build Enigma plugboard connectors
+### Build Enigma with plugboard connectors
 ```kotlin
 val enigmaI = EnigmaBuilder.makeFromCsvValues(
     type = "ENIGMA_I",
