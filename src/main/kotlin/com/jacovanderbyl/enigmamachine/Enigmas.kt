@@ -9,11 +9,11 @@ class EnigmaI(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma(rotorUnit, pl
         }
         rotorUnit.rotors.forEach {
             require(EnigmaFactory.ENIGMA_I in it.compatibility) {
-                "'${it.type.name}' rotor is not compatible with '${name}'."
+                "'${it.type}' rotor is not compatible with '${name}'."
             }
         }
         require(EnigmaFactory.ENIGMA_I in rotorUnit.reflector.compatibility) {
-            "'${rotorUnit.reflector.type.name}' reflector is not compatible with '${name}'."
+            "'${rotorUnit.reflector.type}' reflector is not compatible with '${name}'."
         }
     }
 }
@@ -27,11 +27,11 @@ class EnigmaM3(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma(rotorUnit, p
         }
         rotorUnit.rotors.forEach {
             require(EnigmaFactory.ENIGMA_M3 in it.compatibility) {
-                "'${it.type.name}' rotor is not compatible with '${name}'."
+                "'${it.type}' rotor is not compatible with '${name}'."
             }
         }
         require(EnigmaFactory.ENIGMA_M3 in rotorUnit.reflector.compatibility) {
-            "'${rotorUnit.reflector.type.name}' reflector is not compatible with '${name}'."
+            "'${rotorUnit.reflector.type}' reflector is not compatible with '${name}'."
         }
     }
 }
