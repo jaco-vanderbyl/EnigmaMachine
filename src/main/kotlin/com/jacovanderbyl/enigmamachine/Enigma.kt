@@ -8,9 +8,11 @@ package com.jacovanderbyl.enigmamachine
  *     - Setting Rotor Positions: changing the starting position for each rotor (part of setting up the machine).
  *     - Connecting Plugboard Connector Cables: connecting letters with one another (part of setting up the machine).
  */
-abstract class Enigma(private val rotorUnit: RotorUnit, private val plugboard: Plugboard) : CanEncipher {
-    abstract val name: String
-
+class Enigma(
+    val type: EnigmaFactory,
+    private val rotorUnit: RotorUnit,
+    private val plugboard: Plugboard
+) : CanEncipher {
     /**
      * Simulate enciphering of an Enigma Machine with a plugboard and rotor unit.
      *

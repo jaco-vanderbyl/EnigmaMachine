@@ -10,17 +10,7 @@ import kotlin.test.assertFailsWith
 
 class EnigmaSettingsTest {
     private val plugboard = Plugboard()
-    private val enigma = EnigmaFake(
-        RotorUnit(
-            ReflectorFactory.B.create(),
-            setOf(
-                RotorFactory.I.create(Position(), RingSetting()),
-                RotorFactory.II.create(Position(), RingSetting()),
-                RotorFactory.III.create(Position(), RingSetting())
-            )
-        ),
-        plugboard
-    )
+    private val enigmaFake = createStockEnigmaFake(plugboard)
 
     private val positionsList = listOf(
         listOf(Position('X'), Position('Y'), Position('Z')),
@@ -30,11 +20,11 @@ class EnigmaSettingsTest {
     @TestFactory
     fun `ensure rotor positions can be changed`() = positionsList.map { positionList ->
         DynamicTest.dynamicTest("Rotor positions can be changed.") {
-            enigma.setRotorPositions(*positionList.toTypedArray())
+            enigmaFake.setRotorPositions(*positionList.toTypedArray())
             assertEquals(
                 message = "Failed to ensure rotor positions can be changed.",
                 expected = positionList.map { it.character },
-                actual = enigma.getRotorPositions().map { it.character }
+                actual = enigmaFake.getRotorPositions().map { it.character }
             )
         }
     }
@@ -50,7 +40,7 @@ class EnigmaSettingsTest {
         DynamicTest.dynamicTest("Position count equals rotor count.") {
             val ex = assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure position count equals rotor count.",
-                block = { enigma.setRotorPositions(*positionList.toTypedArray()) }
+                block = { enigmaFake.setRotorPositions(*positionList.toTypedArray()) }
             )
             ex.message?.let { msg ->
                 assertContains(charSequence = msg, other = "number of rotor positions must equal the number of rotors")
@@ -67,7 +57,7 @@ class EnigmaSettingsTest {
     @TestFactory
     fun `ensure connector cables can be added to plugboard`() = connectorsList.mapIndexed { index, connectors ->
         DynamicTest.dynamicTest("Connector cables can be added to plugboard.") {
-            enigma.addPlugboardConnectors(unplugConnectorsFirst = false, *connectors.toTypedArray())
+            enigmaFake.addPlugboardConnectors(unplugConnectorsFirst = false, *connectors.toTypedArray())
 
             connectorsList.filterIndexed { i, _ -> i <= index } .forEach {
                 it.forEach { connector ->
@@ -89,7 +79,7 @@ class EnigmaSettingsTest {
     @TestFactory
     fun `ensure connector cables can be unplugged`() = connectorsList.mapIndexed { index, connectors ->
         DynamicTest.dynamicTest("Connector cables can be unplugged.") {
-            enigma.addPlugboardConnectors(unplugConnectorsFirst = true, *connectors.toTypedArray())
+            enigmaFake.addPlugboardConnectors(unplugConnectorsFirst = true, *connectors.toTypedArray())
 
             connectorsList.filterIndexed { i, _ -> i < index } .forEach {
                 it.forEach { connector ->
@@ -123,46 +113,26 @@ class EnigmaSettingsTest {
 
     @Test
     fun `ensure reset function resets rotor positions to default`() {
-        val em = EnigmaFake(
-            rotorUnit = RotorUnit(
-                reflector = ReflectorFactory.B.create(),
-                rotors = setOf(
-                    RotorFactory.I.create(Position(), RingSetting()),
-                    RotorFactory.II.create(Position(), RingSetting()),
-                    RotorFactory.III.create(Position(), RingSetting())
-                )
-            ),
-            plugboard = Plugboard()
-        )
-        val defaultPositions = em.getRotorPositions().map { it.character }
+        val emFake = createStockEnigmaFake(Plugboard())
+        val defaultPositions = emFake.getRotorPositions().map { it.character }
 
-        em.setRotorPositions(Position('X'), Position('Y'), Position('Z'))
-        em.reset()
+        emFake.setRotorPositions(Position('X'), Position('Y'), Position('Z'))
+        emFake.reset()
 
         assertEquals(
             message = "Failed to ensure reset function resets rotor positions to default.",
             expected = defaultPositions,
-            actual = enigma.getRotorPositions().map { it.character }
+            actual = enigmaFake.getRotorPositions().map { it.character }
         )
     }
 
     @Test
     fun `ensure reset function can reset plugboard connector plugs`() {
         val pb = Plugboard()
-        val em = EnigmaFake(
-            rotorUnit = RotorUnit(
-                reflector = ReflectorFactory.B.create(),
-                rotors = setOf(
-                    RotorFactory.I.create(Position(), RingSetting()),
-                    RotorFactory.II.create(Position(), RingSetting()),
-                    RotorFactory.III.create(Position(), RingSetting())
-                )
-            ),
-            plugboard = pb
-        )
+        val emFake = createStockEnigmaFake(pb)
 
-        em.addPlugboardConnectors(unplugConnectorsFirst = false, Connector(first = 'A', second = 'B'))
-        em.reset(unplugConnectors = true)
+        emFake.addPlugboardConnectors(unplugConnectorsFirst = false, Connector(first = 'A', second = 'B'))
+        emFake.reset(unplugConnectors = true)
 
         assertEquals(
             message = "Failed to ensure reset function can reset plugboard connector plugs.",
@@ -170,4 +140,17 @@ class EnigmaSettingsTest {
             actual = pb.encipher('A')
         )
     }
+
+    private fun createStockEnigmaFake(plugboard: Plugboard) : Enigma = Enigma(
+        type = EnigmaFactory.ENIGMA_I,
+        rotorUnit = RotorUnit(
+            reflector = ReflectorFactory.B.create(),
+            rotors = setOf(
+                RotorFactory.I.create(Position(), RingSetting()),
+                RotorFactory.II.create(Position(), RingSetting()),
+                RotorFactory.III.create(Position(), RingSetting())
+            )
+        ),
+        plugboard = plugboard
+    )
 }

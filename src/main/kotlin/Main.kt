@@ -2,7 +2,7 @@ import com.jacovanderbyl.enigmamachine.*
 
 fun main() {
     val enigma = EnigmaBuilder.makeFromCsvValues(
-        model = EnigmaFactory.ENIGMA_I.name,
+        type = EnigmaFactory.ENIGMA_I.name,
         reflector = "B",
         rotors = "I,II,III",
         ringSettings = "1,1,1",

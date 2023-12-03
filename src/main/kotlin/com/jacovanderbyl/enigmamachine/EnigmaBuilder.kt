@@ -5,7 +5,7 @@ class EnigmaBuilder {
         /**
          * Example usage:
          *     EnigmaBuilder.makeFromCsvValues(
-         *         model = "ENIGMA_I",
+         *         type = "ENIGMA_I",
          *         reflector = "B",
          *         rotors = "I,V,III",
          *         ringSettings = "14,9,24",
@@ -14,21 +14,21 @@ class EnigmaBuilder {
          *     )
          */
         fun makeFromCsvValues(
-            model: String,
+            type: String,
             reflector: String,
             rotors: String,
             ringSettings: String? = null,
             startingPositions: String? = null,
             plugboardConnectors: String? = null
         ): Enigma {
-            require(model in EnigmaFactory.entries.map { it.name }) {
-                "Valid model types: '${EnigmaFactory.entries.map { it.name }}'. Given: '${model}'."
+            require(type in EnigmaFactory.entries.map { it.name }) {
+                "Valid enigma types: '${EnigmaFactory.entries.map { it.name }}'. Given: '${type}'."
             }
             require(reflector in ReflectorFactory.entries.map { it.name }) {
                 "Valid reflector types: '${ReflectorFactory.entries.map { it.name }}'. Given: '${reflector}'."
             }
 
-            return EnigmaFactory.valueOf(model).create(
+            return EnigmaFactory.valueOf(type).create(
                 rotorUnit = RotorUnit(
                     reflector = ReflectorFactory.valueOf(reflector).create(),
                     rotors = setOf(*makeRotors(split(rotors), split(startingPositions), split(ringSettings)))
