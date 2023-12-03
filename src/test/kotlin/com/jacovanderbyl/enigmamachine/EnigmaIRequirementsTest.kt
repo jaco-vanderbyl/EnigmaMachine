@@ -25,7 +25,7 @@ class EnigmaIRequirementsTest {
         DynamicTest.dynamicTest("EnigmaI must have 3 rotors. Providing '${rotors.size}' rotors should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure EnigmaI has exactly 3 rotors.",
-                block = { EnigmaI(RotorUnit(ReflectorB(), rotors), Plugboard()) }
+                block = { EnigmaI(RotorUnit(ReflectorFactory.B.create(), rotors), Plugboard()) }
             )
             ex.message?.let { msg -> assertContains(charSequence = msg, other = "must have 3 rotors") }
         }
@@ -54,7 +54,7 @@ class EnigmaIRequirementsTest {
         DynamicTest.dynamicTest("EnigmaI must accept compatible rotors only. Incompatible rotors should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure EnigmaI only accepts compatible rotors.",
-                block = { EnigmaI(RotorUnit(ReflectorB(), rotors), Plugboard()) }
+                block = { EnigmaI(RotorUnit(ReflectorFactory.B.create(), rotors), Plugboard()) }
             )
             ex.message?.let { msg -> assertContains(charSequence = msg, other = "rotor is not compatible") }
         }
@@ -67,7 +67,7 @@ class EnigmaIRequirementsTest {
             block = {
                 EnigmaI(
                     RotorUnit(
-                        IncompatibleWithEnigmaIReflector(),
+                        createIncompatibleReflector(),
                         setOf(
                             RotorFactory.I.create(Position(), RingSetting()),
                             RotorFactory.II.create(Position(), RingSetting()),
@@ -89,8 +89,10 @@ class EnigmaIRequirementsTest {
         position = Position(),
         ringSetting = RingSetting()
     )
-}
 
-class IncompatibleWithEnigmaIReflector :
-    Reflector(CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ")),
-    CompatibleWithEnigmaM3
+    private fun createIncompatibleReflector() : Reflector = Reflector(
+        cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+        type = ReflectorFactory.B,
+        compatibility = setOf()
+    )
+}

@@ -20,7 +20,7 @@ import kotlin.test.assertFailsWith
 class EnigmaEncipherTest {
     private fun createStockEnigma() : Enigma = EnigmaFake(
         rotorUnit = RotorUnit(
-            reflector = ReflectorB(),
+            reflector = ReflectorFactory.B.create(),
             rotors = setOf(
                 RotorFactory.I.create(Position(), RingSetting()),
                 RotorFactory.II.create(Position(), RingSetting()),
@@ -101,7 +101,7 @@ class EnigmaEncipherTest {
         "B-I-II-III-A-A-A-1-1-1" -> {
             EnigmaFake(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorB(),
+                    reflector = ReflectorFactory.B.create(),
                     rotors = setOf(
                         RotorFactory.I.create(Position(), RingSetting()),
                         RotorFactory.II.create(Position(), RingSetting()),
@@ -114,7 +114,7 @@ class EnigmaEncipherTest {
         "B-I-II-III-Q-E-V-1-1-1" -> {
             EnigmaFake(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorB(),
+                    reflector = ReflectorFactory.B.create(),
                     rotors = setOf(
                         RotorFactory.I.create(Position('Q'), RingSetting()),
                         RotorFactory.II.create(Position('E'), RingSetting()),
@@ -127,7 +127,7 @@ class EnigmaEncipherTest {
         "B-I-II-III-A-A-A-5-11-24" -> {
             EnigmaFake(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorB(),
+                    reflector = ReflectorFactory.B.create(),
                     rotors = setOf(
                         RotorFactory.I.create(Position(), RingSetting(5)),
                         RotorFactory.II.create(Position(), RingSetting(11)),
@@ -140,7 +140,7 @@ class EnigmaEncipherTest {
         "B-I-II-III-Q-E-V-5-11-24" -> {
             EnigmaFake(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorB(),
+                    reflector = ReflectorFactory.B.create(),
                     rotors = setOf(
                         RotorFactory.I.create(Position('Q'), RingSetting(5)),
                         RotorFactory.II.create(Position('E'), RingSetting(11)),
@@ -152,7 +152,7 @@ class EnigmaEncipherTest {
         "B-IV-V-VI-A-B-C-1-2-3" -> {
             EnigmaFake(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorB(),
+                    reflector = ReflectorFactory.B.create(),
                     rotors = setOf(
                         RotorFactory.IV.create(Position(), RingSetting()),
                         RotorFactory.V.create(Position('B'), RingSetting(2)),
@@ -165,7 +165,7 @@ class EnigmaEncipherTest {
         "C-VI-VII-VIII-Z-R-S-26-8-15" -> {
             EnigmaFake(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorC(),
+                    reflector = ReflectorFactory.C.create(),
                     rotors = setOf(
                         RotorFactory.VI.create(Position('Z'), RingSetting(26)),
                         RotorFactory.VII.create(Position('R'), RingSetting(8)),
@@ -178,7 +178,7 @@ class EnigmaEncipherTest {
         "C-VI-VII-VIII-Z-R-S-26-8-15-AB-CD-EF-GH-IJ-KL-MN-OP-QR-ST" -> {
             EnigmaFake(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorC(),
+                    reflector = ReflectorFactory.C.create(),
                     rotors = setOf(
                         RotorFactory.VI.create(Position('Z'), RingSetting(26)),
                         RotorFactory.VII.create(Position('R'), RingSetting(8)),
@@ -195,7 +195,7 @@ class EnigmaEncipherTest {
         "C-VI-VII-VIII-Z-R-S-26-8-15-UV-WX-YZ" -> {
             EnigmaFake(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorC(),
+                    reflector = ReflectorFactory.C.create(),
                     rotors = setOf(
                         RotorFactory.VI.create(Position('Z'), RingSetting(26)),
                         RotorFactory.VII.create(Position('R'), RingSetting(8)),

@@ -12,8 +12,8 @@ class EnigmaI(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma(rotorUnit, pl
                 "'${it.type.name}' rotor is not compatible with '${name}'."
             }
         }
-        require(rotorUnit.reflector is CompatibleWithEnigmaI) {
-            "'${rotorUnit.reflector.javaClass.kotlin.simpleName}' reflector is not compatible with '${name}'."
+        require(EnigmaFactory.ENIGMA_I in rotorUnit.reflector.compatibility) {
+            "'${rotorUnit.reflector.type.name}' reflector is not compatible with '${name}'."
         }
     }
 }
@@ -30,8 +30,8 @@ class EnigmaM3(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma(rotorUnit, p
                 "'${it.type.name}' rotor is not compatible with '${name}'."
             }
         }
-        require(rotorUnit.reflector is CompatibleWithEnigmaM3) {
-            "'${rotorUnit.reflector.javaClass.kotlin.simpleName}' reflector is not compatible with '${name}'."
+        require(EnigmaFactory.ENIGMA_M3 in rotorUnit.reflector.compatibility) {
+            "'${rotorUnit.reflector.type.name}' reflector is not compatible with '${name}'."
         }
     }
 }

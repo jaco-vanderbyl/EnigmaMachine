@@ -12,7 +12,7 @@ class EnigmaSettingsTest {
     private val plugboard = Plugboard()
     private val enigma = EnigmaFake(
         RotorUnit(
-            ReflectorB(),
+            ReflectorFactory.B.create(),
             setOf(
                 RotorFactory.I.create(Position(), RingSetting()),
                 RotorFactory.II.create(Position(), RingSetting()),
@@ -125,7 +125,7 @@ class EnigmaSettingsTest {
     fun `ensure reset function resets rotor positions to default`() {
         val em = EnigmaFake(
             rotorUnit = RotorUnit(
-                reflector = ReflectorB(),
+                reflector = ReflectorFactory.B.create(),
                 rotors = setOf(
                     RotorFactory.I.create(Position(), RingSetting()),
                     RotorFactory.II.create(Position(), RingSetting()),
@@ -151,7 +151,7 @@ class EnigmaSettingsTest {
         val pb = Plugboard()
         val em = EnigmaFake(
             rotorUnit = RotorUnit(
-                reflector = ReflectorB(),
+                reflector = ReflectorFactory.B.create(),
                 rotors = setOf(
                     RotorFactory.I.create(Position(), RingSetting()),
                     RotorFactory.II.create(Position(), RingSetting()),
