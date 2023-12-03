@@ -4,16 +4,12 @@ fun main() {
     val firstEnigmaI = EnigmaBuilder.makeFromCsv(
         type = "ENIGMA_I",
         reflector = "B",
-        rotors = "I,II,III",
-        ringSettings = "1,1,1",
-        startingPositions = "A,A,A"
+        rotors = "I,II,III"
     )
     val secondEnigmaI = EnigmaBuilder.makeFromCsv(
         type = "ENIGMA_I",
         reflector = "B",
-        rotors = "I,II,III",
-        ringSettings = "1,1,1",
-        startingPositions = "A,A,A"
+        rotors = "I,II,III"
     )
 
     val plaintextInput = "AAAAA"

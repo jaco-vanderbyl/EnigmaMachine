@@ -39,16 +39,16 @@ class EnigmaBuilder {
 
         private fun makeRotors(
             rotors: List<String>,
-            positions: List<String>?,
-            ringSettings: List<String>?
+            positions: List<String>,
+            ringSettings: List<String>
         ) : Array<Rotor> {
-            if (positions != null) {
+            if (positions.isNotEmpty()) {
                 require(rotors.size == positions.size) {
                     "Number of positions must equal number of rotors: '${rotors.size}'. " +
                             "Given: '${positions.size}'."
                 }
             }
-            if (ringSettings != null) {
+            if (ringSettings.isNotEmpty()) {
                 require(rotors.size == ringSettings.size) {
                     "Number of ring settings must equal number of rotors: '${rotors.size}'. " +
                             "Given: '${ringSettings.size}'."
@@ -56,7 +56,7 @@ class EnigmaBuilder {
             }
 
             return rotors.mapIndexed { index, rotor ->
-                makeRotor(rotor, positions?.get(index), ringSettings?.get(index))
+                makeRotor(rotor, positions.getOrNull(index), ringSettings.getOrNull(index))
             }.toTypedArray()
         }
 
