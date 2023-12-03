@@ -8,22 +8,26 @@ package com.jacovanderbyl.enigmamachine
 class Connector(val first: Char, val second: Char) {
     init {
         require(first in Keys.CHARACTER_SET) {
-            "Each character in connector pair must be in: '${Keys.CHARACTER_SET}'. Given: '${first}'."
+            "First character is invalid. Character must be in: '${Keys.CHARACTER_SET}'. Given: '${first}'."
         }
         require(second in Keys.CHARACTER_SET) {
-            "Each character in connector pair must be in: '${Keys.CHARACTER_SET}'. Given: '${second}'."
+            "Second character is invalid. Character must be in: '${Keys.CHARACTER_SET}'. Given: '${second}'."
         }
         require(first != second) {
-            "It's not possible to connect a character to itself; must be unique. Given: '${first}${second}'."
+            "The first and second characters cannot be the same. Given: '${first}${second}'."
         }
     }
 
     companion object {
-        fun fromString(pair: String) : Connector {
-            require(pair.length == 2) { "A connector pair must be two characters. Given: '${pair}'." }
-            return Connector(pair[0], pair[1])
+        fun fromString(characterPair: String) : Connector {
+            require(characterPair.length == 2) {
+                "A connector pair must be two characters. Given: '${characterPair}'."
+            }
+            return Connector(characterPair[0], characterPair[1])
         }
 
-        fun fromStrings(pairs: List<String>) : Array<Connector> = pairs.map { fromString(it) } .toTypedArray()
+        fun fromStrings(characterPairs: List<String>) : Array<Connector> = characterPairs.map {
+            fromString(it)
+        } .toTypedArray()
     }
 }
