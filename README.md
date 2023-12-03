@@ -1,6 +1,10 @@
 # Kotlin Enigma Machine
 Kotlin library that simulates Enigma Machine enciphering.
 
+Supports the following models:
+* Wehrmacht Enigma I — The most common wartime Enigma Machine, used by the German Army.
+* Kriegsmarine Enigma M3 — A modified Enigma I model, used by German navy.
+
 From [wikipedia](https://en.wikipedia.org/wiki/Enigma_machine):
 > The Enigma machine is a cipher device developed and used in the early- to mid-20th century to protect commercial,
 > diplomatic, and military communication. It was employed extensively by Nazi Germany during World War II, in all
@@ -13,11 +17,7 @@ From [wikipedia](https://en.wikipedia.org/wiki/Enigma_machine):
 > Entering ciphertext transforms it back into readable plaintext. The rotor mechanism changes the electrical
 > connections between the keys and the lights with each keypress.
 
-Library supports the following models:
-* Wehrmacht Enigma I — The most common wartime Enigma Machine, used by the German Army.
-* Kriegsmarine Enigma M3 — A modified Enigma I model, used by German navy.
-
-## Clone, build and test
+## Build and test
 It is recommended to use the latest released version of Intellij IDEA (Community or Ultimate Edition).
 You can download IntelliJ IDEA [here](https://www.jetbrains.com/idea/download).
 
@@ -30,25 +30,25 @@ Alternatively, go to Build menu and choose Build Project.
 
 ## Usage
 
-### List supported Enigma Machines, Reflectors, Rotors, Ring Settings, and Positions
+### List available Enigma Machines, Reflectors, Rotors, Ring Settings, and Positions
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
-val supportedEnigmas = EnigmaFactory.entries.map { it.name }
-val supportedReflectors = ReflectorFactory.entries.map { it.name }
-val supportedRotors = RotorFactory.entries.map { it.name }
-val supportedRingSettings = Keys.CHARACTER_SET.map { Keys.CHARACTER_SET.indexOf(it) + 1 }
-val supportedPositions = Keys.CHARACTER_SET.map { it }
+val enigmaList = EnigmaFactory.entries.map { it.name }
+val reflectorList = ReflectorFactory.entries.map { it.name }
+val rotorList = RotorFactory.entries.map { it.name }
+val ringSettingList = Keys.CHARACTER_SET.map { Keys.CHARACTER_SET.indexOf(it) + 1 }
+val positionList = Keys.CHARACTER_SET.map { it }
 
-println(supportedEnigmas)      // prints: [ENIGMA_I, ENIGMA_M3]
-println(supportedReflectors)   // prints: [B, C]
-println(supportedRotors)       // prints: [I, II, III, IV, V, VI, VII, VIII]
-println(supportedRingSettings) // prints: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-println(supportedPositions)    // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
+println(enigmaList)      // prints: [ENIGMA_I, ENIGMA_M3]
+println(reflectorList)   // prints: [B, C]
+println(rotorList)       // prints: [I, II, III, IV, V, VI, VII, VIII]
+println(ringSettingList) // prints: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+println(positionList)    // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
 ```
 
-### Build 'stock' Enigma
-'Stock' Enigma I is here defined as having:
+### Build 'stock' Enigma Machine
+'Stock' Enigma Machine is here defined as having:
 * B-reflector
 * I, II and III rotors (from left to right)
 * All ring settings set to default, i.e. '1'
@@ -71,7 +71,7 @@ val enigmaM3 = EnigmaBuilder.makeFromCsv(
 )
 ```
 
-### Build Enigma with an arrangement of rotors, ring settings, starting positions, and a reflector
+### Build with an arrangement of rotors, ring settings, starting positions, and a reflector
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
@@ -84,7 +84,7 @@ val enigmaI = EnigmaBuilder.makeFromCsv(
 )
 ```
 
-### Build Enigma with plugboard connectors
+### Build with plugboard connectors
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
