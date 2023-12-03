@@ -32,6 +32,8 @@ Alternatively, go to Build menu and choose Build Project.
 
 ### List supported Enigma Machines, Reflectors, Rotors, Ring Settings, and Positions
 ```kotlin
+import com.jacovanderbyl.enigmamachine.*
+
 val supportedEnigmas = EnigmaFactory.entries.map { it.name }
 val supportedReflectors = ReflectorFactory.entries.map { it.name }
 val supportedRotors = RotorFactory.entries.map { it.name }
@@ -54,6 +56,8 @@ println(supportedPositions)    // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M
 * No plugboard connectors
 
 ```kotlin
+import com.jacovanderbyl.enigmamachine.*
+
 val enigmaI = EnigmaBuilder.makeFromCsv(
     type = "ENIGMA_I",
     reflector = "B",
@@ -73,6 +77,8 @@ val enigmaM3 = EnigmaBuilder.makeFromCsv(
 
 ### Build Enigma with an arrangement of rotors, ring settings, starting positions, and reflector
 ```kotlin
+import com.jacovanderbyl.enigmamachine.*
+
 val enigmaI = EnigmaBuilder.makeFromCsv(
     type = "ENIGMA_I",
     reflector = "C",
@@ -84,6 +90,8 @@ val enigmaI = EnigmaBuilder.makeFromCsv(
 
 ### Build Enigma with plugboard connectors
 ```kotlin
+import com.jacovanderbyl.enigmamachine.*
+
 val enigmaI = EnigmaBuilder.makeFromCsv(
     type = "ENIGMA_I",
     reflector = "C",
@@ -96,7 +104,16 @@ val enigmaI = EnigmaBuilder.makeFromCsv(
 
 ### Encipher plaintext and 'decipher' ciphertext
 ```kotlin
-val enigmaI = EnigmaBuilder.makeFromCsv(
+import com.jacovanderbyl.enigmamachine.*
+
+val firstEnigmaI = EnigmaBuilder.makeFromCsv(
+    type = "ENIGMA_I",
+    reflector = "B",
+    rotors = "I,II,III",
+    ringSettings = "1,1,1",
+    startingPositions = "A,A,A"
+)
+val secondEnigmaI = EnigmaBuilder.makeFromCsv(
     type = "ENIGMA_I",
     reflector = "B",
     rotors = "I,II,III",
@@ -105,10 +122,10 @@ val enigmaI = EnigmaBuilder.makeFromCsv(
 )
 
 val plaintextInput = "AAAAA"
-val cypher = enigmaI.encipher(plaintextInput)
-val plaintext = enigmaI.reset().encipher(cypher)
+val ciphertext = firstEnigmaI.encipher(plaintextInput)
+val plaintext = secondEnigmaI.encipher(ciphertext)
 
 println(plaintextInput) // prints: AAAAA
-println(cypher)         // prints: BDZGO
+println(ciphertext)     // prints: BDZGO
 println(plaintext)      // prints: AAAAA
 ```

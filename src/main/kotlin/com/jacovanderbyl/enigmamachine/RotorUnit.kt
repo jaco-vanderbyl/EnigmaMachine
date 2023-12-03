@@ -123,7 +123,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
         rotors.elementAt(rotorIndex).position = position
     }
 
-    fun reset() {
-        for (rotor in rotors) rotor.reset()
+    fun resetRotorPositions() {
+        for (rotor in rotors) rotor.resetPosition()
     }
 }

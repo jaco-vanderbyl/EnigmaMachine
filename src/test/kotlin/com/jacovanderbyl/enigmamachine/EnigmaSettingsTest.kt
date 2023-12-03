@@ -57,7 +57,7 @@ class EnigmaSettingsTest {
     @TestFactory
     fun `ensure connector cables can be added to plugboard`() = connectorsList.mapIndexed { index, connectors ->
         DynamicTest.dynamicTest("Connector cables can be added to plugboard.") {
-            enigmaFake.addPlugboardConnectors(unplugConnectorsFirst = false, *connectors.toTypedArray())
+            enigmaFake.addPlugboardConnectors(*connectors.toTypedArray())
 
             connectorsList.filterIndexed { i, _ -> i <= index } .forEach {
                 it.forEach { connector ->
@@ -79,7 +79,7 @@ class EnigmaSettingsTest {
     @TestFactory
     fun `ensure connector cables can be unplugged`() = connectorsList.mapIndexed { index, connectors ->
         DynamicTest.dynamicTest("Connector cables can be unplugged.") {
-            enigmaFake.addPlugboardConnectors(unplugConnectorsFirst = true, *connectors.toTypedArray())
+            enigmaFake.replacePlugboardConnectors(*connectors.toTypedArray())
 
             connectorsList.filterIndexed { i, _ -> i < index } .forEach {
                 it.forEach { connector ->
@@ -112,30 +112,30 @@ class EnigmaSettingsTest {
     }
 
     @Test
-    fun `ensure reset function resets rotor positions to default`() {
+    fun `ensure rotor positions can be reset to default`() {
         val emFake = createStockEnigmaFake(Plugboard())
         val defaultPositions = emFake.getRotorPositions().map { it.character }
 
         emFake.setRotorPositions(Position('X'), Position('Y'), Position('Z'))
-        emFake.reset()
+        emFake.resetRotorPositions()
 
         assertEquals(
-            message = "Failed to ensure reset function resets rotor positions to default.",
+            message = "Failed to ensure rotor positions can be reset to default.",
             expected = defaultPositions,
             actual = enigmaFake.getRotorPositions().map { it.character }
         )
     }
 
     @Test
-    fun `ensure reset function can reset plugboard connector plugs`() {
+    fun `ensure plugboard can be reset`() {
         val pb = Plugboard()
         val emFake = createStockEnigmaFake(pb)
 
-        emFake.addPlugboardConnectors(unplugConnectorsFirst = false, Connector(first = 'A', second = 'B'))
-        emFake.reset(unplugConnectors = true)
+        emFake.addPlugboardConnectors(Connector(first = 'A', second = 'B'))
+        emFake.resetPlugboard()
 
         assertEquals(
-            message = "Failed to ensure reset function can reset plugboard connector plugs.",
+            message = "Failed to ensure plugboard can be reset.",
             expected = 'A',
             actual = pb.encipher('A')
         )

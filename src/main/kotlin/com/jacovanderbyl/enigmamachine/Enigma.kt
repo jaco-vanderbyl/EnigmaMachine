@@ -57,14 +57,20 @@ class Enigma(
         return rotorUnit.rotors.map { it.position }
     }
 
-    fun addPlugboardConnectors(unplugConnectorsFirst: Boolean, vararg connectors: Connector) {
-        if (unplugConnectorsFirst) plugboard.reset()
+    fun resetRotorPositions() {
+        rotorUnit.resetRotorPositions()
+    }
+
+    fun addPlugboardConnectors(vararg connectors: Connector) {
         plugboard.connectPlugs(*connectors)
     }
 
-    fun reset(unplugConnectors: Boolean = false) : Enigma {
-        rotorUnit.reset()
-        if (unplugConnectors) plugboard.reset()
-        return this
+    fun replacePlugboardConnectors(vararg connectors: Connector) {
+        resetPlugboard()
+        plugboard.connectPlugs(*connectors)
+    }
+
+    fun resetPlugboard() {
+        plugboard.reset()
     }
 }

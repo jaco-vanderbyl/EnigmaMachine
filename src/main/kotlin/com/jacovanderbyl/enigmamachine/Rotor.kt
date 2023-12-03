@@ -24,8 +24,8 @@ class Rotor(
         position = Position(characterSet[shiftIndex(position.index, shiftBy = 1)])
     }
 
-    fun reset() {
-        position = Position('A')
+    fun resetPosition() {
+        position = Position()
     }
 
     fun isInNotchedPosition() : Boolean = position.character in notchCharacters
