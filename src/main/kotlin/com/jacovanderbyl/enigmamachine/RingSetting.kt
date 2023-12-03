@@ -5,7 +5,7 @@ package com.jacovanderbyl.enigmamachine
  *
  * Ring settings are used to change the position of the character ring relative to the internal wiring of the rotor.
  */
-class RingSetting(val value: Int) {
+class RingSetting(val value: Int = 1) {
     init {
         require(value in 1..Keys.CHARACTER_SET.length) {
             "The ring setting must be an integer between 1 and ${Keys.CHARACTER_SET.length}. Given: '${value}'."

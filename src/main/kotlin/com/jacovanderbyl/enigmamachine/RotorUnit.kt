@@ -16,8 +16,8 @@ package com.jacovanderbyl.enigmamachine
  */
 class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher {
     init {
-        require(rotors.none { rotor -> rotors.count { it::class == rotor::class } > 1 }) {
-            "Duplicate rotor types are not allowed. Given: ${rotors.map { it.javaClass.kotlin.simpleName }}."
+        require(rotors.none { rotor -> rotors.count { it.type == rotor.type } > 1 }) {
+            "Duplicate rotor types are not allowed. Given: ${rotors.map { it.type }}."
         }
     }
 

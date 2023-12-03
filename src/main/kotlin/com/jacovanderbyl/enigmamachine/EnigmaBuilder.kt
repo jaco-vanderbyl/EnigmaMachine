@@ -28,21 +28,26 @@ class EnigmaBuilder {
                 "Valid reflector types: '${ReflectorFactory.entries.map { it.name }}'. Given: '${reflector}'."
             }
 
-            val enigma = EnigmaFactory.valueOf(model).create(
+            return EnigmaFactory.valueOf(model).create(
                 rotorUnit = RotorUnit(
                     reflector = ReflectorFactory.valueOf(reflector).create(),
-                    rotors = setOf(*makeRotors(split(rotors), split(ringSettings)))
+                    rotors = setOf(*makeRotors(split(rotors), split(startingPositions), split(ringSettings)))
                 ),
-                plugboard = Plugboard()
+                plugboard = Plugboard(*Connector.fromStrings(split(plugboardConnectors)))
             )
-
-            enigma.setRotorPositions(*Position.fromStrings(split(startingPositions)))
-            enigma.addPlugboardConnectors(false, *Connector.fromStrings(split(plugboardConnectors)))
-
-            return enigma
         }
 
-        private fun makeRotors(rotors: List<String>, ringSettings: List<String>?) : Array<Rotor> {
+        private fun makeRotors(
+            rotors: List<String>,
+            positions: List<String>?,
+            ringSettings: List<String>?
+        ) : Array<Rotor> {
+            if (positions != null) {
+                require(rotors.size == positions.size) {
+                    "Number of positions must equal number of rotors: '${rotors.size}'. " +
+                            "Given: '${positions.size}'."
+                }
+            }
             if (ringSettings != null) {
                 require(rotors.size == ringSettings.size) {
                     "Number of ring settings must equal number of rotors: '${rotors.size}'. " +
@@ -51,18 +56,19 @@ class EnigmaBuilder {
             }
 
             return rotors.mapIndexed { index, rotor ->
-                makeRotor(rotor, ringSettings?.get(index))
+                makeRotor(rotor, positions?.get(index), ringSettings?.get(index))
             }.toTypedArray()
         }
 
-        private fun makeRotor(rotor: String, ringSetting: String?): Rotor {
+        private fun makeRotor(rotor: String, position: String?, ringSetting: String?): Rotor {
             require(rotor in RotorFactory.entries.map { it.name }) {
                 "Valid rotor types: '${RotorFactory.entries.map { it.name }}'. Given: '${rotor}'."
             }
 
-            val rotorObj = RotorFactory.valueOf(rotor).create()
-            if (ringSetting != null) rotorObj.ringSetting = RingSetting.fromString(ringSetting)
-            return rotorObj
+            return RotorFactory.valueOf(rotor).create(
+                position = if (position != null) Position.fromString(position) else Position(),
+                ringSetting = if (ringSetting != null) RingSetting.fromString(ringSetting) else RingSetting()
+            )
         }
 
         private fun split(str: String?) : List<String> =

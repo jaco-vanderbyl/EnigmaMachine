@@ -8,8 +8,8 @@ class EnigmaI(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma(rotorUnit, pl
             "'${name}' must have 3 rotors. Given: '${rotorUnit.rotors.count()}'."
         }
         rotorUnit.rotors.forEach {
-            require(it is CompatibleWithEnigmaI) {
-                "'${it.javaClass.kotlin.simpleName}' rotor is not compatible with '${name}'."
+            require(EnigmaFactory.ENIGMA_I in it.compatibility) {
+                "'${it.type.name}' rotor is not compatible with '${name}'."
             }
         }
         require(rotorUnit.reflector is CompatibleWithEnigmaI) {
@@ -26,8 +26,8 @@ class EnigmaM3(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma(rotorUnit, p
             "'${name}' must have 3 rotors. Given: '${rotorUnit.rotors.count()}'."
         }
         rotorUnit.rotors.forEach {
-            require(it is CompatibleWithEnigmaM3) {
-                "'${it.javaClass.kotlin.simpleName}' rotor is not compatible with '${name}'."
+            require(EnigmaFactory.ENIGMA_M3 in it.compatibility) {
+                "'${it.type.name}' rotor is not compatible with '${name}'."
             }
         }
         require(rotorUnit.reflector is CompatibleWithEnigmaM3) {

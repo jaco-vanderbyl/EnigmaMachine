@@ -8,11 +8,13 @@ package com.jacovanderbyl.enigmamachine
  *     - Enciphering: substituting one letter for another, given the particular cipher set map (representing the
  *       internal wiring) of the concrete rotor.
  */
-abstract class Rotor(
+class Rotor(
     cipherSetMap: CipherSetMap,
     notch: Notch,
-    var position: Position = Position('A'),
-    var ringSetting: RingSetting = RingSetting(1),
+    val type: RotorFactory,
+    val compatibility: Set<EnigmaFactory>,
+    var position: Position,
+    var ringSetting: RingSetting
 ) : CanEncipherBidirectionally {
     private val characterSet: String = cipherSetMap.characterSet
     private val cipherSet: String = cipherSetMap.cipherSet

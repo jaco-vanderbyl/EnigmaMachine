@@ -9,10 +9,15 @@ import kotlin.test.assertContains
 import kotlin.test.assertFailsWith
 
 class EnigmaIRequirementsTest {
-    private val badRotorCounts = listOf<Set<Rotor>>(
-        setOf(RotorI()),
-        setOf(RotorI(), RotorII()),
-        setOf(RotorI(), RotorII(), RotorIII(), RotorIV()),
+    private val badRotorCounts = listOf(
+        setOf(RotorFactory.I.create(Position(), RingSetting())),
+        setOf(RotorFactory.I.create(Position(), RingSetting()), RotorFactory.II.create(Position(), RingSetting())),
+        setOf(
+            RotorFactory.I.create(Position(), RingSetting()),
+            RotorFactory.II.create(Position(), RingSetting()),
+            RotorFactory.III.create(Position(), RingSetting()),
+            RotorFactory.IV.create(Position(), RingSetting())
+        ),
     )
 
     @TestFactory
@@ -26,10 +31,22 @@ class EnigmaIRequirementsTest {
         }
     }
 
-    private val incompatibleRotors = listOf<Set<Rotor>>(
-        setOf(IncompatibleWithEnigmaIRotor(), RotorI(), RotorII()),
-        setOf(RotorI(), IncompatibleWithEnigmaIRotor(), RotorII()),
-        setOf(RotorI(), RotorII(), IncompatibleWithEnigmaIRotor()),
+    private val incompatibleRotors = listOf(
+        setOf(
+            createIncompatibleRotor(),
+            RotorFactory.I.create(Position(), RingSetting()),
+            RotorFactory.II.create(Position(), RingSetting())
+        ),
+        setOf(
+            RotorFactory.I.create(Position(), RingSetting()),
+            createIncompatibleRotor(),
+            RotorFactory.II.create(Position(), RingSetting())
+        ),
+        setOf(
+            RotorFactory.I.create(Position(), RingSetting()),
+            RotorFactory.II.create(Position(), RingSetting()),
+            createIncompatibleRotor()
+        ),
     )
 
     @TestFactory
@@ -49,18 +66,30 @@ class EnigmaIRequirementsTest {
             message = "Failed to ensure EnigmaI only accepts compatible reflector.",
             block = {
                 EnigmaI(
-                    RotorUnit(IncompatibleWithEnigmaIReflector(), setOf(RotorI(), RotorII(), RotorIII())),
+                    RotorUnit(
+                        IncompatibleWithEnigmaIReflector(),
+                        setOf(
+                            RotorFactory.I.create(Position(), RingSetting()),
+                            RotorFactory.II.create(Position(), RingSetting()),
+                            RotorFactory.III.create(Position(), RingSetting())
+                        )
+                    ),
                     Plugboard()
                 )
             }
         )
         ex.message?.let { msg -> assertContains(charSequence = msg, other = "reflector is not compatible") }
     }
-}
 
-class IncompatibleWithEnigmaIRotor :
-    Rotor(CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), Notch(setOf('A'))),
-    CompatibleWithEnigmaM3
+    private fun createIncompatibleRotor() : Rotor = Rotor(
+        cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+        notch = Notch(setOf('A')),
+        type = RotorFactory.VIII,
+        compatibility = setOf(),
+        position = Position(),
+        ringSetting = RingSetting()
+    )
+}
 
 class IncompatibleWithEnigmaIReflector :
     Reflector(CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ")),

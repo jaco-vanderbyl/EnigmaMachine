@@ -18,9 +18,21 @@ import kotlin.test.assertFailsWith
  *  With this configuration 'AAAAA' will produce the encoded sequence 'BDZGO'
  */
 class EnigmaEncipherTest {
+    private fun createStockEnigma() : Enigma = EnigmaFake(
+        rotorUnit = RotorUnit(
+            reflector = ReflectorB(),
+            rotors = setOf(
+                RotorFactory.I.create(Position(), RingSetting()),
+                RotorFactory.II.create(Position(), RingSetting()),
+                RotorFactory.III.create(Position(), RingSetting())
+            )
+        ),
+        plugboard = Plugboard()
+    )
+
     @Test
     fun `ensure 'stock' enigma can encipher a single character`() {
-        val enigma = EnigmaFake(RotorUnit(ReflectorB(), setOf(RotorI(), RotorII(), RotorIII())), Plugboard())
+        val enigma = createStockEnigma()
         assertEquals(
             message = "Failed to ensure 'stock' enigma can encipher a single character.",
             expected = 'B',
@@ -30,7 +42,7 @@ class EnigmaEncipherTest {
 
     @Test
     fun `ensure 'stock' enigma can encipher a string`() {
-        val enigma = EnigmaFake(RotorUnit(ReflectorB(), setOf(RotorI(), RotorII(), RotorIII())), Plugboard())
+        val enigma = createStockEnigma()
         assertEquals(
             message = "Failed to ensure 'stock' enigma can encipher a string.",
             expected = "BDZGO",
@@ -43,7 +55,7 @@ class EnigmaEncipherTest {
     @TestFactory
     fun `ensure enigma throws on invalid characters`() = invalidCharacters.map { character ->
         DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
-            val enigma = EnigmaFake(RotorUnit(ReflectorB(), setOf(RotorI(), RotorII(), RotorIII())), Plugboard())
+            val enigma = createStockEnigma()
             assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure engima throws on invalid characters.",
                 block = { enigma.encipher(character) }
@@ -90,7 +102,12 @@ class EnigmaEncipherTest {
             EnigmaFake(
                 rotorUnit = RotorUnit(
                     reflector = ReflectorB(),
-                    rotors = setOf(RotorI(), RotorII(), RotorIII())),
+                    rotors = setOf(
+                        RotorFactory.I.create(Position(), RingSetting()),
+                        RotorFactory.II.create(Position(), RingSetting()),
+                        RotorFactory.III.create(Position(), RingSetting())
+                    )
+                ),
                 plugboard = Plugboard()
             )
         }
@@ -99,9 +116,10 @@ class EnigmaEncipherTest {
                 rotorUnit = RotorUnit(
                     reflector = ReflectorB(),
                     rotors = setOf(
-                        RotorI(position = Position('Q')),
-                        RotorII(position = Position('E')),
-                        RotorIII(position = Position('V')))
+                        RotorFactory.I.create(Position('Q'), RingSetting()),
+                        RotorFactory.II.create(Position('E'), RingSetting()),
+                        RotorFactory.III.create(Position('V'), RingSetting())
+                    )
                 ),
                 Plugboard()
             )
@@ -111,9 +129,10 @@ class EnigmaEncipherTest {
                 rotorUnit = RotorUnit(
                     reflector = ReflectorB(),
                     rotors = setOf(
-                        RotorI(ringSetting = RingSetting(5)),
-                        RotorII(ringSetting = RingSetting(11)),
-                        RotorIII(ringSetting = RingSetting(24)))
+                        RotorFactory.I.create(Position(), RingSetting(5)),
+                        RotorFactory.II.create(Position(), RingSetting(11)),
+                        RotorFactory.III.create(Position(), RingSetting(24))
+                    )
                 ),
                 Plugboard()
             )
@@ -123,9 +142,10 @@ class EnigmaEncipherTest {
                 rotorUnit = RotorUnit(
                     reflector = ReflectorB(),
                     rotors = setOf(
-                        RotorI(position = Position('Q'), ringSetting = RingSetting(5)),
-                        RotorII(position = Position('E'), ringSetting = RingSetting(11)),
-                        RotorIII(position = Position('V'), ringSetting = RingSetting(24)))
+                        RotorFactory.I.create(Position('Q'), RingSetting(5)),
+                        RotorFactory.II.create(Position('E'), RingSetting(11)),
+                        RotorFactory.III.create(Position('V'), RingSetting(24))
+                    )
                 ),
                 Plugboard())
         }
@@ -134,9 +154,10 @@ class EnigmaEncipherTest {
                 rotorUnit = RotorUnit(
                     reflector = ReflectorB(),
                     rotors = setOf(
-                        RotorIV(),
-                        RotorV(position = Position('B'), ringSetting = RingSetting(2)),
-                        RotorVI(position = Position('C'), ringSetting = RingSetting(3)))
+                        RotorFactory.IV.create(Position(), RingSetting()),
+                        RotorFactory.V.create(Position('B'), RingSetting(2)),
+                        RotorFactory.VI.create(Position('C'), RingSetting(3))
+                    )
                 ),
                 Plugboard()
             )
@@ -146,9 +167,10 @@ class EnigmaEncipherTest {
                 rotorUnit = RotorUnit(
                     reflector = ReflectorC(),
                     rotors = setOf(
-                        RotorVI(position = Position('Z'), ringSetting = RingSetting(26)),
-                        RotorVII(position = Position('R'), ringSetting = RingSetting(8)),
-                        RotorVIII(position = Position('S'), ringSetting = RingSetting(15)))
+                        RotorFactory.VI.create(Position('Z'), RingSetting(26)),
+                        RotorFactory.VII.create(Position('R'), RingSetting(8)),
+                        RotorFactory.VIII.create(Position('S'), RingSetting(15))
+                    )
                 ),
                 Plugboard()
             )
@@ -158,9 +180,10 @@ class EnigmaEncipherTest {
                 rotorUnit = RotorUnit(
                     reflector = ReflectorC(),
                     rotors = setOf(
-                        RotorVI(position = Position('Z'), ringSetting = RingSetting(26)),
-                        RotorVII(position = Position('R'), ringSetting = RingSetting(8)),
-                        RotorVIII(position = Position('S'), ringSetting = RingSetting(15)))
+                        RotorFactory.VI.create(Position('Z'), RingSetting(26)),
+                        RotorFactory.VII.create(Position('R'), RingSetting(8)),
+                        RotorFactory.VIII.create(Position('S'), RingSetting(15))
+                    )
                 ),
                 Plugboard(
                     Connector('A', 'B'), Connector('C', 'D'), Connector('E', 'F'), Connector('G', 'H'),
@@ -174,15 +197,16 @@ class EnigmaEncipherTest {
                 rotorUnit = RotorUnit(
                     reflector = ReflectorC(),
                     rotors = setOf(
-                        RotorVI(position = Position('Z'), ringSetting = RingSetting(26)),
-                        RotorVII(position = Position('R'), ringSetting = RingSetting(8)),
-                        RotorVIII(position = Position('S'), ringSetting = RingSetting(15)))
+                        RotorFactory.VI.create(Position('Z'), RingSetting(26)),
+                        RotorFactory.VII.create(Position('R'), RingSetting(8)),
+                        RotorFactory.VIII.create(Position('S'), RingSetting(15))
+                    )
                 ),
                 Plugboard(
                     Connector('U', 'V'), Connector('W', 'X'), Connector('Y', 'Z')
                 )
             )
         }
-        else -> EnigmaFake(RotorUnit(ReflectorB(), setOf(RotorI(), RotorII(), RotorIII())), Plugboard())
+        else -> createStockEnigma()
     }
 }

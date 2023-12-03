@@ -10,7 +10,17 @@ import kotlin.test.assertFailsWith
 
 class EnigmaSettingsTest {
     private val plugboard = Plugboard()
-    private val enigma = EnigmaFake(RotorUnit(ReflectorB(), setOf(RotorI(), RotorII(), RotorIII())), plugboard)
+    private val enigma = EnigmaFake(
+        RotorUnit(
+            ReflectorB(),
+            setOf(
+                RotorFactory.I.create(Position(), RingSetting()),
+                RotorFactory.II.create(Position(), RingSetting()),
+                RotorFactory.III.create(Position(), RingSetting())
+            )
+        ),
+        plugboard
+    )
 
     private val positionsList = listOf(
         listOf(Position('X'), Position('Y'), Position('Z')),
@@ -113,7 +123,17 @@ class EnigmaSettingsTest {
 
     @Test
     fun `ensure reset function resets rotor positions to default`() {
-        val em = EnigmaFake(RotorUnit(ReflectorB(), setOf(RotorI(), RotorII(), RotorIII())), Plugboard())
+        val em = EnigmaFake(
+            rotorUnit = RotorUnit(
+                reflector = ReflectorB(),
+                rotors = setOf(
+                    RotorFactory.I.create(Position(), RingSetting()),
+                    RotorFactory.II.create(Position(), RingSetting()),
+                    RotorFactory.III.create(Position(), RingSetting())
+                )
+            ),
+            plugboard = Plugboard()
+        )
         val defaultPositions = em.getRotorPositions().map { it.character }
 
         em.setRotorPositions(Position('X'), Position('Y'), Position('Z'))
@@ -129,7 +149,17 @@ class EnigmaSettingsTest {
     @Test
     fun `ensure reset function can reset plugboard connector plugs`() {
         val pb = Plugboard()
-        val em = EnigmaFake(RotorUnit(ReflectorB(), setOf(RotorI(), RotorII(), RotorIII())), pb)
+        val em = EnigmaFake(
+            rotorUnit = RotorUnit(
+                reflector = ReflectorB(),
+                rotors = setOf(
+                    RotorFactory.I.create(Position(), RingSetting()),
+                    RotorFactory.II.create(Position(), RingSetting()),
+                    RotorFactory.III.create(Position(), RingSetting())
+                )
+            ),
+            plugboard = pb
+        )
 
         em.addPlugboardConnectors(unplugConnectorsFirst = false, Connector(first = 'A', second = 'B'))
         em.reset(unplugConnectors = true)
