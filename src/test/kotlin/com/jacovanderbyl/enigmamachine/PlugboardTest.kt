@@ -26,7 +26,7 @@ class PlugboardTest {
     fun `ensure plugboard enciphers correctly given connectors in function`() = connectors.map { connectorList ->
         DynamicTest.dynamicTest("Plugboard with connectors '${connectorList}' in function should encipher.") {
             val plugboard = Plugboard()
-            plugboard.connectPlugs(*connectorList.toTypedArray())
+            plugboard.addConnectors(*connectorList.toTypedArray())
             encipherTest(plugboard, connectorList)
         }
     }
@@ -92,7 +92,7 @@ class PlugboardTest {
     )
 
     @TestFactory
-    fun `ensure plugboard throws when connecting duplicate`() = duplicateConnectors.map { connectors ->
+    fun `ensure plugboard throws when adding duplicate connectors`() = duplicateConnectors.map { connectors ->
         DynamicTest.dynamicTest("Duplicate connector letters '${connectors}' should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure plugboard throws when connecting a character that is already connected.",

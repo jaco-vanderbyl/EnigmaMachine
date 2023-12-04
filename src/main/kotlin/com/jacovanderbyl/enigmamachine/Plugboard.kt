@@ -15,7 +15,7 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
     private val connectorMap = mutableMapOf<Char,Char>()
 
     init {
-        connectPlugs(*connectors)
+        addConnectors(*connectors)
     }
 
     /**
@@ -33,7 +33,7 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
         connectorMap.clear()
     }
 
-    fun connectPlugs(vararg connectors: Connector) {
+    fun addConnectors(vararg connectors: Connector) {
         connectors.forEach {
             require(!connectorMap.containsKey(it.first) && !connectorMap.containsKey(it.second)) {
                 "Cannot connect character that's already been connected. Given: '${it.first}${it.second}'."

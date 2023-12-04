@@ -62,12 +62,12 @@ class Enigma(
     }
 
     fun addPlugboardConnectors(vararg connectors: Connector) {
-        plugboard.connectPlugs(*connectors)
+        plugboard.addConnectors(*connectors)
     }
 
     fun replacePlugboardConnectors(vararg connectors: Connector) {
         resetPlugboard()
-        plugboard.connectPlugs(*connectors)
+        plugboard.addConnectors(*connectors)
     }
 
     fun resetPlugboard() {

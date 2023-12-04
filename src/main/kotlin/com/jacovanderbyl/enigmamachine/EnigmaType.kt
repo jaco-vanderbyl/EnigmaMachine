@@ -19,7 +19,7 @@ enum class EnigmaType {
 
     abstract fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma
 
-    fun checkRequirements(enigmaType: EnigmaType, rotorUnit: RotorUnit) {
+    protected fun checkRequirements(enigmaType: EnigmaType, rotorUnit: RotorUnit) {
         require(rotorUnit.rotors.count() == 3) {
             "'${enigmaType}' must have 3 rotors. Given: '${rotorUnit.rotors.count()}'."
         }
