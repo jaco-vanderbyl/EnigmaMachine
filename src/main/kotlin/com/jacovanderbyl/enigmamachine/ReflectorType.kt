@@ -7,14 +7,14 @@ enum class ReflectorType {
     B {
         override fun create() = Reflector(
             cipherSetMap = CipherSetMap("YRUHQSLDPXNGOKMIEBFZCWVJAT"),
-            type = ReflectorType.B,
+            type = B,
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         )
     },
     C {
         override fun create() = Reflector(
             cipherSetMap = CipherSetMap("FVPJIAOYEDRZXWGCTKUQSBNMHL"),
-            type = ReflectorType.C,
+            type = C,
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         )
     };
