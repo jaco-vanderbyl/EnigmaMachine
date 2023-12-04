@@ -22,10 +22,10 @@ class EnigmaBuilder {
             plugboardConnectors: String? = null
         ): Enigma {
             require(type in EnigmaFactory.entries.map { it.name }) {
-                "Valid enigma types: '${EnigmaFactory.entries.map { it.name }}'. Given: '${type}'."
+                "Type is invalid. Valid: '${EnigmaFactory.entries.map { it.name }}'. Given: '${type}'."
             }
             require(reflector in ReflectorFactory.entries.map { it.name }) {
-                "Valid reflector types: '${ReflectorFactory.entries.map { it.name }}'. Given: '${reflector}'."
+                "Reflector is invalid. Valid: '${ReflectorFactory.entries.map { it.name }}'. Given: '${reflector}'."
             }
 
             return EnigmaFactory.valueOf(type).create(
@@ -62,7 +62,7 @@ class EnigmaBuilder {
 
         private fun makeRotor(rotor: String, position: String?, ringSetting: String?): Rotor {
             require(rotor in RotorFactory.entries.map { it.name }) {
-                "Valid rotor types: '${RotorFactory.entries.map { it.name }}'. Given: '${rotor}'."
+                "Rotor is invalid. Valid: '${RotorFactory.entries.map { it.name }}'. Given: '${rotor}'."
             }
 
             return RotorFactory.valueOf(rotor).create(

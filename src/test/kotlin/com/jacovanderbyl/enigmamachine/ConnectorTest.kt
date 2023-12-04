@@ -40,7 +40,7 @@ class ConnectorTest {
     @Test
     fun `ensure first and second connector characters are not the same`() {
         val ex = assertFailsWith<IllegalArgumentException>(
-            message = "ensure first and second connector characters are not the same.",
+            message = "Failed to ensure first and second connector characters are not the same.",
             block = { Connector(first = 'A', second = 'A') }
         )
         ex.message?.let { msg ->
