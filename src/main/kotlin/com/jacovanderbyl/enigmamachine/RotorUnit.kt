@@ -33,7 +33,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      *       common Enigma Machine model, accepted a unit of 3 rotors, but other models could accept up to 8.
      *       E.g. A rotor unit could be: RotorI-RotorII-RotorIII or RotorV-RotorI-RotorIV, etc.
      *     - Once in the machine, each rotor can be set independently to a specific starting letter-position.
-     *       E.g. AAA, or RTB, etc.
+     *       E.g. A-A-A, or R-T-B, etc.
      *     - The rotor notches, together with physical key-presses, determine when and how the rotors in the unit turn.
      *
      * Stepping rules:
@@ -42,7 +42,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      *        I.e. when a rotor is in its notched position and then turns, it will turn the rotor to the left of it.
      *     3) When the right-most rotor steps, it will also step the rotor immediately next to it if that adjacent
      *        rotor happens to be in its notched position. Subsequently, this will cause the next-left rotor to step
-     *        as well -- by way of rule 2. This is the so-called 'double stepping' mechanism.
+     *        as well (by way of rule 2). This is the so-called 'double stepping' mechanism.
      *
      * Example with following setup: RotorI-RotorII-RotorIII, which have notches Q-E-V, with starting positions A-A-T.
      *     A-A-T

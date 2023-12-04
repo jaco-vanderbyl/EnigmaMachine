@@ -38,7 +38,7 @@ class Rotor(
      *     https://crypto.stackexchange.com/a/81585
      */
     override fun encipher(character: Char, reverse: Boolean) : Char {
-        // Step 1 - Apply offset to index of given character, to accommodate rotor's current position and ring setting.
+        // Step 1 - Apply offset to given character's index, to accommodate rotor's current position and ring setting.
         val characterIndex = characterSet.indexOf(character)
         val characterIndexWithOffset = shiftIndex(characterIndex, shiftBy = offset())
 
@@ -47,7 +47,7 @@ class Rotor(
             if (reverse) characterSet[cipherSet.indexOf(characterSet[characterIndexWithOffset])]
             else cipherSet[characterIndexWithOffset]
 
-        // Step 3 - Revert offset (applied in step 1) to index of substitute character.
+        // Step 3 - Revert offset (applied in step 1) to substitute character's index.
         val substituteCharacterIndex = characterSet.indexOf(substituteCharacter)
         val finalCharacterIndex = shiftIndex(substituteCharacterIndex, shiftBy = offset() * -1)
 

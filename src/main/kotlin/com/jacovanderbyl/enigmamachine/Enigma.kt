@@ -1,7 +1,7 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Represents a base Enigma Machine with a plugboard and a rotor unit (which contains a reflector and a set of rotors).
+ * Represents an Enigma Machine with a plugboard and a rotor unit (which contains a reflector and a set of rotors).
  *
  * This class simulates three behaviours:
  *     - Enciphering: taking a 'plaintext' input letter and substituting it with a 'ciphertext' letter.
@@ -14,12 +14,12 @@ class Enigma(
     private val plugboard: Plugboard
 ) : CanEncipher {
     /**
-     * Simulate enciphering of an Enigma Machine with a plugboard and rotor unit.
+     * Simulate an Enigma Machine's enciphering of a single character.
      *
-     * The input of this function is like a key-press on the Enigma Machine and
-     * the output is like a letter display-lamp lighting up.
+     * The input of this function is like a key-press on the Enigma Machine and the output is like a letter
+     * display-lamp lighting up.
      *
-     * Each key-press on an Enigma Machine will cause the rotors to step, so this function does that first.
+     * Each key-press on an Enigma Machine cause the rotors to step, so this function does that first.
      *
      * Next, it simulates the letter substitution journey: first the letter is sent to the plugboard for
      * substitution, then it's sent to the rotor unit, and finally, it's sent back to the plugboard, which
