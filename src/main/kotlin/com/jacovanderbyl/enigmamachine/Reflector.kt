@@ -7,7 +7,7 @@ class Reflector(
     cipherSetMap: CipherSetMap,
     val type: ReflectorType,
     val compatibility: Set<EnigmaType>
-) : CanEncipher {
+) : CanEncipher, HasCompatibility {
     private val characterSet: String = cipherSetMap.characterSet
     private val cipherSet: String = cipherSetMap.cipherSet
 
@@ -18,4 +18,6 @@ class Reflector(
 
         return cipherSet[characterSet.indexOf(character)]
     }
+
+    override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
 }

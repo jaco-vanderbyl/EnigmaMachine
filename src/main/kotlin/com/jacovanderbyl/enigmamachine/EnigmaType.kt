@@ -19,17 +19,17 @@ enum class EnigmaType {
 
     abstract fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma
 
-    fun checkRequirements(type: EnigmaType, rotorUnit: RotorUnit) {
+    fun checkRequirements(enigmaType: EnigmaType, rotorUnit: RotorUnit) {
         require(rotorUnit.rotors.count() == 3) {
-            "'${type}' must have 3 rotors. Given: '${rotorUnit.rotors.count()}'."
+            "'${enigmaType}' must have 3 rotors. Given: '${rotorUnit.rotors.count()}'."
         }
         rotorUnit.rotors.forEach { rotor ->
-            require(type in rotor.compatibility) {
-                "'${rotor.type}' rotor is not compatible with '${type}'."
+            require(rotor.isCompatible(enigmaType)) {
+                "'${rotor.type}' rotor is not compatible with '${enigmaType}'."
             }
         }
-        require(type in rotorUnit.reflector.compatibility) {
-            "'${rotorUnit.reflector.type}' reflector is not compatible with '${type}'."
+        require(rotorUnit.reflector.isCompatible(enigmaType)) {
+            "'${rotorUnit.reflector.type}' reflector is not compatible with '${enigmaType}'."
         }
     }
 }

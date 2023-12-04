@@ -15,7 +15,7 @@ class Rotor(
     val compatibility: Set<EnigmaType>,
     var position: Position,
     var ringSetting: RingSetting
-) : CanEncipherBidirectionally {
+) : CanEncipherBidirectionally, HasCompatibility {
     private val characterSet: String = cipherSetMap.characterSet
     private val cipherSet: String = cipherSetMap.cipherSet
     private val notchCharacters: Set<Char> = notch.characters
@@ -57,6 +57,8 @@ class Rotor(
 
         return characterSet[finalCharacterIndex]
     }
+
+    override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
 
     private fun offset() : Int = position.index - ringSetting.index
 
