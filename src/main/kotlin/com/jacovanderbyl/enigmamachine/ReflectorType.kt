@@ -6,15 +6,15 @@ package com.jacovanderbyl.enigmamachine
 enum class ReflectorType {
     B {
         override fun create() = Reflector(
-            cipherSetMap = CipherSetMap("YRUHQSLDPXNGOKMIEBFZCWVJAT"),
             type = B,
+            cipherSetMap = CipherSetMap("YRUHQSLDPXNGOKMIEBFZCWVJAT"),
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         )
     },
     C {
         override fun create() = Reflector(
-            cipherSetMap = CipherSetMap("FVPJIAOYEDRZXWGCTKUQSBNMHL"),
             type = C,
+            cipherSetMap = CipherSetMap("FVPJIAOYEDRZXWGCTKUQSBNMHL"),
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         )
     };

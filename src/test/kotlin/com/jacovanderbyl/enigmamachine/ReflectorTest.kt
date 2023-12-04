@@ -7,7 +7,8 @@ import kotlin.test.assertTrue
 import kotlin.test.assertFalse
 
 class ReflectorTest {
-    private val cipherSetMap = CipherSetMap("ZYXWVUTSRQPONMLKJIHGFEDCBA")
+    private val cipherSet = "ZYXWVUTSRQPONMLKJIHGFEDCBA"
+    private val cipherSetMap = CipherSetMap(cipherSet)
     private val reflector = Reflector(
         cipherSetMap = cipherSetMap,
         type = ReflectorType.B,
@@ -19,7 +20,7 @@ class ReflectorTest {
         cipherSetMap.characterSet.forEachIndexed { index, character ->
             assertEquals(
                 message = "Failed to ensure reflector enciphers correctly given a cipher set map.",
-                expected = cipherSetMap.cipherSet[index],
+                expected = cipherSet[index],
                 actual = reflector.encipher(character)
             )
         }

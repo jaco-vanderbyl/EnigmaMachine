@@ -8,7 +8,7 @@ package com.jacovanderbyl.enigmamachine
  *                    ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
  *     Cipher set:    EKMFLGDQVZNTOWYHXUSPAIBRCJ
  */
-class CipherSetMap(val cipherSet: String) : CanEncipherBidirectionally {
+class CipherSetMap(private val cipherSet: String) : CanEncipherBidirectionally {
     val characterSet: String = Keys.CHARACTER_SET
 
     init {

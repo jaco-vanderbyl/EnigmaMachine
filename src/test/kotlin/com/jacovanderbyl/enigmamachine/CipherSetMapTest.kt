@@ -10,7 +10,8 @@ import kotlin.test.assertContains
 import kotlin.test.assertFailsWith
 
 class CipherSetMapTest {
-    private val cipherSetMap = CipherSetMap("EKMFLGDQVZNTOWYHXUSPAIBRCJ")
+    private val cipherSet = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
+    private val cipherSetMap = CipherSetMap(cipherSet)
 
     @Test
     fun `ensure character set prop is the same as the enigma key character set`() {
@@ -18,15 +19,6 @@ class CipherSetMapTest {
             message = "Failed to ensure character set prop is the same as the enigma key character set.",
             expected = Keys.CHARACTER_SET,
             actual = cipherSetMap.characterSet
-        )
-    }
-
-    @Test
-    fun `ensure cipher set prop is the same as the given cipher set`() {
-        assertEquals(
-            message = "Failed to ensure cipher set prop is the same as the given cipher set.",
-            expected = "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
-            actual = cipherSetMap.cipherSet
         )
     }
 
@@ -52,7 +44,7 @@ class CipherSetMapTest {
         cipherSetMap.characterSet.forEachIndexed { index, character ->
             assertEquals(
                 message = "Failed to ensure cipher set map enciphers correctly.",
-                expected = cipherSetMap.cipherSet[index],
+                expected = cipherSet[index],
                 actual = cipherSetMap.encipher(character)
             )
         }
@@ -60,7 +52,7 @@ class CipherSetMapTest {
 
     @Test
     fun `ensure cipher set map enciphers in reverse correctly`() {
-        cipherSetMap.cipherSet.forEachIndexed { index, character ->
+        cipherSet.forEachIndexed { index, character ->
             assertEquals(
                 message = "Failed to ensure cipher set map enciphers in reverse correctly.",
                 expected = cipherSetMap.characterSet[index],
