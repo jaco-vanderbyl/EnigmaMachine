@@ -17,11 +17,7 @@ class EnigmaTypeTest {
         val enigma = EnigmaType.ENIGMA_I.create(
             rotorUnit = RotorUnit(
                 reflector = ReflectorType.B.create(),
-                rotors = setOf(
-                    RotorType.I.create(Position(), RingSetting()),
-                    RotorType.V.create(Position(), RingSetting()),
-                    RotorType.III.create(Position(), RingSetting())
-                )
+                rotors = setOf(RotorType.I.create(), RotorType.V.create(), RotorType.III.create())
             ),
             plugboard = Plugboard()
         )
@@ -38,11 +34,7 @@ class EnigmaTypeTest {
         val enigma = EnigmaType.ENIGMA_M3.create(
             rotorUnit = RotorUnit(
                 reflector = ReflectorType.B.create(),
-                rotors = setOf(
-                    RotorType.VI.create(Position(), RingSetting()),
-                    RotorType.VII.create(Position(), RingSetting()),
-                    RotorType.VIII.create(Position(), RingSetting())
-                )
+                rotors = setOf(RotorType.VI.create(), RotorType.VII.create(), RotorType.VIII.create())
             ),
             plugboard = Plugboard()
         )
@@ -55,14 +47,9 @@ class EnigmaTypeTest {
     }
 
     private val badRotorCounts = listOf(
-        setOf(RotorType.I.create(Position(), RingSetting())),
-        setOf(RotorType.I.create(Position(), RingSetting()), RotorType.II.create(Position(), RingSetting())),
-        setOf(
-            RotorType.I.create(Position(), RingSetting()),
-            RotorType.II.create(Position(), RingSetting()),
-            RotorType.III.create(Position(), RingSetting()),
-            RotorType.IV.create(Position(), RingSetting())
-        ),
+        setOf(RotorType.I.create()),
+        setOf(RotorType.I.create(), RotorType.II.create()),
+        setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create(), RotorType.IV.create()),
     )
 
     @TestFactory
@@ -104,21 +91,9 @@ class EnigmaTypeTest {
     }
 
     private val incompatibleRotors = listOf(
-        setOf(
-            createIncompatibleRotor(),
-            RotorType.I.create(Position(), RingSetting()),
-            RotorType.II.create(Position(), RingSetting())
-        ),
-        setOf(
-            RotorType.I.create(Position(), RingSetting()),
-            createIncompatibleRotor(),
-            RotorType.II.create(Position(), RingSetting())
-        ),
-        setOf(
-            RotorType.I.create(Position(), RingSetting()),
-            RotorType.II.create(Position(), RingSetting()),
-            createIncompatibleRotor()
-        ),
+        setOf(createIncompatibleRotor(), RotorType.I.create(), RotorType.II.create()),
+        setOf(RotorType.I.create(), createIncompatibleRotor(), RotorType.II.create()),
+        setOf(RotorType.I.create(), RotorType.II.create(), createIncompatibleRotor()),
     )
 
     @TestFactory
@@ -167,11 +142,7 @@ class EnigmaTypeTest {
                 EnigmaType.ENIGMA_I.create(
                     rotorUnit = RotorUnit(
                         reflector = createIncompatibleReflector(),
-                        rotors = setOf(
-                            RotorType.I.create(Position(), RingSetting()),
-                            RotorType.II.create(Position(), RingSetting()),
-                            RotorType.III.create(Position(), RingSetting())
-                        )
+                        rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
                     ),
                     plugboard = Plugboard()
                 )
@@ -188,11 +159,7 @@ class EnigmaTypeTest {
                 EnigmaType.ENIGMA_M3.create(
                     rotorUnit = RotorUnit(
                         reflector = createIncompatibleReflector(),
-                        rotors = setOf(
-                            RotorType.I.create(Position(), RingSetting()),
-                            RotorType.II.create(Position(), RingSetting()),
-                            RotorType.III.create(Position(), RingSetting())
-                        )
+                        rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
                     ),
                     plugboard = Plugboard()
                 )

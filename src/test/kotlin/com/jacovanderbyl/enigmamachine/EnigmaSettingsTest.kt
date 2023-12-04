@@ -145,11 +145,7 @@ class EnigmaSettingsTest {
         type = EnigmaType.ENIGMA_I,
         rotorUnit = RotorUnit(
             reflector = ReflectorType.B.create(),
-            rotors = setOf(
-                RotorType.I.create(Position(), RingSetting()),
-                RotorType.II.create(Position(), RingSetting()),
-                RotorType.III.create(Position(), RingSetting())
-            )
+            rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
         ),
         plugboard = plugboard
     )

@@ -85,5 +85,5 @@ enum class RotorType {
         )
     };
 
-    abstract fun create(position: Position, ringSetting: RingSetting) : Rotor
+    abstract fun create(position: Position = Position(), ringSetting: RingSetting = RingSetting()) : Rotor
 }
