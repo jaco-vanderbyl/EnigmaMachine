@@ -6,7 +6,7 @@ package com.jacovanderbyl.enigmamachine
 class Position(val character: Char = 'A') {
     init {
         require(character in Keys.CHARACTER_SET) {
-            "The position must linked to a character in: '${Keys.CHARACTER_SET}'. Given: '${character}'."
+            "Invalid character. Valid: '${Keys.CHARACTER_SET}'. Given: '${character}'."
         }
     }
 

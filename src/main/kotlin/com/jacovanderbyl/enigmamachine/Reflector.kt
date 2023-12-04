@@ -11,5 +11,11 @@ class Reflector(
     private val characterSet: String = cipherSetMap.characterSet
     private val cipherSet: String = cipherSetMap.cipherSet
 
-    override fun encipher(character: Char) : Char = cipherSet[characterSet.indexOf(character)]
+    override fun encipher(character: Char) : Char {
+        require(character in Keys.CHARACTER_SET) {
+            "Invalid character. Valid: '${Keys.CHARACTER_SET}'. Given: '${character}'."
+        }
+
+        return cipherSet[characterSet.indexOf(character)]
+    }
 }
