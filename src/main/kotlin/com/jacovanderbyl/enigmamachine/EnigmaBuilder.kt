@@ -21,16 +21,16 @@ class EnigmaBuilder {
             startingPositions: String? = null,
             plugboardConnectors: String? = null
         ): Enigma {
-            require(type in EnigmaFactory.entries.map { it.name }) {
-                "Type is invalid. Valid: '${EnigmaFactory.entries.map { it.name }}'. Given: '${type}'."
+            require(type in EnigmaType.entries.map { it.name }) {
+                "Type is invalid. Valid: '${EnigmaType.entries.map { it.name }}'. Given: '${type}'."
             }
-            require(reflector in ReflectorFactory.entries.map { it.name }) {
-                "Reflector is invalid. Valid: '${ReflectorFactory.entries.map { it.name }}'. Given: '${reflector}'."
+            require(reflector in ReflectorType.entries.map { it.name }) {
+                "Reflector is invalid. Valid: '${ReflectorType.entries.map { it.name }}'. Given: '${reflector}'."
             }
 
-            return EnigmaFactory.valueOf(type).create(
+            return EnigmaType.valueOf(type).create(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorFactory.valueOf(reflector).create(),
+                    reflector = ReflectorType.valueOf(reflector).create(),
                     rotors = setOf(*makeRotors(split(rotors), split(startingPositions), split(ringSettings)))
                 ),
                 plugboard = Plugboard(*Connector.fromStrings(split(plugboardConnectors)))
@@ -61,11 +61,11 @@ class EnigmaBuilder {
         }
 
         private fun makeRotor(rotor: String, position: String?, ringSetting: String?): Rotor {
-            require(rotor in RotorFactory.entries.map { it.name }) {
-                "Rotor is invalid. Valid: '${RotorFactory.entries.map { it.name }}'. Given: '${rotor}'."
+            require(rotor in RotorType.entries.map { it.name }) {
+                "Rotor is invalid. Valid: '${RotorType.entries.map { it.name }}'. Given: '${rotor}'."
             }
 
-            return RotorFactory.valueOf(rotor).create(
+            return RotorType.valueOf(rotor).create(
                 position = if (position != null) Position.fromString(position) else Position(),
                 ringSetting = if (ringSetting != null) RingSetting.fromString(ringSetting) else RingSetting()
             )

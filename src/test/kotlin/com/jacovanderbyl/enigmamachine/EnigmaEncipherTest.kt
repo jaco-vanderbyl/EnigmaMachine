@@ -88,13 +88,13 @@ class EnigmaEncipherTest {
     }
 
     private fun createStockEnigmaFake() : Enigma = Enigma(
-        type = EnigmaFactory.ENIGMA_I,
+        type = EnigmaType.ENIGMA_I,
         rotorUnit = RotorUnit(
-            reflector = ReflectorFactory.B.create(),
+            reflector = ReflectorType.B.create(),
             rotors = setOf(
-                RotorFactory.I.create(Position(), RingSetting()),
-                RotorFactory.II.create(Position(), RingSetting()),
-                RotorFactory.III.create(Position(), RingSetting())
+                RotorType.I.create(Position(), RingSetting()),
+                RotorType.II.create(Position(), RingSetting()),
+                RotorType.III.create(Position(), RingSetting())
             )
         ),
         plugboard = Plugboard()
@@ -104,95 +104,95 @@ class EnigmaEncipherTest {
         "B-I-II-III-A-A-A-1-1-1" -> {
             Enigma(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorFactory.B.create(),
+                    reflector = ReflectorType.B.create(),
                     rotors = setOf(
-                        RotorFactory.I.create(Position(), RingSetting()),
-                        RotorFactory.II.create(Position(), RingSetting()),
-                        RotorFactory.III.create(Position(), RingSetting())
+                        RotorType.I.create(Position(), RingSetting()),
+                        RotorType.II.create(Position(), RingSetting()),
+                        RotorType.III.create(Position(), RingSetting())
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaFactory.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3,
             )
         }
         "B-I-II-III-Q-E-V-1-1-1" -> {
             Enigma(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorFactory.B.create(),
+                    reflector = ReflectorType.B.create(),
                     rotors = setOf(
-                        RotorFactory.I.create(Position('Q'), RingSetting()),
-                        RotorFactory.II.create(Position('E'), RingSetting()),
-                        RotorFactory.III.create(Position('V'), RingSetting())
+                        RotorType.I.create(Position('Q'), RingSetting()),
+                        RotorType.II.create(Position('E'), RingSetting()),
+                        RotorType.III.create(Position('V'), RingSetting())
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaFactory.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3,
             )
         }
         "B-I-II-III-A-A-A-5-11-24" -> {
             Enigma(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorFactory.B.create(),
+                    reflector = ReflectorType.B.create(),
                     rotors = setOf(
-                        RotorFactory.I.create(Position(), RingSetting(5)),
-                        RotorFactory.II.create(Position(), RingSetting(11)),
-                        RotorFactory.III.create(Position(), RingSetting(24))
+                        RotorType.I.create(Position(), RingSetting(5)),
+                        RotorType.II.create(Position(), RingSetting(11)),
+                        RotorType.III.create(Position(), RingSetting(24))
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaFactory.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3,
             )
         }
         "B-I-II-III-Q-E-V-5-11-24" -> {
             Enigma(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorFactory.B.create(),
+                    reflector = ReflectorType.B.create(),
                     rotors = setOf(
-                        RotorFactory.I.create(Position('Q'), RingSetting(5)),
-                        RotorFactory.II.create(Position('E'), RingSetting(11)),
-                        RotorFactory.III.create(Position('V'), RingSetting(24))
+                        RotorType.I.create(Position('Q'), RingSetting(5)),
+                        RotorType.II.create(Position('E'), RingSetting(11)),
+                        RotorType.III.create(Position('V'), RingSetting(24))
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaFactory.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3,
             )
         }
         "B-IV-V-VI-A-B-C-1-2-3" -> {
             Enigma(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorFactory.B.create(),
+                    reflector = ReflectorType.B.create(),
                     rotors = setOf(
-                        RotorFactory.IV.create(Position(), RingSetting()),
-                        RotorFactory.V.create(Position('B'), RingSetting(2)),
-                        RotorFactory.VI.create(Position('C'), RingSetting(3))
+                        RotorType.IV.create(Position(), RingSetting()),
+                        RotorType.V.create(Position('B'), RingSetting(2)),
+                        RotorType.VI.create(Position('C'), RingSetting(3))
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaFactory.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3,
             )
         }
         "C-VI-VII-VIII-Z-R-S-26-8-15" -> {
             Enigma(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorFactory.C.create(),
+                    reflector = ReflectorType.C.create(),
                     rotors = setOf(
-                        RotorFactory.VI.create(Position('Z'), RingSetting(26)),
-                        RotorFactory.VII.create(Position('R'), RingSetting(8)),
-                        RotorFactory.VIII.create(Position('S'), RingSetting(15))
+                        RotorType.VI.create(Position('Z'), RingSetting(26)),
+                        RotorType.VII.create(Position('R'), RingSetting(8)),
+                        RotorType.VIII.create(Position('S'), RingSetting(15))
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaFactory.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3,
             )
         }
         "C-VI-VII-VIII-Z-R-S-26-8-15-AB-CD-EF-GH-IJ-KL-MN-OP-QR-ST" -> {
             Enigma(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorFactory.C.create(),
+                    reflector = ReflectorType.C.create(),
                     rotors = setOf(
-                        RotorFactory.VI.create(Position('Z'), RingSetting(26)),
-                        RotorFactory.VII.create(Position('R'), RingSetting(8)),
-                        RotorFactory.VIII.create(Position('S'), RingSetting(15))
+                        RotorType.VI.create(Position('Z'), RingSetting(26)),
+                        RotorType.VII.create(Position('R'), RingSetting(8)),
+                        RotorType.VIII.create(Position('S'), RingSetting(15))
                     )
                 ),
                 plugboard = Plugboard(
@@ -200,23 +200,23 @@ class EnigmaEncipherTest {
                     Connector('I', 'J'), Connector('K', 'L'), Connector('M', 'N'), Connector('O', 'P'),
                     Connector('Q', 'R'), Connector('S', 'T')
                 ),
-                type = EnigmaFactory.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3,
             )
         }
         "C-VI-VII-VIII-Z-R-S-26-8-15-UV-WX-YZ" -> {
             Enigma(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorFactory.C.create(),
+                    reflector = ReflectorType.C.create(),
                     rotors = setOf(
-                        RotorFactory.VI.create(Position('Z'), RingSetting(26)),
-                        RotorFactory.VII.create(Position('R'), RingSetting(8)),
-                        RotorFactory.VIII.create(Position('S'), RingSetting(15))
+                        RotorType.VI.create(Position('Z'), RingSetting(26)),
+                        RotorType.VII.create(Position('R'), RingSetting(8)),
+                        RotorType.VIII.create(Position('S'), RingSetting(15))
                     )
                 ),
                 plugboard = Plugboard(
                     Connector('U', 'V'), Connector('W', 'X'), Connector('Y', 'Z')
                 ),
-                type = EnigmaFactory.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3,
             )
         }
         else -> createStockEnigmaFake()

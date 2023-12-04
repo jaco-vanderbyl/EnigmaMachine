@@ -1,12 +1,15 @@
 package com.jacovanderbyl.enigmamachine
 
-enum class RotorFactory {
+/**
+ * Serves as Rotor Factory.
+ */
+enum class RotorType {
     I {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
             cipherSetMap = CipherSetMap("EKMFLGDQVZNTOWYHXUSPAIBRCJ"),
             notch = Notch(setOf('Q')),
-            type = RotorFactory.I,
-            compatibility = setOf(EnigmaFactory.ENIGMA_I, EnigmaFactory.ENIGMA_M3),
+            type = RotorType.I,
+            compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
         )
@@ -15,8 +18,8 @@ enum class RotorFactory {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
             cipherSetMap = CipherSetMap("AJDKSIRUXBLHWTMCQGZNPYFVOE"),
             notch = Notch(setOf('E')),
-            type = RotorFactory.II,
-            compatibility = setOf(EnigmaFactory.ENIGMA_I, EnigmaFactory.ENIGMA_M3),
+            type = RotorType.II,
+            compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
         )
@@ -25,8 +28,8 @@ enum class RotorFactory {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
             cipherSetMap = CipherSetMap("BDFHJLCPRTXVZNYEIWGAKMUSQO"),
             notch = Notch(setOf('V')),
-            type = RotorFactory.III,
-            compatibility = setOf(EnigmaFactory.ENIGMA_I, EnigmaFactory.ENIGMA_M3),
+            type = RotorType.III,
+            compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
         )
@@ -35,8 +38,8 @@ enum class RotorFactory {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
             cipherSetMap = CipherSetMap("ESOVPZJAYQUIRHXLNFTGKDCMWB"),
             notch = Notch(setOf('J')),
-            type = RotorFactory.IV,
-            compatibility = setOf(EnigmaFactory.ENIGMA_I, EnigmaFactory.ENIGMA_M3),
+            type = RotorType.IV,
+            compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
         )
@@ -45,8 +48,8 @@ enum class RotorFactory {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
             cipherSetMap = CipherSetMap("VZBRGITYUPSDNHLXAWMJQOFECK"),
             notch = Notch(setOf('Z')),
-            type = RotorFactory.V,
-            compatibility = setOf(EnigmaFactory.ENIGMA_I, EnigmaFactory.ENIGMA_M3),
+            type = RotorType.V,
+            compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
         )
@@ -55,8 +58,8 @@ enum class RotorFactory {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
             cipherSetMap = CipherSetMap("JPGVOUMFYQBENHZRDKASXLICTW"),
             notch = Notch(setOf('Z', 'M')),
-            type = RotorFactory.VI,
-            compatibility = setOf(EnigmaFactory.ENIGMA_M3),
+            type = RotorType.VI,
+            compatibility = setOf(EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
         )
@@ -65,8 +68,8 @@ enum class RotorFactory {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
             cipherSetMap = CipherSetMap("NZJHGRCXMYSWBOUFAIVLPEKQDT"),
             notch = Notch(setOf('Z', 'M')),
-            type = RotorFactory.VII,
-            compatibility = setOf(EnigmaFactory.ENIGMA_M3),
+            type = RotorType.VII,
+            compatibility = setOf(EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
         )
@@ -75,8 +78,8 @@ enum class RotorFactory {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
             cipherSetMap = CipherSetMap("FKQHTLXOCBJSPDZRAMEWNIUYGV"),
             notch = Notch(setOf('Z', 'M')),
-            type = RotorFactory.VIII,
-            compatibility = setOf(EnigmaFactory.ENIGMA_M3),
+            type = RotorType.VIII,
+            compatibility = setOf(EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
         )

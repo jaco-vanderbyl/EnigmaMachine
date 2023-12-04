@@ -11,8 +11,8 @@ package com.jacovanderbyl.enigmamachine
 class Rotor(
     cipherSetMap: CipherSetMap,
     notch: Notch,
-    val type: RotorFactory,
-    val compatibility: Set<EnigmaFactory>,
+    val type: RotorType,
+    val compatibility: Set<EnigmaType>,
     var position: Position,
     var ringSetting: RingSetting
 ) : CanEncipherBidirectionally {

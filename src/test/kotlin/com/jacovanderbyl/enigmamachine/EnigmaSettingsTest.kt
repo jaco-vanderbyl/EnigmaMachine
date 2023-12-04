@@ -142,13 +142,13 @@ class EnigmaSettingsTest {
     }
 
     private fun createStockEnigmaFake(plugboard: Plugboard) : Enigma = Enigma(
-        type = EnigmaFactory.ENIGMA_I,
+        type = EnigmaType.ENIGMA_I,
         rotorUnit = RotorUnit(
-            reflector = ReflectorFactory.B.create(),
+            reflector = ReflectorType.B.create(),
             rotors = setOf(
-                RotorFactory.I.create(Position(), RingSetting()),
-                RotorFactory.II.create(Position(), RingSetting()),
-                RotorFactory.III.create(Position(), RingSetting())
+                RotorType.I.create(Position(), RingSetting()),
+                RotorType.II.create(Position(), RingSetting()),
+                RotorType.III.create(Position(), RingSetting())
             )
         ),
         plugboard = plugboard

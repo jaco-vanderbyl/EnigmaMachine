@@ -1,18 +1,21 @@
 package com.jacovanderbyl.enigmamachine
 
-enum class ReflectorFactory {
+/**
+ * Serves as Reflector Factory.
+ */
+enum class ReflectorType {
     B {
         override fun create() = Reflector(
             cipherSetMap = CipherSetMap("YRUHQSLDPXNGOKMIEBFZCWVJAT"),
-            type = ReflectorFactory.B,
-            compatibility = setOf(EnigmaFactory.ENIGMA_I, EnigmaFactory.ENIGMA_M3)
+            type = ReflectorType.B,
+            compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         )
     },
     C {
         override fun create() = Reflector(
             cipherSetMap = CipherSetMap("FVPJIAOYEDRZXWGCTKUQSBNMHL"),
-            type = ReflectorFactory.C,
-            compatibility = setOf(EnigmaFactory.ENIGMA_I, EnigmaFactory.ENIGMA_M3)
+            type = ReflectorType.C,
+            compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         )
     };
 

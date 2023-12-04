@@ -34,9 +34,9 @@ Alternatively, go to Build menu and choose Build Project.
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
-val enigmaList = EnigmaFactory.entries.map { it.name }
-val reflectorList = ReflectorFactory.entries.map { it.name }
-val rotorList = RotorFactory.entries.map { it.name }
+val enigmaList = EnigmaType.entries.map { it.name }
+val reflectorList = ReflectorType.entries.map { it.name }
+val rotorList = RotorType.entries.map { it.name }
 val ringSettingList = Keys.CHARACTER_SET.map { Keys.CHARACTER_SET.indexOf(it) + 1 }
 val positionList = Keys.CHARACTER_SET.map { it }
 

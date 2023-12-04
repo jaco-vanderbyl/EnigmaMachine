@@ -9,18 +9,18 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class EnigmaFactoryTest {
+class EnigmaTypeTest {
     private val plaintext = "AAAAA"
 
     @Test
     fun `ensure factory-built EnigmaI enciphers correctly`() {
-        val enigma = EnigmaFactory.ENIGMA_I.create(
+        val enigma = EnigmaType.ENIGMA_I.create(
             rotorUnit = RotorUnit(
-                reflector = ReflectorFactory.B.create(),
+                reflector = ReflectorType.B.create(),
                 rotors = setOf(
-                    RotorFactory.I.create(Position(), RingSetting()),
-                    RotorFactory.V.create(Position(), RingSetting()),
-                    RotorFactory.III.create(Position(), RingSetting())
+                    RotorType.I.create(Position(), RingSetting()),
+                    RotorType.V.create(Position(), RingSetting()),
+                    RotorType.III.create(Position(), RingSetting())
                 )
             ),
             plugboard = Plugboard()
@@ -35,13 +35,13 @@ class EnigmaFactoryTest {
 
     @Test
     fun `ensure factory-built EnigmaM3 enciphers correctly`() {
-        val enigma = EnigmaFactory.ENIGMA_M3.create(
+        val enigma = EnigmaType.ENIGMA_M3.create(
             rotorUnit = RotorUnit(
-                reflector = ReflectorFactory.B.create(),
+                reflector = ReflectorType.B.create(),
                 rotors = setOf(
-                    RotorFactory.VI.create(Position(), RingSetting()),
-                    RotorFactory.VII.create(Position(), RingSetting()),
-                    RotorFactory.VIII.create(Position(), RingSetting())
+                    RotorType.VI.create(Position(), RingSetting()),
+                    RotorType.VII.create(Position(), RingSetting()),
+                    RotorType.VIII.create(Position(), RingSetting())
                 )
             ),
             plugboard = Plugboard()
@@ -55,13 +55,13 @@ class EnigmaFactoryTest {
     }
 
     private val badRotorCounts = listOf(
-        setOf(RotorFactory.I.create(Position(), RingSetting())),
-        setOf(RotorFactory.I.create(Position(), RingSetting()), RotorFactory.II.create(Position(), RingSetting())),
+        setOf(RotorType.I.create(Position(), RingSetting())),
+        setOf(RotorType.I.create(Position(), RingSetting()), RotorType.II.create(Position(), RingSetting())),
         setOf(
-            RotorFactory.I.create(Position(), RingSetting()),
-            RotorFactory.II.create(Position(), RingSetting()),
-            RotorFactory.III.create(Position(), RingSetting()),
-            RotorFactory.IV.create(Position(), RingSetting())
+            RotorType.I.create(Position(), RingSetting()),
+            RotorType.II.create(Position(), RingSetting()),
+            RotorType.III.create(Position(), RingSetting()),
+            RotorType.IV.create(Position(), RingSetting())
         ),
     )
 
@@ -71,9 +71,9 @@ class EnigmaFactoryTest {
             val ex = assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure EnigmaI has exactly 3 rotors.",
                 block = {
-                    EnigmaFactory.ENIGMA_I.create(
+                    EnigmaType.ENIGMA_I.create(
                         rotorUnit = RotorUnit(
-                            reflector = ReflectorFactory.B.create(),
+                            reflector = ReflectorType.B.create(),
                             rotors = rotors
                         ),
                         plugboard = Plugboard()
@@ -90,9 +90,9 @@ class EnigmaFactoryTest {
             val ex = assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure EnigmaM3 has exactly 3 rotors.",
                 block = {
-                    EnigmaFactory.ENIGMA_M3.create(
+                    EnigmaType.ENIGMA_M3.create(
                         rotorUnit = RotorUnit(
-                            reflector = ReflectorFactory.B.create(),
+                            reflector = ReflectorType.B.create(),
                             rotors = rotors
                         ),
                         plugboard = Plugboard()
@@ -106,17 +106,17 @@ class EnigmaFactoryTest {
     private val incompatibleRotors = listOf(
         setOf(
             createIncompatibleRotor(),
-            RotorFactory.I.create(Position(), RingSetting()),
-            RotorFactory.II.create(Position(), RingSetting())
+            RotorType.I.create(Position(), RingSetting()),
+            RotorType.II.create(Position(), RingSetting())
         ),
         setOf(
-            RotorFactory.I.create(Position(), RingSetting()),
+            RotorType.I.create(Position(), RingSetting()),
             createIncompatibleRotor(),
-            RotorFactory.II.create(Position(), RingSetting())
+            RotorType.II.create(Position(), RingSetting())
         ),
         setOf(
-            RotorFactory.I.create(Position(), RingSetting()),
-            RotorFactory.II.create(Position(), RingSetting()),
+            RotorType.I.create(Position(), RingSetting()),
+            RotorType.II.create(Position(), RingSetting()),
             createIncompatibleRotor()
         ),
     )
@@ -127,9 +127,9 @@ class EnigmaFactoryTest {
             val ex = assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure EnigmaI only accepts compatible rotors.",
                 block = {
-                    EnigmaFactory.ENIGMA_I.create(
+                    EnigmaType.ENIGMA_I.create(
                         rotorUnit = RotorUnit(
-                            reflector = ReflectorFactory.B.create(),
+                            reflector = ReflectorType.B.create(),
                             rotors = rotors
                         ),
                         plugboard = Plugboard()
@@ -146,9 +146,9 @@ class EnigmaFactoryTest {
             val ex = assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure EnigmaM3 only accepts compatible rotors.",
                 block = {
-                    EnigmaFactory.ENIGMA_M3.create(
+                    EnigmaType.ENIGMA_M3.create(
                         rotorUnit = RotorUnit(
-                            reflector = ReflectorFactory.B.create(),
+                            reflector = ReflectorType.B.create(),
                             rotors = rotors
                         ),
                         plugboard = Plugboard()
@@ -164,13 +164,13 @@ class EnigmaFactoryTest {
         val ex = assertFailsWith<IllegalArgumentException>(
             message = "Failed to ensure EnigmaI only accepts compatible reflector.",
             block = {
-                EnigmaFactory.ENIGMA_I.create(
+                EnigmaType.ENIGMA_I.create(
                     rotorUnit = RotorUnit(
                         reflector = createIncompatibleReflector(),
                         rotors = setOf(
-                            RotorFactory.I.create(Position(), RingSetting()),
-                            RotorFactory.II.create(Position(), RingSetting()),
-                            RotorFactory.III.create(Position(), RingSetting())
+                            RotorType.I.create(Position(), RingSetting()),
+                            RotorType.II.create(Position(), RingSetting()),
+                            RotorType.III.create(Position(), RingSetting())
                         )
                     ),
                     plugboard = Plugboard()
@@ -185,13 +185,13 @@ class EnigmaFactoryTest {
         val ex = assertFailsWith<IllegalArgumentException>(
             message = "Failed to ensure EnigmaM3 only accepts compatible reflector.",
             block = {
-                EnigmaFactory.ENIGMA_M3.create(
+                EnigmaType.ENIGMA_M3.create(
                     rotorUnit = RotorUnit(
                         reflector = createIncompatibleReflector(),
                         rotors = setOf(
-                            RotorFactory.I.create(Position(), RingSetting()),
-                            RotorFactory.II.create(Position(), RingSetting()),
-                            RotorFactory.III.create(Position(), RingSetting())
+                            RotorType.I.create(Position(), RingSetting()),
+                            RotorType.II.create(Position(), RingSetting()),
+                            RotorType.III.create(Position(), RingSetting())
                         )
                     ),
                     plugboard = Plugboard()
@@ -204,7 +204,7 @@ class EnigmaFactoryTest {
     private fun createIncompatibleRotor() : Rotor = Rotor(
         cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
         notch = Notch(setOf('A')),
-        type = RotorFactory.VIII,
+        type = RotorType.VIII,
         compatibility = setOf(),
         position = Position(),
         ringSetting = RingSetting()
@@ -212,7 +212,7 @@ class EnigmaFactoryTest {
 
     private fun createIncompatibleReflector() : Reflector = Reflector(
         cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-        type = ReflectorFactory.B,
+        type = ReflectorType.B,
         compatibility = setOf()
     )
 }

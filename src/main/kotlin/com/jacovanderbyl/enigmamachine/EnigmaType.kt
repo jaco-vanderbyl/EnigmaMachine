@@ -1,6 +1,9 @@
 package com.jacovanderbyl.enigmamachine
 
-enum class EnigmaFactory {
+/**
+ * Serves as Enigma Factory.
+ */
+enum class EnigmaType {
     ENIGMA_I {
         override fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma {
             checkRequirements(ENIGMA_I, rotorUnit)
@@ -16,7 +19,7 @@ enum class EnigmaFactory {
 
     abstract fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma
 
-    fun checkRequirements(type: EnigmaFactory, rotorUnit: RotorUnit) {
+    fun checkRequirements(type: EnigmaType, rotorUnit: RotorUnit) {
         require(rotorUnit.rotors.count() == 3) {
             "'${type}' must have 3 rotors. Given: '${rotorUnit.rotors.count()}'."
         }

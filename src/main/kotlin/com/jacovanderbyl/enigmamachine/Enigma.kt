@@ -9,7 +9,7 @@ package com.jacovanderbyl.enigmamachine
  *     - Connecting Plugboard Connector Cables: connecting letters with one another (part of setting up the machine).
  */
 class Enigma(
-    val type: EnigmaFactory,
+    val type: EnigmaType,
     private val rotorUnit: RotorUnit,
     private val plugboard: Plugboard
 ) : CanEncipher {

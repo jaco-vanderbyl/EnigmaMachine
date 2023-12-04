@@ -5,8 +5,8 @@ package com.jacovanderbyl.enigmamachine
  */
 class Reflector(
     cipherSetMap: CipherSetMap,
-    val type: ReflectorFactory,
-    val compatibility: Set<EnigmaFactory>
+    val type: ReflectorType,
+    val compatibility: Set<EnigmaType>
 ) : CanEncipher {
     private val characterSet: String = cipherSetMap.characterSet
     private val cipherSet: String = cipherSetMap.cipherSet
