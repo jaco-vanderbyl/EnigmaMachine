@@ -33,10 +33,10 @@ class PositionTest {
 
     @Test
     fun `ensure position index equals character set index of character`() {
-        Keys.CHARACTER_SET.forEach { character ->
+        Keys.CHARACTER_SET.forEachIndexed { index, character ->
             assertEquals(
                 message = "Failed to ensure position index equals character set index of character.",
-                expected = Keys.CHARACTER_SET.indexOf(character),
+                expected = index,
                 actual = Position(character).index
             )
         }
@@ -44,7 +44,6 @@ class PositionTest {
 
     @Test
     fun `ensure named constructor can create object from string`() {
-        val connector = Connector.fromString(characterPair = "AB")
         assertEquals(
             message = "Failed to ensure named constructor can create object from string.",
             expected = 'A',

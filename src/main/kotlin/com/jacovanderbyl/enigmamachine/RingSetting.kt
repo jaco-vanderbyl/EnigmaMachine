@@ -8,7 +8,8 @@ package com.jacovanderbyl.enigmamachine
 class RingSetting(val value: Int = 1) {
     init {
         require(value in 1..Keys.CHARACTER_SET.length) {
-            "The ring setting must be an integer between 1 and ${Keys.CHARACTER_SET.length}. Given: '${value}'."
+            "Invalid value. The ring setting must be an integer between 1 and ${Keys.CHARACTER_SET.length}. " +
+                    "Given: '${value}'."
         }
     }
 
@@ -17,7 +18,7 @@ class RingSetting(val value: Int = 1) {
     companion object {
         fun fromString(setting: String) : RingSetting {
             require(setting.toIntOrNull() != null) {
-                "A rotor ring setting must be an integer. Given: '${setting}'."
+                "A rotor ring setting string must be an integer. Given: '${setting}'."
             }
 
             return RingSetting(setting.toInt())
