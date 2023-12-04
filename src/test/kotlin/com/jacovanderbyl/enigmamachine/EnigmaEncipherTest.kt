@@ -25,9 +25,9 @@ class EnigmaEncipherTest {
     fun `ensure 'stock' enigma can encipher a single character`() {
         val enigma = createStockEnigmaFake()
         assertEquals(
-            message = "Failed to ensure 'stock' enigma can encipher a single character.",
             expected = 'B',
-            actual = enigma.encipher('A')
+            actual = enigma.encipher('A'),
+            message = "Failed to ensure 'stock' enigma can encipher a single character."
         )
     }
 
@@ -35,9 +35,9 @@ class EnigmaEncipherTest {
     fun `ensure 'stock' enigma can encipher a string`() {
         val enigma = createStockEnigmaFake()
         assertEquals(
-            message = "Failed to ensure 'stock' enigma can encipher a string.",
             expected = "BDZGO",
-            actual = enigma.encipher("AAAAA")
+            actual = enigma.encipher("AAAAA"),
+            message = "Failed to ensure 'stock' enigma can encipher a string."
         )
     }
 
@@ -48,8 +48,8 @@ class EnigmaEncipherTest {
         DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
             val enigma = createStockEnigmaFake()
             val ex = assertFailsWith<IllegalArgumentException>(
-                message = "Failed to ensure engima throws on invalid characters.",
-                block = { enigma.encipher(character) }
+                block = { enigma.encipher(character) },
+                message = "Failed to ensure engima throws on invalid characters."
             )
             ex.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid character") }
         }
@@ -72,17 +72,17 @@ class EnigmaEncipherTest {
             val enigma = createEnigmaFake(fileName)
             val ciphertext = enigma.encipher(plaintext)
             assertEquals(
-                message = "Failed to ensure enigma enciphers correctly with different configurations.",
                 expected = ClassLoader.getSystemResource("ciphertexts/${fileName}").readText(),
-                actual = ciphertext
+                actual = ciphertext,
+                message = "Failed to ensure enigma enciphers correctly with different configurations."
             )
 
             val enigma2 = createEnigmaFake(fileName)
             val ciphertext2 = enigma2.encipher(ciphertext)
             assertEquals(
-                message = "Failed to ensure enigma enciphers correctly with different configurations.",
                 expected = plaintext,
-                actual = ciphertext2
+                actual = ciphertext2,
+                message = "Failed to ensure enigma enciphers correctly with different configurations."
             )
         }
     }

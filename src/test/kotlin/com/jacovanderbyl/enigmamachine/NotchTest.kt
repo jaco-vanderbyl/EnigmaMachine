@@ -12,9 +12,9 @@ class NotchTest {
     @Test
     fun `ensure notch characters are set correctly`() {
         assertEquals(
-            message = "Failed to ensure enigma key character set is uppercase alphabet.",
             expected = setOf('A', 'B'),
-            actual = Notch(setOf('A', 'B')).characters
+            actual = Notch(setOf('A', 'B')).characters,
+            message = "Failed to ensure enigma key character set is uppercase alphabet."
         )
     }
 
@@ -24,8 +24,8 @@ class NotchTest {
     fun `ensure invalid notch character throws`() = invalidCharacters.map { character ->
         DynamicTest.dynamicTest("Invalid notch character '${character}' should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
-                message = "Failed to ensure invalid notch character throws.",
-                block = { Notch(setOf(character)) }
+                block = { Notch(setOf(character)) },
+                message = "Failed to ensure invalid notch character throws."
             )
             ex.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid notch character") }
         }
@@ -42,8 +42,8 @@ class NotchTest {
     fun `ensure bad notch character count throws`() = badCharacterCounts.map { characterSet ->
         DynamicTest.dynamicTest("Bad notch character count '${characterSet}' should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
-                message = "Failed to ensure bad notch character count throws.",
-                block = { Notch(characterSet) }
+                block = { Notch(characterSet) },
+                message = "Failed to ensure bad notch character count throws."
             )
             ex.message?.let { msg ->
                 assertContains(charSequence = msg, other = "cannot have more notches than the character set size")

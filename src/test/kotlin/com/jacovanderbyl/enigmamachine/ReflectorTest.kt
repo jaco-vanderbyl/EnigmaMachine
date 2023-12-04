@@ -19,9 +19,9 @@ class ReflectorTest {
     fun `ensure reflector enciphers correctly given a cipher set map`() {
         cipherSetMap.characterSet.forEachIndexed { index, character ->
             assertEquals(
-                message = "Failed to ensure reflector enciphers correctly given a cipher set map.",
                 expected = cipherSet[index],
-                actual = reflector.encipher(character)
+                actual = reflector.encipher(character),
+                message = "Failed to ensure reflector enciphers correctly given a cipher set map."
             )
         }
     }
@@ -29,12 +29,12 @@ class ReflectorTest {
     @Test
     fun `ensure reflector compatibility works correctly`() {
         assertTrue(
-            message = "Failed to ensure reflector compatibility works correctly.",
-            actual = reflector.isCompatible(EnigmaType.ENIGMA_I)
+            actual = reflector.isCompatible(EnigmaType.ENIGMA_I),
+            message = "Failed to ensure reflector compatibility works correctly."
         )
         assertFalse(
-            message = "Failed to ensure reflector compatibility works correctly.",
-            actual = reflector.isCompatible(EnigmaType.ENIGMA_M3)
+            actual = reflector.isCompatible(EnigmaType.ENIGMA_M3),
+            message = "Failed to ensure reflector compatibility works correctly."
         )
     }
 }

@@ -35,14 +35,14 @@ class PlugboardTest {
         // Test connected characters encipher correctly
         connectorList.forEach { connector ->
             assertEquals(
-                message = "Failed to ensure plugboard enciphers connected characters correctly.",
                 expected = connector.second,
-                actual = plugboard.encipher(connector.first)
+                actual = plugboard.encipher(connector.first),
+                message = "Failed to ensure plugboard enciphers connected characters correctly."
             )
             assertEquals(
-                message = "Failed to ensure plugboard enciphers connected characters correctly.",
                 expected = connector.first,
-                actual = plugboard.encipher(connector.second)
+                actual = plugboard.encipher(connector.second),
+                message = "Failed to ensure plugboard enciphers connected characters correctly."
             )
         }
 
@@ -52,9 +52,9 @@ class PlugboardTest {
             character in connectorList.map { connector -> connector.second }
         }.forEach { character ->
             assertEquals(
-                message = "Failed to ensure plugboard enciphers unconnected characters correctly.",
                 expected = character,
-                actual = plugboard.encipher(character)
+                actual = plugboard.encipher(character),
+                message = "Failed to ensure plugboard enciphers unconnected characters correctly."
             )
         }
     }
@@ -64,9 +64,9 @@ class PlugboardTest {
         val plugboard = Plugboard(Connector('A', 'B'))
         plugboard.reset()
         assertEquals(
-            message = "Failed to ensure plugboard enciphers unconnected characters correctly.",
             expected = 'A',
-            actual = plugboard.encipher('A')
+            actual = plugboard.encipher('A'),
+            message = "Failed to ensure plugboard enciphers unconnected characters correctly."
         )
     }
 
@@ -77,8 +77,8 @@ class PlugboardTest {
         DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
             val plugboard = Plugboard()
             val ex = assertFailsWith<IllegalArgumentException>(
-                message = "Failed to ensure plugboard throws on invalid characters.",
-                block = { plugboard.encipher(character) }
+                block = { plugboard.encipher(character) },
+                message = "Failed to ensure plugboard throws on invalid characters."
             )
             ex.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid character") }
         }
@@ -95,8 +95,8 @@ class PlugboardTest {
     fun `ensure plugboard throws when adding duplicate connectors`() = duplicateConnectors.map { connectors ->
         DynamicTest.dynamicTest("Duplicate connector letters '${connectors}' should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
-                message = "Failed to ensure plugboard throws when connecting a character that is already connected.",
-                block = { Plugboard(*connectors.toTypedArray()) }
+                block = { Plugboard(*connectors.toTypedArray()) },
+                message = "Failed to ensure plugboard throws when connecting a character that is already connected."
             )
             ex.message?.let { msg ->
                 assertContains(charSequence = msg, other = "Cannot connect character that's already been connected")

@@ -22,9 +22,9 @@ class EnigmaSettingsTest {
         DynamicTest.dynamicTest("Rotor positions can be changed.") {
             enigmaFake.setRotorPositions(*positionList.toTypedArray())
             assertEquals(
-                message = "Failed to ensure rotor positions can be changed.",
                 expected = positionList.map { it.character },
-                actual = enigmaFake.getRotorPositions().map { it.character }
+                actual = enigmaFake.getRotorPositions().map { it.character },
+                message = "Failed to ensure rotor positions can be changed."
             )
         }
     }
@@ -39,8 +39,8 @@ class EnigmaSettingsTest {
     fun `ensure position count equals rotor count`() = badPositionsCount.map { positionList ->
         DynamicTest.dynamicTest("Position count equals rotor count.") {
             val ex = assertFailsWith<IllegalArgumentException>(
-                message = "Failed to ensure position count equals rotor count.",
-                block = { enigmaFake.setRotorPositions(*positionList.toTypedArray()) }
+                block = { enigmaFake.setRotorPositions(*positionList.toTypedArray()) },
+                message = "Failed to ensure position count equals rotor count."
             )
             ex.message?.let { msg ->
                 assertContains(charSequence = msg, other = "number of rotor positions must equal the number of rotors")
@@ -62,14 +62,14 @@ class EnigmaSettingsTest {
             connectorsList.filterIndexed { i, _ -> i <= index } .forEach {
                 it.forEach { connector ->
                     assertEquals(
-                        message = "Failed to ensure connector cables can be added to plugboard.",
                         expected = connector.second,
-                        actual = plugboard.encipher(connector.first)
+                        actual = plugboard.encipher(connector.first),
+                        message = "Failed to ensure connector cables can be added to plugboard."
                     )
                     assertEquals(
-                        message = "Failed to ensure connector cables can be added to plugboard.",
                         expected = connector.first,
-                        actual = plugboard.encipher(connector.second)
+                        actual = plugboard.encipher(connector.second),
+                        message = "Failed to ensure connector cables can be added to plugboard."
                     )
                 }
             }
@@ -84,28 +84,28 @@ class EnigmaSettingsTest {
             connectorsList.filterIndexed { i, _ -> i < index } .forEach {
                 it.forEach { connector ->
                     assertEquals(
-                        message = "Failed to ensure connector cables can be unplugged.",
                         expected = connector.first,
-                        actual = plugboard.encipher(connector.first)
+                        actual = plugboard.encipher(connector.first),
+                        message = "Failed to ensure connector cables can be unplugged."
                     )
                     assertEquals(
-                        message = "Failed to ensure connector cables can be unplugged.",
                         expected = connector.second,
-                        actual = plugboard.encipher(connector.second)
+                        actual = plugboard.encipher(connector.second),
+                        message = "Failed to ensure connector cables can be unplugged."
                     )
                 }
             }
 
             connectors.forEach {connector ->
                 assertEquals(
-                    message = "Failed to ensure connector cables can be added to plugboard.",
                     expected = connector.second,
-                    actual = plugboard.encipher(connector.first)
+                    actual = plugboard.encipher(connector.first),
+                    message = "Failed to ensure connector cables can be added to plugboard."
                 )
                 assertEquals(
-                    message = "Failed to ensure connector cables can be added to plugboard.",
                     expected = connector.first,
-                    actual = plugboard.encipher(connector.second)
+                    actual = plugboard.encipher(connector.second),
+                    message = "Failed to ensure connector cables can be added to plugboard."
                 )
             }
         }
@@ -120,9 +120,9 @@ class EnigmaSettingsTest {
         emFake.resetRotorPositions()
 
         assertEquals(
-            message = "Failed to ensure rotor positions can be reset to default.",
             expected = defaultPositions,
-            actual = enigmaFake.getRotorPositions().map { it.character }
+            actual = enigmaFake.getRotorPositions().map { it.character },
+            message = "Failed to ensure rotor positions can be reset to default."
         )
     }
 
@@ -135,9 +135,9 @@ class EnigmaSettingsTest {
         emFake.resetPlugboard()
 
         assertEquals(
-            message = "Failed to ensure plugboard can be reset.",
             expected = 'A',
-            actual = pb.encipher('A')
+            actual = pb.encipher('A'),
+            message = "Failed to ensure plugboard can be reset."
         )
     }
 

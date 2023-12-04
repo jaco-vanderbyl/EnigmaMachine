@@ -20,9 +20,9 @@ class EnigmaBuilderTest {
         )
 
         assertEquals(
-            message = "Failed to ensure build with optional fields omitted enciphers correctly.",
             expected = "SCSUX",
-            actual = enigma.encipher(plaintext)
+            actual = enigma.encipher(plaintext),
+            message = "Failed to ensure build with optional fields omitted enciphers correctly."
         )
     }
 
@@ -38,9 +38,9 @@ class EnigmaBuilderTest {
         )
 
         assertEquals(
-            message = "Failed to ensure build with optional fields empty enciphers correctly.",
             expected = "RRQMR",
-            actual = enigma.encipher(plaintext)
+            actual = enigma.encipher(plaintext),
+            message = "Failed to ensure build with optional fields empty enciphers correctly."
         )
     }
 
@@ -56,23 +56,23 @@ class EnigmaBuilderTest {
         )
 
         assertEquals(
-            message = "Failed to ensure build with CSV fields containing whitespace enciphers correctly.",
             expected = "RRQMR",
-            actual = enigma.encipher(plaintext)
+            actual = enigma.encipher(plaintext),
+            message = "Failed to ensure build with CSV fields containing whitespace enciphers correctly."
         )
     }
 
     @Test
     fun `ensure build with invalid type throws`() {
         val ex = assertFailsWith<IllegalArgumentException>(
-            message = "Failed to ensure build with bogus type throws.",
             block = {
                 EnigmaBuilder.makeFromCsv(
                     type = "BOGUS_TYPE",
                     reflector = "B",
                     rotors = "I,V,III"
                 )
-            }
+            },
+            message = "Failed to ensure build with bogus type throws."
         )
         ex.message?.let { msg -> assertContains(charSequence = msg, other = "Type is invalid") }
     }
@@ -80,14 +80,14 @@ class EnigmaBuilderTest {
     @Test
     fun `ensure build with invalid reflector throws`() {
         val ex = assertFailsWith<IllegalArgumentException>(
-            message = "Failed to ensure build with bogus reflector throws.",
             block = {
                 EnigmaBuilder.makeFromCsv(
                     type = "ENIGMA_I",
                     reflector = "BOGUS_REFLECTOR",
                     rotors = "I,V,III"
                 )
-            }
+            },
+            message = "Failed to ensure build with bogus reflector throws."
         )
         ex.message?.let { msg -> assertContains(charSequence = msg, other = "Reflector is invalid") }
     }
@@ -102,14 +102,14 @@ class EnigmaBuilderTest {
     fun `ensure build with invalid rotor throws`() = invalidRotors.map { rotors ->
         DynamicTest.dynamicTest("Invalid rotor string '${rotors}' should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
-                message = "Failed to ensure build with invalid rotor throws.",
                 block = {
                     EnigmaBuilder.makeFromCsv(
                         type = "ENIGMA_I",
                         reflector = "B",
                         rotors = rotors
                     )
-                }
+                },
+                message = "Failed to ensure build with invalid rotor throws."
             )
             ex.message?.let { msg -> assertContains(charSequence = msg, other = "Rotor is invalid") }
         }
@@ -125,7 +125,6 @@ class EnigmaBuilderTest {
     fun `ensure build with bad ring setting count throws`() = badRingSettingCounts.map { ringSettings ->
         DynamicTest.dynamicTest("Bad ring settings count '${ringSettings}' should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
-                message = "Failed to ensure build with bad ring setting count throws.",
                 block = {
                     EnigmaBuilder.makeFromCsv(
                         type = "ENIGMA_I",
@@ -133,7 +132,8 @@ class EnigmaBuilderTest {
                         rotors = "I,V,III",
                         ringSettings = ringSettings
                     )
-                }
+                },
+                message = "Failed to ensure build with bad ring setting count throws."
             )
             ex.message?.let { msg ->
                 assertContains(charSequence = msg, other = "Number of ring settings must equal number of rotors")
@@ -151,7 +151,6 @@ class EnigmaBuilderTest {
     fun `ensure build with bad position count throws`() = badPositionCounts.map { positions ->
         DynamicTest.dynamicTest("Bad position count '${positions}' should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
-                message = "Failed to ensure build with bad position count throws.",
                 block = {
                     EnigmaBuilder.makeFromCsv(
                         type = "ENIGMA_I",
@@ -159,7 +158,8 @@ class EnigmaBuilderTest {
                         rotors = "I,V,III",
                         startingPositions = positions
                     )
-                }
+                },
+                message = "Failed to ensure build with bad position count throws."
             )
             ex.message?.let { msg ->
                 assertContains(charSequence = msg, other = "Number of positions must equal number of rotors")

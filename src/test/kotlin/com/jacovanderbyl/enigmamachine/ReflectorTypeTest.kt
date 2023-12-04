@@ -12,21 +12,21 @@ class ReflectorTypeTest {
 
         Keys.CHARACTER_SET.forEachIndexed { index, character ->
             assertEquals(
-                message = "Failed to ensure ReflectorB is created correctly.",
                 expected = "YRUHQSLDPXNGOKMIEBFZCWVJAT"[index],
-                actual = reflectorB.encipher(character)
+                actual = reflectorB.encipher(character),
+                message = "Failed to ensure ReflectorB is created correctly."
             )
         }
 
         assertEquals(
-            message = "Failed to ensure ReflectorB is created correctly.",
             expected = ReflectorType.B,
-            actual = reflectorB.type
+            actual = reflectorB.type,
+            message = "Failed to ensure ReflectorB is created correctly."
         )
 
         assertTrue(
-            message = "Failed to ensure ReflectorB is created correctly.",
-            actual = reflectorB.isCompatible(EnigmaType.ENIGMA_I) && reflectorB.isCompatible(EnigmaType.ENIGMA_M3)
+            actual = reflectorB.isCompatible(EnigmaType.ENIGMA_I) && reflectorB.isCompatible(EnigmaType.ENIGMA_M3),
+            message = "Failed to ensure ReflectorB is created correctly."
         )
     }
 
@@ -36,21 +36,21 @@ class ReflectorTypeTest {
 
         Keys.CHARACTER_SET.forEachIndexed { index, character ->
             assertEquals(
-                message = "Failed to ensure ReflectorC is created correctly.",
                 expected = "FVPJIAOYEDRZXWGCTKUQSBNMHL"[index],
-                actual = reflectorB.encipher(character)
+                actual = reflectorB.encipher(character),
+                message = "Failed to ensure ReflectorC is created correctly."
             )
         }
 
         assertEquals(
-            message = "Failed to ensure ReflectorC is created correctly.",
             expected = ReflectorType.C,
-            actual = reflectorB.type
+            actual = reflectorB.type,
+            message = "Failed to ensure ReflectorC is created correctly."
         )
 
         assertTrue(
-            message = "Failed to ensure ReflectorC is created correctly.",
-            actual = reflectorB.isCompatible(EnigmaType.ENIGMA_I) && reflectorB.isCompatible(EnigmaType.ENIGMA_M3)
+            actual = reflectorB.isCompatible(EnigmaType.ENIGMA_I) && reflectorB.isCompatible(EnigmaType.ENIGMA_M3),
+            message = "Failed to ensure ReflectorC is created correctly."
         )
     }
 }
