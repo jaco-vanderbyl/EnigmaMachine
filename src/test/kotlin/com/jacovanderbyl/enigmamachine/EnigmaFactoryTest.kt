@@ -6,9 +6,54 @@ import org.junit.jupiter.api.TestFactory
 
 import kotlin.IllegalArgumentException
 import kotlin.test.assertContains
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class EnigmaRequirementsTest {
+class EnigmaFactoryTest {
+    val plaintext = "AAAAA"
+
+    @Test
+    fun `ensure factory-built EnigmaI enciphers correctly`() {
+        val enigma = EnigmaFactory.ENIGMA_I.create(
+            rotorUnit = RotorUnit(
+                reflector = ReflectorFactory.B.create(),
+                rotors = setOf(
+                    RotorFactory.I.create(Position(), RingSetting()),
+                    RotorFactory.V.create(Position(), RingSetting()),
+                    RotorFactory.III.create(Position(), RingSetting())
+                )
+            ),
+            plugboard = Plugboard()
+        )
+
+        assertEquals(
+            message = "Failed to ensure factory-built EnigmaI enciphers correctly.",
+            expected = "SCSUX",
+            actual = enigma.encipher(plaintext)
+        )
+    }
+
+    @Test
+    fun `ensure factory-built EnigmaM3 enciphers correctly`() {
+        val enigma = EnigmaFactory.ENIGMA_M3.create(
+            rotorUnit = RotorUnit(
+                reflector = ReflectorFactory.B.create(),
+                rotors = setOf(
+                    RotorFactory.VI.create(Position(), RingSetting()),
+                    RotorFactory.VII.create(Position(), RingSetting()),
+                    RotorFactory.VIII.create(Position(), RingSetting())
+                )
+            ),
+            plugboard = Plugboard()
+        )
+
+        assertEquals(
+            message = "Failed to ensure factory-built EnigmaM3 enciphers correctly.",
+            expected = "GJUBB",
+            actual = enigma.encipher(plaintext)
+        )
+    }
+
     private val badRotorCounts = listOf(
         setOf(RotorFactory.I.create(Position(), RingSetting())),
         setOf(RotorFactory.I.create(Position(), RingSetting()), RotorFactory.II.create(Position(), RingSetting())),

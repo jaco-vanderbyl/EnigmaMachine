@@ -10,6 +10,7 @@ import kotlin.test.assertFailsWith
 
 class EnigmaBuilderTest {
     val plaintext = "AAAAA"
+
     @Test
     fun `ensure build with optional fields omitted enciphers correctly`() {
         val enigma = EnigmaBuilder.makeFromCsv(
