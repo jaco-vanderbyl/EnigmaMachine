@@ -6,9 +6,9 @@ package com.jacovanderbyl.enigmamachine
 enum class RotorType {
     I {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
+            type = RotorType.I,
             cipherSetMap = CipherSetMap("EKMFLGDQVZNTOWYHXUSPAIBRCJ"),
             notch = Notch(setOf('Q')),
-            type = RotorType.I,
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
@@ -16,9 +16,9 @@ enum class RotorType {
     },
     II {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
+            type = RotorType.II,
             cipherSetMap = CipherSetMap("AJDKSIRUXBLHWTMCQGZNPYFVOE"),
             notch = Notch(setOf('E')),
-            type = RotorType.II,
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
@@ -26,9 +26,9 @@ enum class RotorType {
     },
     III {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
+            type = RotorType.III,
             cipherSetMap = CipherSetMap("BDFHJLCPRTXVZNYEIWGAKMUSQO"),
             notch = Notch(setOf('V')),
-            type = RotorType.III,
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
@@ -36,9 +36,9 @@ enum class RotorType {
     },
     IV {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
+            type = RotorType.IV,
             cipherSetMap = CipherSetMap("ESOVPZJAYQUIRHXLNFTGKDCMWB"),
             notch = Notch(setOf('J')),
-            type = RotorType.IV,
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
@@ -46,9 +46,9 @@ enum class RotorType {
     },
     V {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
+            type = RotorType.V,
             cipherSetMap = CipherSetMap("VZBRGITYUPSDNHLXAWMJQOFECK"),
             notch = Notch(setOf('Z')),
-            type = RotorType.V,
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
@@ -56,9 +56,9 @@ enum class RotorType {
     },
     VI {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
+            type = RotorType.VI,
             cipherSetMap = CipherSetMap("JPGVOUMFYQBENHZRDKASXLICTW"),
             notch = Notch(setOf('Z', 'M')),
-            type = RotorType.VI,
             compatibility = setOf(EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
@@ -66,9 +66,9 @@ enum class RotorType {
     },
     VII {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
+            type = RotorType.VII,
             cipherSetMap = CipherSetMap("NZJHGRCXMYSWBOUFAIVLPEKQDT"),
             notch = Notch(setOf('Z', 'M')),
-            type = RotorType.VII,
             compatibility = setOf(EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting
@@ -76,9 +76,9 @@ enum class RotorType {
     },
     VIII {
         override fun create(position: Position, ringSetting: RingSetting) : Rotor = Rotor(
+            type = RotorType.VIII,
             cipherSetMap = CipherSetMap("FKQHTLXOCBJSPDZRAMEWNIUYGV"),
             notch = Notch(setOf('Z', 'M')),
-            type = RotorType.VIII,
             compatibility = setOf(EnigmaType.ENIGMA_M3),
             position = position,
             ringSetting = ringSetting

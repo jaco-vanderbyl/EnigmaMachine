@@ -8,12 +8,23 @@ package com.jacovanderbyl.enigmamachine
  *                    ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
  *     Cipher set:    EKMFLGDQVZNTOWYHXUSPAIBRCJ
  */
-class CipherSetMap(val cipherSet: String) {
+class CipherSetMap(val cipherSet: String) : CanEncipherBidirectionally {
     val characterSet: String = Keys.CHARACTER_SET
 
     init {
         require(String(cipherSet.toCharArray().apply { sort() }) == characterSet) {
             "The provided cipher set '$cipherSet' does not map to: '${characterSet}'."
+        }
+    }
+
+    override fun encipher(character: Char, reverse: Boolean) : Char {
+        require(character in characterSet) {
+            "Invalid character. Valid: '${characterSet}'. Given: '${character}'."
+        }
+
+        return when(reverse) {
+            false -> cipherSet[characterSet.indexOf(character)]
+            true -> characterSet[cipherSet.indexOf(character)]
         }
     }
 }

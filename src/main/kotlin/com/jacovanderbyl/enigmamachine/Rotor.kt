@@ -9,16 +9,14 @@ package com.jacovanderbyl.enigmamachine
  *       internal wiring) of the concrete rotor.
  */
 class Rotor(
-    cipherSetMap: CipherSetMap,
-    notch: Notch,
     val type: RotorType,
-    val compatibility: Set<EnigmaType>,
+    private val cipherSetMap: CipherSetMap,
+    private val notch: Notch,
+    private val compatibility: Set<EnigmaType>,
     var position: Position,
     var ringSetting: RingSetting
 ) : CanEncipherBidirectionally, HasCompatibility {
     private val characterSet: String = cipherSetMap.characterSet
-    private val cipherSet: String = cipherSetMap.cipherSet
-    private val notchCharacters: Set<Char> = notch.characters
 
     fun step() {
         position = Position(characterSet[shiftIndex(position.index, shiftBy = 1)])
@@ -28,7 +26,7 @@ class Rotor(
         position = Position()
     }
 
-    fun isInNotchedPosition() : Boolean = position.character in notchCharacters
+    fun isInNotchedPosition() : Boolean = position.character in notch.characters
 
     /**
      * Substitute one character for another, simulating rotor wiring, position, and ring setting.
@@ -38,18 +36,17 @@ class Rotor(
      *     https://crypto.stackexchange.com/a/81585
      */
     override fun encipher(character: Char, reverse: Boolean) : Char {
-        require(character in Keys.CHARACTER_SET) {
-            "Invalid character. Valid: '${Keys.CHARACTER_SET}'. Given: '${character}'."
+        require(character in characterSet) {
+            "Invalid character. Valid: '${characterSet}'. Given: '${character}'."
         }
 
         // Step 1 - Apply offset to given character's index, to accommodate rotor's current position and ring setting.
         val characterIndex = characterSet.indexOf(character)
         val characterIndexWithOffset = shiftIndex(characterIndex, shiftBy = offset())
+        val characterWithOffset = characterSet[characterIndexWithOffset]
 
         // Step 2 - Simulate wiring to substitute given character with new character. Allow bidirectional substitutions.
-        val substituteCharacter =
-            if (reverse) characterSet[cipherSet.indexOf(characterSet[characterIndexWithOffset])]
-            else cipherSet[characterIndexWithOffset]
+        val substituteCharacter = cipherSetMap.encipher(characterWithOffset, reverse)
 
         // Step 3 - Revert offset (applied in step 1) to substitute character's index.
         val substituteCharacterIndex = characterSet.indexOf(substituteCharacter)
