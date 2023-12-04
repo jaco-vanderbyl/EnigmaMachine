@@ -21,7 +21,13 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
     /**
      * Substitute character if it's connected with another, otherwise return original character.
      */
-    override fun encipher(character: Char) : Char = connectorMap.getOrDefault(character, character)
+    override fun encipher(character: Char) : Char {
+        require(character in Keys.CHARACTER_SET) {
+            "Invalid character. Valid: '${Keys.CHARACTER_SET}'. Given: '${character}'."
+        }
+
+        return connectorMap.getOrDefault(character, character)
+    }
 
     fun reset() {
         connectorMap.clear()
@@ -30,7 +36,7 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
     fun connectPlugs(vararg connectors: Connector) {
         connectors.forEach {
             require(!connectorMap.containsKey(it.first) && !connectorMap.containsKey(it.second)) {
-                "Cannot connect a character that has already been connected. Given: '${it.first}${it.second}'."
+                "Cannot connect character that's already been connected. Given: '${it.first}${it.second}'."
             }
 
             connectorMap[it.first] = it.second

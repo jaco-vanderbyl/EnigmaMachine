@@ -27,7 +27,7 @@ class Enigma(
      */
     override fun encipher(character: Char) : Char {
         require(character in Keys.CHARACTER_SET) {
-            "Character must be in: '${Keys.CHARACTER_SET}'. Given: '${character}'."
+            "Invalid character. Valid: '${Keys.CHARACTER_SET}'. Given: '${character}'."
         }
 
         rotorUnit.stepRotors()

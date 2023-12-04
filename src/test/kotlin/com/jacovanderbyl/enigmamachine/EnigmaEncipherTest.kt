@@ -3,6 +3,7 @@ package com.jacovanderbyl.enigmamachine
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.api.Test
+import kotlin.test.assertContains
 
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -46,10 +47,11 @@ class EnigmaEncipherTest {
     fun `ensure enigma throws on invalid characters`() = invalidCharacters.map { character ->
         DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
             val enigma = createStockEnigmaFake()
-            assertFailsWith<IllegalArgumentException>(
+            val ex = assertFailsWith<IllegalArgumentException>(
                 message = "Failed to ensure engima throws on invalid characters.",
                 block = { enigma.encipher(character) }
             )
+            ex.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid character") }
         }
     }
 

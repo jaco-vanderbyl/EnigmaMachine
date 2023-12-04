@@ -1,7 +1,7 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Represents a base rotor.
+ * Represents an Enigma Machine rotor.
  *
  * This class simulates two behaviours:
  *     - Stepping: turning the rotor one position. E.g. turing from position 'A' to 'B'.
@@ -38,6 +38,10 @@ class Rotor(
      *     https://crypto.stackexchange.com/a/81585
      */
     override fun encipher(character: Char, reverse: Boolean) : Char {
+        require(character in Keys.CHARACTER_SET) {
+            "Invalid character. Valid: '${Keys.CHARACTER_SET}'. Given: '${character}'."
+        }
+
         // Step 1 - Apply offset to given character's index, to accommodate rotor's current position and ring setting.
         val characterIndex = characterSet.indexOf(character)
         val characterIndexWithOffset = shiftIndex(characterIndex, shiftBy = offset())
