@@ -48,7 +48,7 @@ class RotorTypeTest {
 
             val rotor = rotorType.create()
 
-            Keys.CHARACTER_SET.forEachIndexed { index, character ->
+            Enigma.CHARACTER_SET.forEachIndexed { index, character ->
                 assertEquals(
                     expected = rotorCipherSets[rotorType]?.getOrNull(index),
                     actual = rotor.encipher(character),

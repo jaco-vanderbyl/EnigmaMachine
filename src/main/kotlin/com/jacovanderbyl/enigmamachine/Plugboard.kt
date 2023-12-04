@@ -22,8 +22,8 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
      * Substitute character if it's connected with another, otherwise return original character.
      */
     override fun encipher(character: Char) : Char {
-        require(character in Keys.CHARACTER_SET) {
-            "Invalid character. Valid: '${Keys.CHARACTER_SET}'. Given: '${character}'."
+        require(character in Enigma.CHARACTER_SET) {
+            "Invalid character. Valid: '${Enigma.CHARACTER_SET}'. Given: '${character}'."
         }
 
         return connectorMap.getOrDefault(character, character)

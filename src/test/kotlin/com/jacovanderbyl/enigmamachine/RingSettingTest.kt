@@ -33,7 +33,7 @@ class RingSettingTest {
 
     @Test
     fun `ensure ring setting index is one less than value`() {
-        (1..Keys.CHARACTER_SET.length).forEachIndexed { index, value ->
+        (1..Enigma.CHARACTER_SET.length).forEachIndexed { index, value ->
             assertEquals(
                 expected = index,
                 actual = RingSetting(value).index,

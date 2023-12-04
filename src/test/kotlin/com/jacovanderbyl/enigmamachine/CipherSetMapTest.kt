@@ -15,7 +15,7 @@ class CipherSetMapTest {
     @Test
     fun `ensure character set equals the enigma character set`() {
         assertEquals(
-            expected = Keys.CHARACTER_SET,
+            expected = Enigma.CHARACTER_SET,
             actual = cipherSetMap.characterSet,
             message = "Failed to ensure character set equals the enigma character set."
         )

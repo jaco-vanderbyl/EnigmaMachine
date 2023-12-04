@@ -13,6 +13,11 @@ class Enigma(
     private val rotorUnit: RotorUnit,
     private val plugboard: Plugboard
 ) : CanEncipher {
+    companion object {
+        // Represents the 26 keys on the Enigma Machine's keyboard.
+        const val CHARACTER_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    }
+
     /**
      * Simulate an Enigma Machine's enciphering of a single character.
      *
@@ -26,8 +31,8 @@ class Enigma(
      * does the final substitution.
      */
     override fun encipher(character: Char) : Char {
-        require(character in Keys.CHARACTER_SET) {
-            "Invalid character. Valid: '${Keys.CHARACTER_SET}'. Given: '${character}'."
+        require(character in Enigma.CHARACTER_SET) {
+            "Invalid character. Valid: '${Enigma.CHARACTER_SET}'. Given: '${character}'."
         }
 
         rotorUnit.stepRotors()

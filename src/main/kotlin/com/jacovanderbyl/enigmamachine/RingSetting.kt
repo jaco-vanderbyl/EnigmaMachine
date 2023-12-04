@@ -7,8 +7,8 @@ package com.jacovanderbyl.enigmamachine
  */
 class RingSetting(val value: Int = 1) {
     init {
-        require(value in 1..Keys.CHARACTER_SET.length) {
-            "Invalid value. The ring setting must be an integer between 1 and ${Keys.CHARACTER_SET.length}. " +
+        require(value in 1..Enigma.CHARACTER_SET.length) {
+            "Invalid value. The ring setting must be an integer between 1 and ${Enigma.CHARACTER_SET.length}. " +
                     "Given: '${value}'."
         }
     }

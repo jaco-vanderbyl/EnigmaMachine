@@ -9,7 +9,7 @@ class KeysTest {
     fun `ensure enigma key character set is uppercase alphabet`() {
         assertEquals(
             expected = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-            actual = Keys.CHARACTER_SET,
+            actual = Enigma.CHARACTER_SET,
             message = "Failed to ensure enigma key character set is uppercase alphabet."
         )
     }

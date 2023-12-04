@@ -5,12 +5,12 @@ package com.jacovanderbyl.enigmamachine
  */
 class Position(val character: Char = 'A') {
     init {
-        require(character in Keys.CHARACTER_SET) {
-            "Invalid character. Valid: '${Keys.CHARACTER_SET}'. Given: '${character}'."
+        require(character in Enigma.CHARACTER_SET) {
+            "Invalid character. Valid: '${Enigma.CHARACTER_SET}'. Given: '${character}'."
         }
     }
 
-    val index = Keys.CHARACTER_SET.indexOf(character)
+    val index = Enigma.CHARACTER_SET.indexOf(character)
 
     companion object {
         fun fromString(position: String) : Position {

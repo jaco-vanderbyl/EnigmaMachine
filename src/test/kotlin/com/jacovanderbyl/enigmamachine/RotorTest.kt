@@ -25,7 +25,7 @@ class RotorTest {
     fun `ensure step moves rotor forward one position`() {
         val rotor = createRotorFake()
 
-        Keys.CHARACTER_SET.repeat(2).forEach { character ->
+        Enigma.CHARACTER_SET.repeat(2).forEach { character ->
             assertEquals(
                 expected = character,
                 actual = rotor.position.character,

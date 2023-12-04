@@ -33,7 +33,7 @@ class PositionTest {
 
     @Test
     fun `ensure position index equals character set index of character`() {
-        Keys.CHARACTER_SET.forEachIndexed { index, character ->
+        Enigma.CHARACTER_SET.forEachIndexed { index, character ->
             assertEquals(
                 expected = index,
                 actual = Position(character).index,

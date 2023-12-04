@@ -9,7 +9,7 @@ package com.jacovanderbyl.enigmamachine
  *     Cipher set:    EKMFLGDQVZNTOWYHXUSPAIBRCJ
  */
 class CipherSetMap(private val cipherSet: String) : CanEncipherBidirectionally {
-    val characterSet: String = Keys.CHARACTER_SET
+    val characterSet: String = Enigma.CHARACTER_SET
 
     init {
         require(String(cipherSet.toCharArray().apply { sort() }) == characterSet) {

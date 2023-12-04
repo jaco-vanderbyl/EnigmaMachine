@@ -47,7 +47,7 @@ class PlugboardTest {
         }
 
         // Test unconnected characters encipher correctly
-        Keys.CHARACTER_SET.filterNot { character ->
+        Enigma.CHARACTER_SET.filterNot { character ->
             character in connectorList.map { connector -> connector.first } ||
             character in connectorList.map { connector -> connector.second }
         }.forEach { character ->

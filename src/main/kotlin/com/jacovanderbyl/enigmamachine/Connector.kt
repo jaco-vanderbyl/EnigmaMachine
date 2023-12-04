@@ -7,11 +7,11 @@ package com.jacovanderbyl.enigmamachine
  */
 class Connector(val first: Char, val second: Char) {
     init {
-        require(first in Keys.CHARACTER_SET) {
-            "First character is invalid. Character must be in: '${Keys.CHARACTER_SET}'. Given: '${first}'."
+        require(first in Enigma.CHARACTER_SET) {
+            "First character is invalid. Character must be in: '${Enigma.CHARACTER_SET}'. Given: '${first}'."
         }
-        require(second in Keys.CHARACTER_SET) {
-            "Second character is invalid. Character must be in: '${Keys.CHARACTER_SET}'. Given: '${second}'."
+        require(second in Enigma.CHARACTER_SET) {
+            "Second character is invalid. Character must be in: '${Enigma.CHARACTER_SET}'. Given: '${second}'."
         }
         require(first != second) {
             "The first and second characters cannot be the same. Given: '${first}${second}'."

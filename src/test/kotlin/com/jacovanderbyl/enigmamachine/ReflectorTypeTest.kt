@@ -10,7 +10,7 @@ class ReflectorTypeTest {
     fun `ensure ReflectorB is created correctly`() {
         val reflectorB = ReflectorType.B.create()
 
-        Keys.CHARACTER_SET.forEachIndexed { index, character ->
+        Enigma.CHARACTER_SET.forEachIndexed { index, character ->
             assertEquals(
                 expected = "YRUHQSLDPXNGOKMIEBFZCWVJAT"[index],
                 actual = reflectorB.encipher(character),
@@ -34,7 +34,7 @@ class ReflectorTypeTest {
     fun `ensure ReflectorC is created correctly`() {
         val reflectorB = ReflectorType.C.create()
 
-        Keys.CHARACTER_SET.forEachIndexed { index, character ->
+        Enigma.CHARACTER_SET.forEachIndexed { index, character ->
             assertEquals(
                 expected = "FVPJIAOYEDRZXWGCTKUQSBNMHL"[index],
                 actual = reflectorB.encipher(character),
