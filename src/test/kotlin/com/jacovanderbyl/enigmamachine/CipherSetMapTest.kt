@@ -3,7 +3,6 @@ package com.jacovanderbyl.enigmamachine
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
-
 import kotlin.IllegalArgumentException
 import kotlin.test.DefaultAsserter.assertEquals
 import kotlin.test.assertContains
@@ -14,63 +13,65 @@ class CipherSetMapTest {
     private val cipherSetMap = CipherSetMap(cipherSet)
 
     @Test
-    fun `ensure character set prop is the same as the enigma key character set`() {
+    fun `ensure character set equals the enigma character set`() {
         assertEquals(
             expected = Keys.CHARACTER_SET,
             actual = cipherSetMap.characterSet,
-            message = "Failed to ensure character set prop is the same as the enigma key character set."
+            message = "Failed to ensure character set equals the enigma character set."
         )
     }
 
-    private val bogusCipherSets = listOf(
+    @TestFactory
+    fun `ensure invalid cipher set throws`() = listOf(
         "",
         "AAAAAAAAAAAAAAAAAAAAAAAAAA",
         "ABCDEFGHIJKLMNOPQRSTUVWXYZABC",
-        "AACDEFGHIJKLMNOPQRSTUVWXYZ"
-    )
-
-    @TestFactory
-    fun `ensure given cipher set maps to character set`() = bogusCipherSets.map { cipherSet ->
-        DynamicTest.dynamicTest("Bogus cipher set input '${cipherSet}' should throw.") {
+        "AACDEFGHIJKLMNOPQRSTUVWXYZ",
+    ).map { cipherSet ->
+        DynamicTest.dynamicTest("Invalid cipher set '${cipherSet}' should throw.") {
             assertFailsWith<IllegalArgumentException>(
                 block = { CipherSetMap(cipherSet) },
-                message = "Failed to ensure given cipher set maps to character set."
+                message = "Failed to ensure invalid cipher set throws."
             )
         }
     }
 
     @Test
-    fun `ensure cipher set map enciphers correctly`() {
-        cipherSetMap.characterSet.forEachIndexed { index, character ->
+    fun `ensure encipher works`() {
+        cipherSetMap.characterSet.forEachIndexed { index, char ->
             assertEquals(
                 expected = cipherSet[index],
-                actual = cipherSetMap.encipher(character),
-                message = "Failed to ensure cipher set map enciphers correctly."
+                actual = cipherSetMap.encipher(char),
+                message = "Failed to ensure encipher works."
             )
         }
     }
 
     @Test
-    fun `ensure cipher set map enciphers in reverse correctly`() {
+    fun `ensure encipher works in reverse`() {
         cipherSet.forEachIndexed { index, character ->
             assertEquals(
                 expected = cipherSetMap.characterSet[index],
                 actual = cipherSetMap.encipher(character, reverse = true),
-                message = "Failed to ensure cipher set map enciphers in reverse correctly."
+                message = "Failed to ensure encipher works in reverse."
             )
         }
     }
 
-    private val invalidCharacters = listOf(' ', 'a', '@')
-
     @TestFactory
-    fun `ensure cipher set map throws on invalid characters`() = invalidCharacters.map { character ->
-        DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
+    fun `ensure invalid character throws`() = listOf(
+        ' ',
+        'a',
+        '@',
+    ).map { char ->
+        DynamicTest.dynamicTest("Invalid character '${char}' should throw.") {
             val ex = assertFailsWith<IllegalArgumentException>(
-                block = { cipherSetMap.encipher(character) },
-                message = "Failed to ensure cipher set map throws on invalid characters."
+                block = { cipherSetMap.encipher(char) },
+                message = "Failed to ensure invalid character throws."
             )
-            ex.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid character") }
+            ex.message?.let {msg ->
+                assertContains(charSequence = msg, other = "invalid character", ignoreCase = true)
+            }
         }
     }
 }
