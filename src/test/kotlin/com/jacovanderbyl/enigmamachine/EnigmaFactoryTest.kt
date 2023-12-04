@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EnigmaFactoryTest {
-    val plaintext = "AAAAA"
+    private val plaintext = "AAAAA"
 
     @Test
     fun `ensure factory-built EnigmaI enciphers correctly`() {

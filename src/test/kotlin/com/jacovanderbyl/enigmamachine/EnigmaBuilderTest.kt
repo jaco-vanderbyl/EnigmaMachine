@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EnigmaBuilderTest {
-    val plaintext = "AAAAA"
+    private val plaintext = "AAAAA"
 
     @Test
     fun `ensure build with optional fields omitted enciphers correctly`() {
@@ -92,7 +92,7 @@ class EnigmaBuilderTest {
         ex.message?.let { msg -> assertContains(charSequence = msg, other = "Reflector is invalid") }
     }
 
-    val invalidRotors = listOf(
+    private val invalidRotors = listOf(
         "BOGUS_ROTOR,II,III",
         "I,BOGUS_ROTOR,III",
         "I,II,BOGUS_ROTOR",
@@ -115,7 +115,7 @@ class EnigmaBuilderTest {
         }
     }
 
-    val badRingSettingCounts = listOf(
+    private val badRingSettingCounts = listOf(
         "1",
         "1,1",
         "1,1,1,1",
@@ -141,7 +141,7 @@ class EnigmaBuilderTest {
         }
     }
 
-    val badPositionCounts = listOf(
+    private val badPositionCounts = listOf(
         "A",
         "A,A",
         "A,A,A,A",
