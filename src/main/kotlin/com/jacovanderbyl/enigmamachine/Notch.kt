@@ -10,8 +10,8 @@ class Notch(vararg positions: Position) {
 
     init {
         require(positions.size in 1..Enigma.CHARACTER_SET.length) {
-            "Invalid character count. A rotor cannot have more notches than the character set" +
-                    "size: '${Enigma.CHARACTER_SET.length}'. Given: '${positions.size}'."
+            "Invalid character count. A rotor cannot have more notches than the character set size: " +
+                    "'${Enigma.CHARACTER_SET.length}'. Given: '${positions.size}'."
         }
     }
 }
