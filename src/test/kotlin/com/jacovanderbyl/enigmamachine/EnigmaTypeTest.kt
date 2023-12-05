@@ -1,9 +1,7 @@
 package com.jacovanderbyl.enigmamachine
 
 import org.junit.jupiter.api.DynamicTest
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
-import kotlin.IllegalArgumentException
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -76,9 +74,9 @@ class EnigmaTypeTest {
         else -> throw IllegalArgumentException()
     }
 
-    @Test
-    fun `ensure factory creates enigma correctly`() {
-        EnigmaType.entries.forEach { enigmaType ->
+    @TestFactory
+    fun `ensure factory creates enigma correctly`() = EnigmaType.entries.map { enigmaType ->
+        DynamicTest.dynamicTest("Test factory creation of enigma type: '${enigmaType}'.") {
             val enigma = enigmaType.create(
                 rotorUnit = RotorUnit(
                     reflector = validReflector(enigmaType),
@@ -159,9 +157,9 @@ class EnigmaTypeTest {
         return tests.toList()
     }
 
-    @Test
-    fun `ensure incompatible reflector throws`() {
-        EnigmaType.entries.forEach { enigmaType ->
+    @TestFactory
+    fun `ensure incompatible reflector throws`() = EnigmaType.entries.map { enigmaType ->
+        DynamicTest.dynamicTest("Incompatible reflector type '${enigmaType}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
                     enigmaType.create(
