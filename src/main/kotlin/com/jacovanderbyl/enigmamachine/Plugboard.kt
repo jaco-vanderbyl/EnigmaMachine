@@ -36,7 +36,8 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
     fun addConnectors(vararg connectors: Connector) {
         connectors.forEach {
             require(!connectorMap.containsKey(it.first) && !connectorMap.containsKey(it.second)) {
-                "Cannot connect character that's already been connected. Given: '${it.first}${it.second}'."
+                "Duplicate connector. Cannot connect character that's already been connected. " +
+                        "Given: '${it.first}${it.second}'."
             }
 
             connectorMap[it.first] = it.second
