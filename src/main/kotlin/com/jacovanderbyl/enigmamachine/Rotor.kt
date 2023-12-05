@@ -1,12 +1,18 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Represents an Enigma Machine rotor.
+ * Represents a rotor, used to substitute one letter with another.
+ *
+ * A single rotor performs a simple letter-substitution, but multiple rotors are mounted side by side on a spindle in
+ * the rotor unit, and the rotors turn with every letter substitution. From wikipedia: Enigma's security comes
+ * from using several rotors in series (usually three or four) and the regular stepping movement of the rotors,
+ * thus implementing a polyalphabetic substitution cipher.
  *
  * This class simulates two behaviours:
- *     - Stepping: turning the rotor one position. E.g. turing from position 'A' to 'B'.
- *     - Enciphering: substituting one letter for another, given the particular cipher set map (representing the
- *       internal wiring) of the concrete rotor.
+ *     - Stepping:
+ *           Turning the rotor one position. E.g. turing from position 'A' to 'B'.
+ *     - Enciphering:
+ *           Substituting one letter for another, given a cipher set map (representing the internal wiring).
  */
 class Rotor(
     val type: RotorType,

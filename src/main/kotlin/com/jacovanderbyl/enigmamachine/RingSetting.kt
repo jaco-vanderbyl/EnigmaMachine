@@ -3,7 +3,9 @@ package com.jacovanderbyl.enigmamachine
 /**
  * Represents the ring setting on a rotor.
  *
- * Ring settings are used to change the position of the character ring relative to the internal wiring of the rotor.
+ * From Wikipedia: The ring settings, or Ringstellung, are used to change the position of the alphabet ring relative
+ * to the internal wiring. Notch and alphabet ring are fixed together. Changing the ring setting will therefore change
+ * the positions of the wiring, relative to the turnover-point and start position.
  */
 class RingSetting(val value: Int = 1) {
     init {

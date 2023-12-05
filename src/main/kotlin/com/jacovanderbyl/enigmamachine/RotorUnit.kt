@@ -4,8 +4,10 @@ package com.jacovanderbyl.enigmamachine
  * Represents a rotor unit, consisting of a reflector and a set of rotors.
  *
  * This class simulates two behaviours:
- *     - Stepping - when and how the rotors turn, which happens after each key-press on the Enigma Machine.
- *     - Enciphering - taking a 'plaintext' input letter and substituting it with a 'ciphertext' letter.
+ *     - Stepping:
+ *           When and how the rotors turn, which happens after each key-press on the Enigma Machine.
+ *     - Enciphering:
+ *           Taking a 'plaintext' input letter and substituting it with a 'ciphertext' letter.
  *
  * STEPPING allows for greater cryptographical complexity. It's what ensures that repeated letters in the input
  * plaintext are not just substituted with repeated letters in the ciphertext.

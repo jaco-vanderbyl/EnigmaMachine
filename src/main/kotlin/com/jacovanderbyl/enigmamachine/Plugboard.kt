@@ -1,15 +1,10 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Represents a plugboard on an Enigma Machine.
+ * Represents a plugboard, which has 26 letters, each of which can be connected with one other letter (therefore
+ * allowing up to 13 connectors), and these connections are used to substitute one letter with another.
  *
- * The plugboard allowed for even more letter substitutions to happen when enciphering a letter, which added
- * significant cryptographic strength to the machine.
- *
- * The plugboard may or may not actually substitute a letter for a new one. Substitution is determined
- * by the plugboard cable connections. If no cables are connected, no substitutions will occur. If only 'A' and 'B'
- * are connected with a cable, then only those two letters will be substituted. It was common to use ten cables,
- * connecting 20 letters.
+ * The plugboard adds significant cryptographic strength to the machine.
  */
 class Plugboard(vararg connectors: Connector) : CanEncipher {
     private val connectorMap = mutableMapOf<Char,Char>()
