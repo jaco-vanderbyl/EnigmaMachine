@@ -13,11 +13,11 @@ class RingSettingTest {
     @TestFactory
     fun `ensure ring setting throws on invalid value`() = invalidValues.map { value ->
         DynamicTest.dynamicTest("Invalid value '${value}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
+            val exception = assertFailsWith<IllegalArgumentException>(
                 block = { RingSetting(value) },
                 message = "Failed to ensure ring setting throws on invalid value."
             )
-            ex.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid value") }
+            exception.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid value") }
         }
     }
 
@@ -55,11 +55,11 @@ class RingSettingTest {
     @TestFactory
     fun `ensure named constructor only accepts integer in string`() = bogusRingSettingStrings.map { value ->
         DynamicTest.dynamicTest("Non integer string '${value}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
+            val exception = assertFailsWith<IllegalArgumentException>(
                 block = { RingSetting.fromString(value) },
                 message = "Failed to ensure named constructor only accepts integer in string."
             )
-            ex.message?.let { msg ->
+            exception.message?.let { msg ->
                 assertContains(charSequence = msg, other = "ring setting string must be an integer")
             }
         }

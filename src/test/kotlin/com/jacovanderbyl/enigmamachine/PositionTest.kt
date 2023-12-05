@@ -13,11 +13,11 @@ class PositionTest {
     @TestFactory
     fun `ensure position throws on invalid characters`() = invalidCharacters.map { character ->
         DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
+            val exception = assertFailsWith<IllegalArgumentException>(
                 block = { Position(character) },
                 message = "Failed to ensure position throws on invalid characters."
             )
-            ex.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid character") }
+            exception.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid character") }
         }
     }
 
@@ -55,11 +55,11 @@ class PositionTest {
     @TestFactory
     fun `ensure named constructor only accepts one-character string`() = bogusPositionStrings.map { position ->
         DynamicTest.dynamicTest("Non one-character string '${position}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
+            val exception = assertFailsWith<IllegalArgumentException>(
                 block = { Position.fromString(position) },
                 message = "Failed to ensure named constructor only accepts one-character string."
             )
-            ex.message?.let { msg ->
+            exception.message?.let { msg ->
                 assertContains(charSequence = msg, other = "position must be a single character")
             }
         }
