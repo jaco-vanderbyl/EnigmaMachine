@@ -39,22 +39,22 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      *     - The rotor notches, together with physical key-presses, determine when and how the rotors in the unit turn.
      *
      * Stepping rules:
-     *     1) The right-most rotor always steps when a key is pressed.
+     *     1) The entry rotor (right-most) always steps when a key is pressed.
      *     2) Any rotor that steps out of its notch position will cause the rotor to its left to step also.
      *        I.e. when a rotor is in its notched position and then turns, it will turn the rotor to the left of it.
-     *     3) When the right-most rotor steps, it will also step the rotor immediately next to it if that adjacent
+     *     3) When the entry rotor steps, it will also step the rotor immediately next to it if that adjacent
      *        rotor happens to be in its notched position. Subsequently, this will cause the next-left rotor to step
      *        as well (by way of rule 2). This is the so-called 'double stepping' mechanism.
      *
      * Example with following setup: RotorI-RotorII-RotorIII, which have notches Q-E-V, with starting positions A-A-T.
      *     A-A-T
      *     A-A-U  (Rule1: T→U)
-     *     A-A-V  (Rule1: U→V) — Right-most rotor is now in its notch position: V
+     *     A-A-V  (Rule1: U→V) — Entry rotor is now in its notch position: V
      *     A-B-W  (Rule1: V→W steps out of notch) ⇒ (Rule2: A→B)
      *     A-B-X  (Rule1: W→X)
      *     .....  Stepping continues
      *     A-D-U  (Rule1: T→U)
-     *     A-D-V  (Rule1: U→V) — Right-most rotor is now in its notch position: V
+     *     A-D-V  (Rule1: U→V) — Entry rotor is now in its notch position: V
      *     A-E-W  (Rule1: V→W steps out of notch) ⇒ (Rule2: D→E) — Middle rotor is now in its notch position: E
      *     B-F-X  (Rule1: W→X) ⇒ (Rule3: E→F steps out of notch) ⇒ (Rule2: A→B) — Double stepping complete
      *     B-F-Y  (Rule1: X→Y)
@@ -66,21 +66,21 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      *            because there is not another rotor to the left
      *
      * In this function the stepping rules are applied as follows: it loops over the rotors in the unit, starting with
-     * the right-most rotor (last item in the rotor set), and then, to determine if the current rotor in the loop
+     * the entry rotor (last item in the rotor set), and then, to determine if the current rotor in the loop
      * should step, one of three conditions must be true:
-     *     a) the rotor _is_ the right-most rotor, or
+     *     a) the rotor _is_ the entry rotor, or
      *     b) the previous rotor stepped out of its notched position, or
-     *     c) the rotor is in its notched position, and it's adjacent to the right-most rotor.
+     *     c) the rotor is in its notched position, and it's adjacent to the entry rotor.
      */
     fun stepRotors() {
         var previousSteppedOutOfNotch = false
 
         rotors.reversed().forEachIndexed { index, rotor ->
-            val isRightMost = index == 0
-            val isNextToRightMost = index == 1
-            val isNotchedAndNextToRightMost = rotor.isInNotchedPosition() && isNextToRightMost
+            val isEntryRotor = index == 0
+            val isNextToEntryRotor = index == 1
+            val isNotchedAndNextToEntryRotor = rotor.isInNotchedPosition() && isNextToEntryRotor
 
-            if (isRightMost || previousSteppedOutOfNotch || isNotchedAndNextToRightMost) {
+            if (isEntryRotor || previousSteppedOutOfNotch || isNotchedAndNextToEntryRotor) {
                 previousSteppedOutOfNotch = rotor.isInNotchedPosition()
                 rotor.step()
             }
@@ -90,11 +90,13 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
     /**
      * Simulate enciphering of rotor unit.
      *
-     * There is a sequence of letter substitutions that happens within the rotor unit. It starts with the right-most
-     * rotor, which does a substitution, then the next rotor takes the substituted letter and substitutes it with yet
-     * another letter. This continues until the left-most rotor passes a letter to the reflector. The reflector does
-     * its own substitution, and then sends (reflects) a letter back to the left-most rotor. Substitutions happen again
-     * for each rotor back to the right-most rotor, which does the last substitution for the unit.
+     * There is a sequence of letter substitutions that happens within the rotor unit:
+     *     - It starts with the entry rotor (right-most), which does a substitution.
+     *     - Then, the left-next rotor takes the substituted letter and substitutes it with yet another letter.
+     *     - This is repeated for every rotor, until the left-most rotor passes a letter to the reflector.
+     *     - The reflector does its own substitution, and it then sends (reflects) a letter back to the left-most rotor.
+     *     - Substitutions happen again for each rotor, in reverse, back to the entry rotor, which does the
+     *       final substitution for the unit.
      *
      * I.e. A rotor unit with 3 rotors and a reflector will perform 7 letter substitutions.
      *
@@ -102,7 +104,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      * with the same configuration and settings.
      */
     override fun encipher(character: Char) : Char {
-        // Simulate character substitutions for each rotor, moving from last (right-most) to first (left-most) rotor.
+        // Simulate character substitutions for each rotor, moving from the entry rotor (right-most) to the left-most.
         var substituteCharacter = character
         for (rotor in rotors.reversed()) {
             substituteCharacter = rotor.encipher(substituteCharacter)
@@ -111,7 +113,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
         // Simulate character substitution of reflector
         substituteCharacter = reflector.encipher(substituteCharacter)
 
-        // Simulate character substitution for each rotor, moving from first (left-most) to last (right-most) rotor.
+        // Simulate character substitution for each rotor, moving from left-most to entry rotor.
         for (rotor in rotors) {
             substituteCharacter = rotor.encipher(substituteCharacter, reverse = true)
         }
