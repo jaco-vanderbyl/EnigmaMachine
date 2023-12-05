@@ -83,8 +83,6 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
             if (isRightMost || previousSteppedOutOfNotch || isNotchedAndNextToRightMost) {
                 previousSteppedOutOfNotch = rotor.isInNotchedPosition()
                 rotor.step()
-            } else {
-                previousSteppedOutOfNotch = false
             }
         }
     }
