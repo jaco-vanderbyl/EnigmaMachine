@@ -9,7 +9,7 @@ import kotlin.test.assertFailsWith
 class EnigmaTypeTest {
     private fun createIncompatibleRotor() : Rotor = Rotor(
         cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-        notch = Notch(setOf('A')),
+        notch = Notch(Position('A')),
         type = RotorType.V,
         compatibility = setOf(),
         position = Position(),

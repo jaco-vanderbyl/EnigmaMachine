@@ -1,18 +1,17 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Represents one or more notches on a rotor.
+ * Represents a notch on a rotor at a specific position.
+ *
+ * A rotor can have one or more notches.
  */
-class Notch(val characters: Set<Char>) {
+class Notch(vararg positions: Position) {
+    val characters = positions.map { it.character }.toSet()
+
     init {
-        require(characters.size in 1..Enigma.CHARACTER_SET.length) {
+        require(positions.size in 1..Enigma.CHARACTER_SET.length) {
             "Invalid character count. A rotor cannot have more notches than the character set" +
-                    "size: '${Enigma.CHARACTER_SET.length}'. Given: '${characters.size}'."
-        }
-        characters.forEach {
-            require(it in Enigma.CHARACTER_SET) {
-                "Invalid character. Valid: '${Enigma.CHARACTER_SET}'. Given: '${it}'."
-            }
+                    "size: '${Enigma.CHARACTER_SET.length}'. Given: '${positions.size}'."
         }
     }
 }

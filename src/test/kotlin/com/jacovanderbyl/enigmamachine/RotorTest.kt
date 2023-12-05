@@ -9,12 +9,12 @@ import kotlin.test.assertTrue
 
 class RotorTest {
     private val cipherSet = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
-    private val notchCharacters = setOf('C', 'J', 'W')
+    private val notchCharacters = setOf(Position('C'), Position('J'), Position('W'))
 
     private fun createRotor() : Rotor = Rotor(
         type = RotorType.I,
         cipherSetMap = CipherSetMap(cipherSet),
-        notch = Notch(notchCharacters),
+        notch = Notch(*notchCharacters.toTypedArray()),
         compatibility = setOf(EnigmaType.ENIGMA_I),
         position = Position(),
         ringSetting = RingSetting()
@@ -53,7 +53,7 @@ class RotorTest {
 
         do {
             when (rotor.position.character) {
-                in notchCharacters -> assertTrue(
+                in notchCharacters.map { it.character } -> assertTrue(
                     actual = rotor.isInNotchedPosition(),
                     message = "Failed to confirm rotor is in notched position."
                 )
