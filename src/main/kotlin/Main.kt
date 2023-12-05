@@ -1,12 +1,12 @@
 import com.jacovanderbyl.enigmamachine.*
 
 fun main() {
-    val firstEnigmaI = EnigmaBuilder.makeFromCsv(
+    val firstEnigmaI = EnigmaBuilder.make(
         type = "ENIGMA_I",
         reflector = "B",
         rotors = "I,II,III"
     )
-    val secondEnigmaI = EnigmaBuilder.makeFromCsv(
+    val secondEnigmaI = EnigmaBuilder.make(
         type = "ENIGMA_I",
         reflector = "B",
         rotors = "I,II,III"

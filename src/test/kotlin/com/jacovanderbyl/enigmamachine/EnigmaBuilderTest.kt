@@ -10,7 +10,7 @@ import kotlin.test.assertFailsWith
 class EnigmaBuilderTest {
      @Test
     fun `ensure build works with optional fields omitted`() {
-        val enigma = EnigmaBuilder.makeFromCsv(
+        val enigma = EnigmaBuilder.make(
             type = "ENIGMA_I",
             reflector = "B",
             rotors = "I,V,III"
@@ -24,7 +24,7 @@ class EnigmaBuilderTest {
 
     @Test
     fun `ensure build works with optional fields`() {
-        val enigma = EnigmaBuilder.makeFromCsv(
+        val enigma = EnigmaBuilder.make(
             type = "ENIGMA_I",
             reflector = "B",
             rotors = "I,V,III",
@@ -41,7 +41,7 @@ class EnigmaBuilderTest {
 
     @Test
     fun `ensure build works with CSV fields containing whitespace`() {
-        val enigma = EnigmaBuilder.makeFromCsv(
+        val enigma = EnigmaBuilder.make(
             type = "ENIGMA_I",
             reflector = "B",
             rotors = " I, V, III ",
@@ -60,7 +60,7 @@ class EnigmaBuilderTest {
     fun `ensure invalid enigma type throws`() {
         val exception = assertFailsWith<IllegalArgumentException>(
             block = {
-                EnigmaBuilder.makeFromCsv(
+                EnigmaBuilder.make(
                     type = "BOGUS_TYPE",
                     reflector = "B",
                     rotors = "I,V,III"
@@ -77,7 +77,7 @@ class EnigmaBuilderTest {
     fun `ensure invalid reflector type throws`() {
         val exception = assertFailsWith<IllegalArgumentException>(
             block = {
-                EnigmaBuilder.makeFromCsv(
+                EnigmaBuilder.make(
                     type = "ENIGMA_I",
                     reflector = "BOGUS_REFLECTOR",
                     rotors = "I,V,III"
@@ -99,7 +99,7 @@ class EnigmaBuilderTest {
         DynamicTest.dynamicTest("Invalid rotor type '${rotors}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
-                    EnigmaBuilder.makeFromCsv(
+                    EnigmaBuilder.make(
                         type = "ENIGMA_I",
                         reflector = "B",
                         rotors = rotors
@@ -122,7 +122,7 @@ class EnigmaBuilderTest {
         DynamicTest.dynamicTest("Invalid ring setting count '${ringSettings}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
-                    EnigmaBuilder.makeFromCsv(
+                    EnigmaBuilder.make(
                         type = "ENIGMA_I",
                         reflector = "B",
                         rotors = "I,V,III",
@@ -146,7 +146,7 @@ class EnigmaBuilderTest {
         DynamicTest.dynamicTest("Invalid position count '${positions}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
-                    EnigmaBuilder.makeFromCsv(
+                    EnigmaBuilder.make(
                         type = "ENIGMA_I",
                         reflector = "B",
                         rotors = "I,V,III",

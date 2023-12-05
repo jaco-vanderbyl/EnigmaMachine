@@ -1,9 +1,8 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Represents a connector, connecting one character with another.
- *
- * E.g.: a plugboard cable connecting 'A' and 'B'.
+ * Represents a connection between two distinct characters,
+ * used by plugboard to substitute one character for another.
  */
 class Connector(val first: Char, val second: Char) {
     init {
@@ -28,6 +27,6 @@ class Connector(val first: Char, val second: Char) {
 
         fun fromStrings(characterPairs: List<String>) : Array<Connector> = characterPairs.map {
             fromString(it)
-        } .toTypedArray()
+        }.toTypedArray()
     }
 }

@@ -58,13 +58,13 @@ println(positionList)    // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
-val enigmaI = EnigmaBuilder.makeFromCsv(
+val enigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "B",
     rotors = "I,II,III"
 )
 
-val enigmaM3 = EnigmaBuilder.makeFromCsv(
+val enigmaM3 = EnigmaBuilder.make(
     type = "ENIGMA_M3",
     reflector = "B",
     rotors = "I,II,III"
@@ -75,7 +75,7 @@ val enigmaM3 = EnigmaBuilder.makeFromCsv(
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
-val enigmaI = EnigmaBuilder.makeFromCsv(
+val enigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "C",
     rotors = "I,V,III",
@@ -88,7 +88,7 @@ val enigmaI = EnigmaBuilder.makeFromCsv(
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
-val enigmaI = EnigmaBuilder.makeFromCsv(
+val enigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "C",
     rotors = "I,V,III",
@@ -102,13 +102,13 @@ val enigmaI = EnigmaBuilder.makeFromCsv(
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
-val firstEnigmaI = EnigmaBuilder.makeFromCsv(
+val firstEnigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "B",
     rotors = "I,II,III"
 )
 
-val secondEnigmaI = EnigmaBuilder.makeFromCsv(
+val secondEnigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "B",
     rotors = "I,II,III"

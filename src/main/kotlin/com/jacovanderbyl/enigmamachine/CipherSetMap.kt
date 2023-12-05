@@ -1,12 +1,13 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Represents a map between two character sets, used for substituting one character with another.
+ * Represents a map between the Enigma Machine character set and a given cipher set,
+ * used to substitute one character for another.
  *
  * E.g.:
- *     Character set: ABCDEFGHIJKLMNOPQRSTUVWXYZ
- *                    ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
- *     Cipher set:    EKMFLGDQVZNTOWYHXUSPAIBRCJ
+ *     Enigma Character Set: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+ *                           ↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕
+ *     Cipher Set:           EKMFLGDQVZNTOWYHXUSPAIBRCJ
  */
 class CipherSetMap(private val cipherSet: String) : CanEncipherBidirectionally {
     val characterSet: String = Enigma.CHARACTER_SET

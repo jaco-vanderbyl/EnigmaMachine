@@ -3,8 +3,10 @@ package com.jacovanderbyl.enigmamachine
 class EnigmaBuilder {
     companion object {
         /**
+         * All params, except 'type' and 'reflector', accept comma-separated values.
+         *
          * Example usage:
-         *     EnigmaBuilder.makeFromCsv(
+         *     EnigmaBuilder.make(
          *         type = "ENIGMA_I",
          *         reflector = "B",
          *         rotors = "I,V,III",
@@ -13,7 +15,7 @@ class EnigmaBuilder {
          *         plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
          *     )
          */
-        fun makeFromCsv(
+        fun make(
             type: String,
             reflector: String,
             rotors: String,
@@ -71,10 +73,9 @@ class EnigmaBuilder {
             )
         }
 
-        private fun split(str: String?) : List<String> =
-            if (str.isNullOrEmpty())
-                listOf()
-            else
-                str.filterNot { it.isWhitespace() }.split(",")
+        private fun split(str: String?) : List<String> = when (str.isNullOrEmpty()) {
+            true -> listOf()
+            false -> str.filterNot { it.isWhitespace() }.split(",")
+        }
     }
 }

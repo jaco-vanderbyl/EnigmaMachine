@@ -3,11 +3,19 @@ package com.jacovanderbyl.enigmamachine
 /**
  * Represents an Enigma Machine with a plugboard and a rotor unit (which contains a reflector and a set of rotors).
  *
- * This class simulates three behaviours:
- *     - Enciphering: taking a 'plaintext' input letter and substituting it with a 'ciphertext' letter.
- *     - Setting Rotor Positions: changing the starting position for each rotor (part of setting up the machine).
- *     - Connecting Plugboard Connector Cables: connecting letters with one another (part of setting up the machine).
+ * Class simulates three behaviours:
+ *     - Enciphering:
+ *           Taking 'plaintext' input and outputting letter-substitution 'ciphertext'.
+ *     - Setting Rotor Positions:
+ *           Changing the starting position for each rotor (part of machine setup).
+ *     - Adding Plugboard Connectors:
+ *           Connecting letters on the plugboard (part of machine setup).
+ *
+ * Learn more about Enigma Machine:
+ *     - https://en.wikipedia.org/wiki/Enigma_machine
+ *     - https://www.cryptomuseum.com/crypto/enigma/
  */
+
 class Enigma(
     val type: EnigmaType,
     private val rotorUnit: RotorUnit,
@@ -19,20 +27,21 @@ class Enigma(
     }
 
     /**
-     * Simulate an Enigma Machine's enciphering of a single character.
+     * Simulate enciphering of a single character.
      *
-     * The input of this function is like a key-press on the Enigma Machine and the output is like a letter
-     * display-lamp lighting up.
+     * The input for this function is like a key-press on the Enigma Machine
+     * and the output is like a letter display-lamp lighting up.
      *
-     * Each key-press on an Enigma Machine cause the rotors to step, so this function does that first.
+     * Each key-press on an Enigma Machine causes the rotors to step (turn), so this function does that first.
      *
-     * Next, it simulates the letter substitution journey: first the letter is sent to the plugboard for
-     * substitution, then it's sent to the rotor unit, and finally, it's sent back to the plugboard, which
-     * does the final substitution.
+     * Next, it simulates the letter substitution journey:
+     *     1) Letter is 'sent' to the plugboard for substitution.
+     *     2) Substituted letter is 'sent' to the rotor unit for substitution.
+     *     3) Substituted letter is 'sent' back to the plugboard for final substitution.
      */
     override fun encipher(character: Char) : Char {
-        require(character in Enigma.CHARACTER_SET) {
-            "Invalid character. Valid: '${Enigma.CHARACTER_SET}'. Given: '${character}'."
+        require(character in CHARACTER_SET) {
+            "Invalid character. Valid: '${CHARACTER_SET}'. Given: '${character}'."
         }
 
         rotorUnit.stepRotors()

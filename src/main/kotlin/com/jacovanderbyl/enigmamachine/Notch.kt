@@ -1,7 +1,7 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Represents a notch (at one or more characters) on a rotor.
+ * Represents one or more notches on a rotor.
  */
 class Notch(val characters: Set<Char>) {
     init {
