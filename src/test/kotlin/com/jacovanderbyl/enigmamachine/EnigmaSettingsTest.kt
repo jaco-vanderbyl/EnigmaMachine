@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EnigmaSettingsTest {
-    private fun createStockEnigmaFake(plugboard: Plugboard = Plugboard()) : Enigma = Enigma(
+    private fun createStockEnigma(plugboard: Plugboard = Plugboard()) : Enigma = Enigma(
         type = EnigmaType.ENIGMA_I,
         rotorUnit = RotorUnit(
             reflector = ReflectorType.B.create(),
@@ -23,7 +23,7 @@ class EnigmaSettingsTest {
         listOf(Position('A'), Position('B'), Position('C')),
     ).map { positions ->
         DynamicTest.dynamicTest("Test setting positions to: '${positions}'.") {
-            val enigma = createStockEnigmaFake()
+            val enigma = createStockEnigma()
             enigma.setRotorPositions(*positions.toTypedArray())
 
             assertEquals(
@@ -41,7 +41,7 @@ class EnigmaSettingsTest {
         listOf(Position('A'), Position('B'), Position('C'), Position('D')),
     ).map { positions ->
         DynamicTest.dynamicTest("Invalid positions count '${positions.size}' should throw.") {
-            val enigma = createStockEnigmaFake()
+            val enigma = createStockEnigma()
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
                     enigma.setRotorPositions(*positions.toTypedArray())
@@ -56,7 +56,7 @@ class EnigmaSettingsTest {
 
     @Test
     fun `ensure positions can be reset`() {
-        val enigma = createStockEnigmaFake()
+        val enigma = createStockEnigma()
         enigma.setRotorPositions(Position('X'), Position('Y'), Position('Z'))
         enigma.resetRotorPositions()
 
@@ -70,7 +70,7 @@ class EnigmaSettingsTest {
     @Test
     fun `ensure plugboard can be reset`() {
         val plugboard = Plugboard()
-        val enigma = createStockEnigmaFake(plugboard)
+        val enigma = createStockEnigma(plugboard)
         enigma.addPlugboardConnectors(Connector(first = 'A', second = 'B'))
         enigma.resetPlugboard()
 
@@ -82,7 +82,7 @@ class EnigmaSettingsTest {
     }
 
     private val plugboardSingle = Plugboard()
-    private val enigmaSingle = createStockEnigmaFake(plugboardSingle)
+    private val enigmaSingle = createStockEnigma(plugboardSingle)
     private val connectorsList = listOf(
         listOf(Connector('A', 'B'), Connector('C', 'D')),
         listOf(Connector('E', 'F'), Connector('G', 'H')),

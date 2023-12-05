@@ -21,15 +21,15 @@ enum class EnigmaType {
 
     protected fun checkRequirements(enigmaType: EnigmaType, rotorUnit: RotorUnit) {
         require(rotorUnit.rotors.count() == 3) {
-            "'${enigmaType}' must have 3 rotors. Given: '${rotorUnit.rotors.count()}'."
+            "Invalid rotor count. '${enigmaType}' must have 3 rotors. Given: '${rotorUnit.rotors.count()}'."
         }
         rotorUnit.rotors.forEach { rotor ->
             require(rotor.isCompatible(enigmaType)) {
-                "'${rotor.type}' rotor is not compatible with '${enigmaType}'."
+                "Incompatible rotor. '${rotor.type}' rotor is not compatible with '${enigmaType}'."
             }
         }
         require(rotorUnit.reflector.isCompatible(enigmaType)) {
-            "'${rotorUnit.reflector.type}' reflector is not compatible with '${enigmaType}'."
+            "Incompatible reflector. '${rotorUnit.reflector.type}' reflector is not compatible with '${enigmaType}'."
         }
     }
 }

@@ -3,175 +3,16 @@ package com.jacovanderbyl.enigmamachine
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
-
 import kotlin.IllegalArgumentException
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EnigmaTypeTest {
-    private val plaintext = "AAAAA"
-
-    @Test
-    fun `ensure factory-built EnigmaI enciphers correctly`() {
-        val enigma = EnigmaType.ENIGMA_I.create(
-            rotorUnit = RotorUnit(
-                reflector = ReflectorType.B.create(),
-                rotors = setOf(RotorType.I.create(), RotorType.V.create(), RotorType.III.create())
-            ),
-            plugboard = Plugboard()
-        )
-
-        assertEquals(
-            expected = "SCSUX",
-            actual = enigma.encipher(plaintext),
-            message = "Failed to ensure factory-built EnigmaI enciphers correctly."
-        )
-    }
-
-    @Test
-    fun `ensure factory-built EnigmaM3 enciphers correctly`() {
-        val enigma = EnigmaType.ENIGMA_M3.create(
-            rotorUnit = RotorUnit(
-                reflector = ReflectorType.B.create(),
-                rotors = setOf(RotorType.VI.create(), RotorType.VII.create(), RotorType.VIII.create())
-            ),
-            plugboard = Plugboard()
-        )
-
-        assertEquals(
-            expected = "GJUBB",
-            actual = enigma.encipher(plaintext),
-            message = "Failed to ensure factory-built EnigmaM3 enciphers correctly."
-        )
-    }
-
-    private val badRotorCounts = listOf(
-        setOf(RotorType.I.create()),
-        setOf(RotorType.I.create(), RotorType.II.create()),
-        setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create(), RotorType.IV.create()),
-    )
-
-    @TestFactory
-    fun `ensure EnigmaI has exactly 3 rotors`() = badRotorCounts.map { rotors ->
-        DynamicTest.dynamicTest("EnigmaI must have 3 rotors. Providing '${rotors.size}' rotors should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = {
-                    EnigmaType.ENIGMA_I.create(
-                        rotorUnit = RotorUnit(
-                            reflector = ReflectorType.B.create(),
-                            rotors = rotors
-                        ),
-                        plugboard = Plugboard()
-                    )
-                },
-                message = "Failed to ensure EnigmaI has exactly 3 rotors."
-            )
-            ex.message?.let { msg -> assertContains(charSequence = msg, other = "must have 3 rotors") }
-        }
-    }
-
-    @TestFactory
-    fun `ensure EnigmaM3 has exactly 3 rotors`() = badRotorCounts.map { rotors ->
-        DynamicTest.dynamicTest("EnigmaM3 must have 3 rotors. Providing '${rotors.size}' rotors should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = {
-                    EnigmaType.ENIGMA_M3.create(
-                        rotorUnit = RotorUnit(
-                            reflector = ReflectorType.B.create(),
-                            rotors = rotors
-                        ),
-                        plugboard = Plugboard()
-                    )
-                },
-                message = "Failed to ensure EnigmaM3 has exactly 3 rotors."
-            )
-            ex.message?.let { msg -> assertContains(charSequence = msg, other = "must have 3 rotors") }
-        }
-    }
-
-    private val incompatibleRotors = listOf(
-        setOf(createIncompatibleRotor(), RotorType.I.create(), RotorType.II.create()),
-        setOf(RotorType.I.create(), createIncompatibleRotor(), RotorType.II.create()),
-        setOf(RotorType.I.create(), RotorType.II.create(), createIncompatibleRotor()),
-    )
-
-    @TestFactory
-    fun `ensure EnigmaI only accepts compatible rotors`() = incompatibleRotors.map { rotors ->
-        DynamicTest.dynamicTest("EnigmaI must accept compatible rotors only. Incompatible rotors should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = {
-                    EnigmaType.ENIGMA_I.create(
-                        rotorUnit = RotorUnit(
-                            reflector = ReflectorType.B.create(),
-                            rotors = rotors
-                        ),
-                        plugboard = Plugboard()
-                    )
-                },
-                message = "Failed to ensure EnigmaI only accepts compatible rotors."
-            )
-            ex.message?.let { msg -> assertContains(charSequence = msg, other = "rotor is not compatible") }
-        }
-    }
-
-    @TestFactory
-    fun `ensure EnigmaM3 only accepts compatible rotors`() = incompatibleRotors.map { rotors ->
-        DynamicTest.dynamicTest("EnigmaM3 must accept compatible rotors only. Incompatible rotors should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = {
-                    EnigmaType.ENIGMA_M3.create(
-                        rotorUnit = RotorUnit(
-                            reflector = ReflectorType.B.create(),
-                            rotors = rotors
-                        ),
-                        plugboard = Plugboard()
-                    )
-                },
-                message = "Failed to ensure EnigmaM3 only accepts compatible rotors."
-            )
-            ex.message?.let { msg -> assertContains(charSequence = msg, other = "rotor is not compatible") }
-        }
-    }
-
-    @Test
-    fun `ensure EnigmaI only accepts compatible reflector`() {
-        val ex = assertFailsWith<IllegalArgumentException>(
-            block = {
-                EnigmaType.ENIGMA_I.create(
-                    rotorUnit = RotorUnit(
-                        reflector = createIncompatibleReflector(),
-                        rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
-                    ),
-                    plugboard = Plugboard()
-                )
-            },
-            message = "Failed to ensure EnigmaI only accepts compatible reflector."
-        )
-        ex.message?.let { msg -> assertContains(charSequence = msg, other = "reflector is not compatible") }
-    }
-
-    @Test
-    fun `ensure EnigmaM3 only accepts compatible reflector`() {
-        val ex = assertFailsWith<IllegalArgumentException>(
-            block = {
-                EnigmaType.ENIGMA_M3.create(
-                    rotorUnit = RotorUnit(
-                        reflector = createIncompatibleReflector(),
-                        rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
-                    ),
-                    plugboard = Plugboard()
-                )
-            },
-            message = "Failed to ensure EnigmaM3 only accepts compatible reflector."
-        )
-        ex.message?.let { msg -> assertContains(charSequence = msg, other = "reflector is not compatible") }
-    }
-
     private fun createIncompatibleRotor() : Rotor = Rotor(
         cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
         notch = Notch(setOf('A')),
-        type = RotorType.VIII,
+        type = RotorType.V,
         compatibility = setOf(),
         position = Position(),
         ringSetting = RingSetting()
@@ -182,4 +23,160 @@ class EnigmaTypeTest {
         type = ReflectorType.B,
         compatibility = setOf()
     )
+
+    private fun validRotors(enigmaType: EnigmaType) = when (enigmaType) {
+        EnigmaType.ENIGMA_I -> setOf(RotorType.I.create(), RotorType.V.create(), RotorType.III.create())
+        EnigmaType.ENIGMA_M3 -> setOf(RotorType.VI.create(), RotorType.VII.create(), RotorType.VIII.create())
+        else -> throw IllegalArgumentException()
+    }
+
+    private fun validReflector(enigmaType: EnigmaType) = when (enigmaType) {
+        EnigmaType.ENIGMA_I -> ReflectorType.B.create()
+        EnigmaType.ENIGMA_M3 -> ReflectorType.C.create()
+        else -> throw IllegalArgumentException()
+    }
+
+    private fun invalidRotorCount(enigmaType: EnigmaType) = when (enigmaType) {
+        EnigmaType.ENIGMA_I -> listOf(
+                setOf(RotorType.I.create()),
+                setOf(RotorType.I.create(), RotorType.II.create()),
+                setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create(), RotorType.IV.create()),
+            )
+        EnigmaType.ENIGMA_M3 -> listOf(
+                setOf(RotorType.I.create()),
+                setOf(RotorType.I.create(), RotorType.II.create()),
+                setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create(), RotorType.IV.create()),
+            )
+        else -> throw IllegalArgumentException()
+    }
+
+    private fun incompatibleRotors(enigmaType: EnigmaType) = when (enigmaType) {
+        EnigmaType.ENIGMA_I -> listOf(
+                setOf(createIncompatibleRotor(), RotorType.I.create(), RotorType.II.create()),
+                setOf(RotorType.I.create(), createIncompatibleRotor(), RotorType.II.create()),
+                setOf(RotorType.I.create(), RotorType.II.create(), createIncompatibleRotor()),
+            )
+        EnigmaType.ENIGMA_M3 -> listOf(
+                setOf(createIncompatibleRotor(), RotorType.VII.create(), RotorType.VIII.create()),
+                setOf(RotorType.VI.create(), createIncompatibleRotor(), RotorType.VIII.create()),
+                setOf(RotorType.VI.create(), RotorType.VII.create(), createIncompatibleRotor()),
+            )
+        else -> throw IllegalArgumentException()
+    }
+
+    private fun incompatibleReflector(enigmaType: EnigmaType) = when (enigmaType) {
+        EnigmaType.ENIGMA_I -> createIncompatibleReflector()
+        EnigmaType.ENIGMA_M3 -> createIncompatibleReflector()
+        else -> throw IllegalArgumentException()
+    }
+
+    private fun expectedCiphers(enigmaType: EnigmaType) = when (enigmaType) {
+        EnigmaType.ENIGMA_I -> "SCSUX"
+        EnigmaType.ENIGMA_M3 -> "MWMJL"
+        else -> throw IllegalArgumentException()
+    }
+
+    @Test
+    fun `ensure factory creates enigma correctly`() {
+        EnigmaType.entries.forEach { enigmaType ->
+            val enigma = enigmaType.create(
+                rotorUnit = RotorUnit(
+                    reflector = validReflector(enigmaType),
+                    rotors = validRotors(enigmaType)
+                ),
+                plugboard = Plugboard()
+            )
+            assertEquals(
+                expected = enigmaType,
+                actual = enigma.type,
+                message = "Failed to ensure factory creates enigma with correct type."
+            )
+            assertEquals(
+                expected = expectedCiphers(enigmaType),
+                actual = enigma.encipher("AAAAA"),
+                message = "Failed to ensure factory creates enigma that enciphers correctly."
+            )
+        }
+    }
+
+    @TestFactory
+    fun `ensure invalid rotor count throws`(): List<DynamicTest> {
+        val tests = mutableListOf<DynamicTest>()
+
+        EnigmaType.entries.forEach { enigmaType ->
+            tests += invalidRotorCount(enigmaType).map { rotors ->
+                DynamicTest.dynamicTest(
+                    "Invalid rotor count '${rotors.size}' for enigma '${enigmaType}' should throw."
+                ) {
+                    val exception = assertFailsWith<IllegalArgumentException>(
+                        block = {
+                            enigmaType.create(
+                                rotorUnit = RotorUnit(
+                                    reflector = validReflector(enigmaType),
+                                    rotors = rotors
+                                ),
+                                plugboard = Plugboard()
+                            )
+                        },
+                        message = "Failed to ensure invalid rotor count throws."
+                    )
+                    exception.message?.let {
+                        assertContains(it, "invalid rotor count", ignoreCase = true)
+                    }
+                }
+            }
+        }
+
+        return tests.toList()
+    }
+
+    @TestFactory
+    fun `ensure incompatible rotor throws`(): List<DynamicTest> {
+        val tests = mutableListOf<DynamicTest>()
+
+        EnigmaType.entries.forEach { enigmaType ->
+            tests += incompatibleRotors(enigmaType).map { rotors ->
+                DynamicTest.dynamicTest("Incompatible rotor for enigma '${enigmaType}' should throw.") {
+                    val exception = assertFailsWith<IllegalArgumentException>(
+                        block = {
+                            enigmaType.create(
+                                rotorUnit = RotorUnit(
+                                    reflector = validReflector(enigmaType),
+                                    rotors = rotors
+                                ),
+                                plugboard = Plugboard()
+                            )
+                        },
+                        message = "Failed to ensure incompatible rotor throws."
+                    )
+                    exception.message?.let {
+                        assertContains(it, "incompatible rotor", ignoreCase = true)
+                    }
+                }
+            }
+        }
+
+        return tests.toList()
+    }
+
+    @Test
+    fun `ensure incompatible reflector throws`() {
+        EnigmaType.entries.forEach { enigmaType ->
+            val exception = assertFailsWith<IllegalArgumentException>(
+                block = {
+                    enigmaType.create(
+                        rotorUnit = RotorUnit(
+                            reflector = incompatibleReflector(enigmaType),
+                            rotors = validRotors(enigmaType)
+                        ),
+                        plugboard = Plugboard()
+                    )
+                },
+                message = "Failed to ensure incompatible reflector throws."
+            )
+            exception.message?.let {
+                assertContains(it, "incompatible reflector", ignoreCase = true)
+            }
+        }
+    }
 }

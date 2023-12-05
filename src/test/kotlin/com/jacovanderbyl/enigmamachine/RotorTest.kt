@@ -12,7 +12,7 @@ class RotorTest {
     private val cipherSet = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
     private val notchCharacters = setOf('C', 'J', 'W')
 
-    private fun createRotorFake() : Rotor = Rotor(
+    private fun createRotor() : Rotor = Rotor(
         type = RotorType.I,
         cipherSetMap = CipherSetMap(cipherSet),
         notch = Notch(notchCharacters),
@@ -23,7 +23,7 @@ class RotorTest {
 
     @Test
     fun `ensure step moves rotor forward one position`() {
-        val rotor = createRotorFake()
+        val rotor = createRotor()
 
         Enigma.CHARACTER_SET.repeat(2).forEach { character ->
             assertEquals(
@@ -37,7 +37,7 @@ class RotorTest {
 
     @Test
     fun `ensure rotor position can be reset to default`() {
-        val rotor = createRotorFake()
+        val rotor = createRotor()
         rotor.position = Position('G')
         rotor.resetPosition()
 
@@ -50,7 +50,7 @@ class RotorTest {
 
     @Test
     fun `ensure getting whether the rotor is in notched position works correctly`() {
-        val rotor = createRotorFake()
+        val rotor = createRotor()
 
         do {
             when (rotor.position.character) {
@@ -70,7 +70,7 @@ class RotorTest {
 
     @Test
     fun `ensure rotor compatibility works correctly`() {
-        val rotor = createRotorFake()
+        val rotor = createRotor()
 
         assertTrue(
             message = "Failed to ensure rotor compatibility works correctly.",
@@ -92,7 +92,7 @@ class RotorTest {
         'Z' to 'J',
     ).map {
         DynamicTest.dynamicTest("Rotor should encipher '${it.key}' to '${it.value}}'.") {
-            val rotor = createRotorFake()
+            val rotor = createRotor()
 
             assertEquals(
                 expected = it.value,
@@ -117,7 +117,7 @@ class RotorTest {
         'Z' to 'D',
     ).map {
         DynamicTest.dynamicTest("Rotor should encipher '${it.key}' to '${it.value}}'.") {
-            val rotor = createRotorFake()
+            val rotor = createRotor()
             rotor.position = Position('B')
 
             assertEquals(
@@ -143,7 +143,7 @@ class RotorTest {
         'Z' to 'I',
     ).map {
         DynamicTest.dynamicTest("Rotor should encipher '${it.key}' to '${it.value}}'.") {
-            val rotor = createRotorFake()
+            val rotor = createRotor()
             rotor.position = Position('G')
             rotor.ringSetting = RingSetting(19)
 

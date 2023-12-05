@@ -20,7 +20,7 @@ import kotlin.test.assertFailsWith
 class EnigmaEncipherTest {
     private val plaintext = ClassLoader.getSystemResource("./plaintext").readText()
 
-    private fun createStockEnigmaFake() : Enigma = Enigma(
+    private fun createStockEnigma() : Enigma = Enigma(
         type = EnigmaType.ENIGMA_I,
         rotorUnit = RotorUnit(
             reflector = ReflectorType.B.create(),
@@ -29,7 +29,7 @@ class EnigmaEncipherTest {
         plugboard = Plugboard()
     )
 
-    private fun createEnigmaFake(fileName: String) : Enigma = when (fileName) {
+    private fun createEnigma(fileName: String) : Enigma = when (fileName) {
         "B-I-II-III-A-A-A-1-1-1" -> {
             Enigma(
                 rotorUnit = RotorUnit(
@@ -144,12 +144,12 @@ class EnigmaEncipherTest {
                 type = EnigmaType.ENIGMA_M3
             )
         }
-        else -> createStockEnigmaFake()
+        else -> createStockEnigma()
     }
 
     @Test
     fun `ensure encipher works with a single character`() {
-        val enigma = createStockEnigmaFake()
+        val enigma = createStockEnigma()
         assertEquals(
             expected = 'B',
             actual = enigma.encipher('A'),
@@ -159,7 +159,7 @@ class EnigmaEncipherTest {
 
     @Test
     fun `ensure encipher works with a string`() {
-        val enigma = createStockEnigmaFake()
+        val enigma = createStockEnigma()
         assertEquals(
             expected = "BDZGO",
             actual = enigma.encipher("AAAAA"),
@@ -174,7 +174,7 @@ class EnigmaEncipherTest {
         '@',
     ).map { char ->
         DynamicTest.dynamicTest("Invalid character '${char}' should throw.") {
-            val enigma = createStockEnigmaFake()
+            val enigma = createStockEnigma()
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = { enigma.encipher(char) },
                 message = "Failed to ensure invalid character throws."
@@ -197,7 +197,7 @@ class EnigmaEncipherTest {
         "C-VI-VII-VIII-Z-R-S-26-8-15-UV-WX-YZ",
     ).map { fileName ->
         DynamicTest.dynamicTest("Test encipher with configuration: '${fileName}'.") {
-            val enigma = createEnigmaFake(fileName)
+            val enigma = createEnigma(fileName)
             val ciphertext = enigma.encipher(plaintext)
             assertEquals(
                 expected = ClassLoader.getSystemResource("ciphertexts/${fileName}").readText(),
@@ -205,7 +205,7 @@ class EnigmaEncipherTest {
                 message = "Failed to ensure encipher works with different configurations."
             )
 
-            val enigma2 = createEnigmaFake(fileName)
+            val enigma2 = createEnigma(fileName)
             assertEquals(
                 expected = plaintext,
                 actual = enigma2.encipher(ciphertext),
