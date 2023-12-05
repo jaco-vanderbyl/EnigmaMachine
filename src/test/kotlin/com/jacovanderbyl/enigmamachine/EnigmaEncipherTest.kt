@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.api.Test
 import kotlin.test.assertContains
-
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
@@ -21,39 +20,14 @@ import kotlin.test.assertFailsWith
 class EnigmaEncipherTest {
     private val plaintext = ClassLoader.getSystemResource("./plaintext").readText()
 
-    @Test
-    fun `ensure 'stock' enigma can encipher a single character`() {
-        val enigma = createStockEnigmaFake()
-        assertEquals(
-            expected = 'B',
-            actual = enigma.encipher('A'),
-            message = "Failed to ensure 'stock' enigma can encipher a single character."
-        )
-    }
-
-    @Test
-    fun `ensure 'stock' enigma can encipher a string`() {
-        val enigma = createStockEnigmaFake()
-        assertEquals(
-            expected = "BDZGO",
-            actual = enigma.encipher("AAAAA"),
-            message = "Failed to ensure 'stock' enigma can encipher a string."
-        )
-    }
-
-    private val invalidCharacters = listOf(' ', 'a', '@')
-
-    @TestFactory
-    fun `ensure enigma throws on invalid characters`() = invalidCharacters.map { character ->
-        DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
-            val enigma = createStockEnigmaFake()
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = { enigma.encipher(character) },
-                message = "Failed to ensure engima throws on invalid characters."
-            )
-            ex.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid character") }
-        }
-    }
+    private fun createStockEnigmaFake() : Enigma = Enigma(
+        type = EnigmaType.ENIGMA_I,
+        rotorUnit = RotorUnit(
+            reflector = ReflectorType.B.create(),
+            rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
+        ),
+        plugboard = Plugboard()
+    )
 
     private val ciphertextFileNames = listOf(
         "B-I-II-III-A-A-A-1-1-1",
@@ -66,36 +40,6 @@ class EnigmaEncipherTest {
         "C-VI-VII-VIII-Z-R-S-26-8-15-UV-WX-YZ",
     )
 
-    @TestFactory
-    fun `ensure enigma enciphers correctly with different configurations`() = ciphertextFileNames.map { fileName ->
-        DynamicTest.dynamicTest("Testing enciphering with file: ${fileName}.") {
-            val enigma = createEnigmaFake(fileName)
-            val ciphertext = enigma.encipher(plaintext)
-            assertEquals(
-                expected = ClassLoader.getSystemResource("ciphertexts/${fileName}").readText(),
-                actual = ciphertext,
-                message = "Failed to ensure enigma enciphers correctly with different configurations."
-            )
-
-            val enigma2 = createEnigmaFake(fileName)
-            val ciphertext2 = enigma2.encipher(ciphertext)
-            assertEquals(
-                expected = plaintext,
-                actual = ciphertext2,
-                message = "Failed to ensure enigma enciphers correctly with different configurations."
-            )
-        }
-    }
-
-    private fun createStockEnigmaFake() : Enigma = Enigma(
-        type = EnigmaType.ENIGMA_I,
-        rotorUnit = RotorUnit(
-            reflector = ReflectorType.B.create(),
-            rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
-        ),
-        plugboard = Plugboard()
-    )
-
     private fun createEnigmaFake(fileName: String) : Enigma = when (fileName) {
         "B-I-II-III-A-A-A-1-1-1" -> {
             Enigma(
@@ -104,7 +48,7 @@ class EnigmaEncipherTest {
                     rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaType.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3
             )
         }
         "B-I-II-III-Q-E-V-1-1-1" -> {
@@ -118,7 +62,7 @@ class EnigmaEncipherTest {
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaType.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3
             )
         }
         "B-I-II-III-A-A-A-5-11-24" -> {
@@ -132,7 +76,7 @@ class EnigmaEncipherTest {
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaType.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3
             )
         }
         "B-I-II-III-Q-E-V-5-11-24" -> {
@@ -146,7 +90,7 @@ class EnigmaEncipherTest {
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaType.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3
             )
         }
         "B-IV-V-VI-A-B-C-1-2-3" -> {
@@ -160,7 +104,7 @@ class EnigmaEncipherTest {
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaType.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3
             )
         }
         "C-VI-VII-VIII-Z-R-S-26-8-15" -> {
@@ -174,7 +118,7 @@ class EnigmaEncipherTest {
                     )
                 ),
                 plugboard = Plugboard(),
-                type = EnigmaType.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3
             )
         }
         "C-VI-VII-VIII-Z-R-S-26-8-15-AB-CD-EF-GH-IJ-KL-MN-OP-QR-ST" -> {
@@ -192,7 +136,7 @@ class EnigmaEncipherTest {
                     Connector('I', 'J'), Connector('K', 'L'), Connector('M', 'N'), Connector('O', 'P'),
                     Connector('Q', 'R'), Connector('S', 'T')
                 ),
-                type = EnigmaType.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3
             )
         }
         "C-VI-VII-VIII-Z-R-S-26-8-15-UV-WX-YZ" -> {
@@ -208,9 +152,76 @@ class EnigmaEncipherTest {
                 plugboard = Plugboard(
                     Connector('U', 'V'), Connector('W', 'X'), Connector('Y', 'Z')
                 ),
-                type = EnigmaType.ENIGMA_M3,
+                type = EnigmaType.ENIGMA_M3
             )
         }
         else -> createStockEnigmaFake()
+    }
+
+    @Test
+    fun `ensure encipher works with a single character`() {
+        val enigma = createStockEnigmaFake()
+        assertEquals(
+            expected = 'B',
+            actual = enigma.encipher('A'),
+            message = "Failed to ensure encipher works with a single character."
+        )
+    }
+
+    @Test
+    fun `ensure encipher works with a string`() {
+        val enigma = createStockEnigmaFake()
+        assertEquals(
+            expected = "BDZGO",
+            actual = enigma.encipher("AAAAA"),
+            message = "Failed to ensure encipher works with a string."
+        )
+    }
+
+    @TestFactory
+    fun `ensure invalid character throws`() = listOf(
+        ' ',
+        'a',
+        '@',
+    ).map { char ->
+        DynamicTest.dynamicTest("Invalid character '${char}' should throw.") {
+            val enigma = createStockEnigmaFake()
+            val exception = assertFailsWith<IllegalArgumentException>(
+                block = { enigma.encipher(char) },
+                message = "Failed to ensure invalid character throws."
+            )
+            exception.message?.let {
+                assertContains(it, "invalid character", ignoreCase = true)
+            }
+        }
+    }
+
+    @TestFactory
+    fun `ensure encipher works with different configurations`() = listOf(
+        "B-I-II-III-A-A-A-1-1-1",
+        "B-I-II-III-Q-E-V-1-1-1",
+        "B-I-II-III-A-A-A-5-11-24",
+        "B-I-II-III-Q-E-V-5-11-24",
+        "B-IV-V-VI-A-B-C-1-2-3",
+        "C-VI-VII-VIII-Z-R-S-26-8-15",
+        "C-VI-VII-VIII-Z-R-S-26-8-15-AB-CD-EF-GH-IJ-KL-MN-OP-QR-ST",
+        "C-VI-VII-VIII-Z-R-S-26-8-15-UV-WX-YZ",
+    ).map { fileName ->
+        DynamicTest.dynamicTest("Test encipher with configuration: '${fileName}'.") {
+            val enigma = createEnigmaFake(fileName)
+            val ciphertext = enigma.encipher(plaintext)
+            assertEquals(
+                expected = ClassLoader.getSystemResource("ciphertexts/${fileName}").readText(),
+                actual = ciphertext,
+                message = "Failed to ensure encipher works with different configurations."
+            )
+
+            val enigma2 = createEnigmaFake(fileName)
+            assertEquals(
+                expected = plaintext,
+                actual = enigma2.encipher(ciphertext),
+                message = "Failed to ensure enigma enciphers correctly with different configurations."
+            )
+        }
     }
 }
