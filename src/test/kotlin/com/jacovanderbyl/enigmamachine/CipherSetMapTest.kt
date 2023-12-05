@@ -29,10 +29,13 @@ class CipherSetMapTest {
         "AACDEFGHIJKLMNOPQRSTUVWXYZ",
     ).map { cipherSet ->
         DynamicTest.dynamicTest("Invalid cipher set '${cipherSet}' should throw.") {
-            assertFailsWith<IllegalArgumentException>(
+            val exception = assertFailsWith<IllegalArgumentException>(
                 block = { CipherSetMap(cipherSet) },
                 message = "Failed to ensure invalid cipher set throws."
             )
+            exception.message?.let {
+                assertContains(it, "cipher set '${cipherSet}' does not map", ignoreCase = true)
+            }
         }
     }
 
@@ -65,12 +68,12 @@ class CipherSetMapTest {
         '@',
     ).map { char ->
         DynamicTest.dynamicTest("Invalid character '${char}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
+            val exception = assertFailsWith<IllegalArgumentException>(
                 block = { cipherSetMap.encipher(char) },
                 message = "Failed to ensure invalid character throws."
             )
-            ex.message?.let {msg ->
-                assertContains(charSequence = msg, other = "invalid character", ignoreCase = true)
+            exception.message?.let {
+                assertContains(it, "invalid character", ignoreCase = true)
             }
         }
     }

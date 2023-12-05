@@ -3,83 +3,80 @@ package com.jacovanderbyl.enigmamachine
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.api.Test
-
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class ConnectorTest {
-    private val invalidCharacters = listOf(' ', 'a', '@')
-
     @TestFactory
-    fun `ensure first connector character is valid`() = invalidCharacters.map { character ->
-        DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = { Connector(first = character, second = 'A') },
-                message = "Failed to ensure first connector character is valid."
+    fun `ensure invalid character throws`() = listOf(
+        ' ',
+        'a',
+        '@',
+    ).map { char ->
+        DynamicTest.dynamicTest("Invalid character '${char}' should throw.") {
+            val exception = assertFailsWith<IllegalArgumentException>(
+                block = { Connector(first = char, second = 'A') },
+                message = "Failed to ensure invalid character throws for first letter."
             )
-            ex.message?.let { msg ->
-                assertContains(charSequence = msg, other = "First character is invalid")
+            exception.message?.let {
+                assertContains(it, "first character is invalid", ignoreCase = true)
             }
-        }
-    }
 
-    @TestFactory
-    fun `ensure second connector character is valid`() = invalidCharacters.map { character ->
-        DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = { Connector(first = 'A', second = character) },
-                message = "Failed to ensure second connector character is valid."
+            val exception2 = assertFailsWith<IllegalArgumentException>(
+                block = { Connector(first = 'A', second = char) },
+                message = "Failed to ensure invalid character throws for second letter."
             )
-            ex.message?.let { msg ->
-                assertContains(charSequence = msg, other = "Second character is invalid")
+            exception2.message?.let {
+                assertContains(it, "second character is invalid", ignoreCase = true)
             }
         }
     }
 
     @Test
-    fun `ensure first and second connector characters are not the same`() {
-        val ex = assertFailsWith<IllegalArgumentException>(
+    fun `ensure first and second letters are different`() {
+        val exception = assertFailsWith<IllegalArgumentException>(
             block = { Connector(first = 'A', second = 'A') },
-            message = "Failed to ensure first and second connector characters are not the same."
+            message = "Failed to ensure first and second letters are different."
         )
-        ex.message?.let { msg ->
-            assertContains(charSequence = msg, other = "The first and second characters cannot be the same")
+        exception.message?.let {
+            assertContains(it, "first and second characters cannot be the same", ignoreCase = true)
         }
     }
 
     @Test
-    fun `ensure named constructor can create object from string`() {
+    fun `ensure named constructor works`() {
         val connector = Connector.fromString(characterPair = "AB")
         assertEquals(
             expected = "AB",
             actual = "${connector.first}${connector.second}",
-            message = "Failed to ensure named constructor can create object from string."
+            message = "Failed to ensure named constructor works."
         )
     }
 
-    private val bogusCharacterPairs = listOf("A", "ABC")
-
-    @TestFactory
-    fun `ensure named constructor only accepts two-character string`() = bogusCharacterPairs.map { characterPair ->
-        DynamicTest.dynamicTest("Non two-character pair string '${characterPair}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = { Connector.fromString(characterPair) },
-                message = "Failed to ensure named constructor only accepts two-character string."
-            )
-            ex.message?.let { msg ->
-                assertContains(charSequence = msg, other = "A connector pair must be two characters")
-            }
-        }
-    }
-
     @Test
-    fun `ensure named constructor can create object list from string list`() {
+    fun `ensure named constructor works with string list`() {
         val connectorList = Connector.fromStrings(characterPairs = listOf("AB", "CD", "EF"))
         assertEquals(
             expected = listOf("AB", "CD", "EF"),
             actual = connectorList.map { connector -> "${connector.first}${connector.second}" },
-            message = "Failed to ensure named constructor can create object list from string list."
+            message = "Failed to ensure named constructor works with string list."
         )
+    }
+
+    @TestFactory
+    fun `ensure named constructor param is 2-character string`() = listOf(
+        "A",
+        "ABC"
+    ).map { characterPair ->
+        DynamicTest.dynamicTest("Invalid character pair string '${characterPair}' should throw.") {
+            val exception = assertFailsWith<IllegalArgumentException>(
+                block = { Connector.fromString(characterPair) },
+                message = "Failed to ensure named constructor param is 2-character string."
+            )
+            exception.message?.let {
+                assertContains(it, "connector pair must be two characters", ignoreCase = true)
+            }
+        }
     }
 }
