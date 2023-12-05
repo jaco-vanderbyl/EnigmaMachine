@@ -185,6 +185,9 @@ class EnigmaEncipherTest {
         }
     }
 
+    /**
+     * Ciphertext fixtures created using EnigmaZone (https://zoezap.com/enigmazone).
+     */
     @TestFactory
     fun `ensure encipher works with different configurations`() = listOf(
         "B-I-II-III-A-A-A-1-1-1",
