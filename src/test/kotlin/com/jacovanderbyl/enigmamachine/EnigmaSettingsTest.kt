@@ -3,145 +3,12 @@ package com.jacovanderbyl.enigmamachine
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.api.Test
-
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EnigmaSettingsTest {
-    private val plugboard = Plugboard()
-    private val enigmaFake = createStockEnigmaFake(plugboard)
-
-    private val positionsList = listOf(
-        listOf(Position('X'), Position('Y'), Position('Z')),
-        listOf(Position('A'), Position('B'), Position('C')),
-    )
-
-    @TestFactory
-    fun `ensure rotor positions can be changed`() = positionsList.map { positionList ->
-        DynamicTest.dynamicTest("Rotor positions can be changed.") {
-            enigmaFake.setRotorPositions(*positionList.toTypedArray())
-            assertEquals(
-                expected = positionList.map { it.character },
-                actual = enigmaFake.getRotorPositions().map { it.character },
-                message = "Failed to ensure rotor positions can be changed."
-            )
-        }
-    }
-
-    private val badPositionsCount = listOf(
-        listOf(),
-        listOf(Position('A'), Position('B')),
-        listOf(Position('A'), Position('B'), Position('C'), Position('D')),
-    )
-
-    @TestFactory
-    fun `ensure position count equals rotor count`() = badPositionsCount.map { positionList ->
-        DynamicTest.dynamicTest("Position count equals rotor count.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = { enigmaFake.setRotorPositions(*positionList.toTypedArray()) },
-                message = "Failed to ensure position count equals rotor count."
-            )
-            ex.message?.let { msg ->
-                assertContains(charSequence = msg, other = "number of rotor positions must equal the number of rotors")
-            }
-        }
-    }
-
-    private val connectorsList = listOf(
-        listOf(Connector(first = 'A', second = 'B'), Connector(first = 'C', second = 'D')),
-        listOf(Connector(first = 'E', second = 'F'), Connector(first = 'G', second = 'H')),
-        listOf(Connector(first = 'I', second = 'J'), Connector(first = 'K', second = 'L')),
-    )
-
-    @TestFactory
-    fun `ensure connector cables can be added to plugboard`() = connectorsList.mapIndexed { index, connectors ->
-        DynamicTest.dynamicTest("Connector cables can be added to plugboard.") {
-            enigmaFake.addPlugboardConnectors(*connectors.toTypedArray())
-
-            connectorsList.filterIndexed { i, _ -> i <= index } .forEach {
-                it.forEach { connector ->
-                    assertEquals(
-                        expected = connector.second,
-                        actual = plugboard.encipher(connector.first),
-                        message = "Failed to ensure connector cables can be added to plugboard."
-                    )
-                    assertEquals(
-                        expected = connector.first,
-                        actual = plugboard.encipher(connector.second),
-                        message = "Failed to ensure connector cables can be added to plugboard."
-                    )
-                }
-            }
-        }
-    }
-
-    @TestFactory
-    fun `ensure connector cables can be unplugged`() = connectorsList.mapIndexed { index, connectors ->
-        DynamicTest.dynamicTest("Connector cables can be unplugged.") {
-            enigmaFake.replacePlugboardConnectors(*connectors.toTypedArray())
-
-            connectorsList.filterIndexed { i, _ -> i < index } .forEach {
-                it.forEach { connector ->
-                    assertEquals(
-                        expected = connector.first,
-                        actual = plugboard.encipher(connector.first),
-                        message = "Failed to ensure connector cables can be unplugged."
-                    )
-                    assertEquals(
-                        expected = connector.second,
-                        actual = plugboard.encipher(connector.second),
-                        message = "Failed to ensure connector cables can be unplugged."
-                    )
-                }
-            }
-
-            connectors.forEach {connector ->
-                assertEquals(
-                    expected = connector.second,
-                    actual = plugboard.encipher(connector.first),
-                    message = "Failed to ensure connector cables can be added to plugboard."
-                )
-                assertEquals(
-                    expected = connector.first,
-                    actual = plugboard.encipher(connector.second),
-                    message = "Failed to ensure connector cables can be added to plugboard."
-                )
-            }
-        }
-    }
-
-    @Test
-    fun `ensure rotor positions can be reset to default`() {
-        val emFake = createStockEnigmaFake(Plugboard())
-        val defaultPositions = emFake.getRotorPositions().map { it.character }
-
-        emFake.setRotorPositions(Position('X'), Position('Y'), Position('Z'))
-        emFake.resetRotorPositions()
-
-        assertEquals(
-            expected = defaultPositions,
-            actual = enigmaFake.getRotorPositions().map { it.character },
-            message = "Failed to ensure rotor positions can be reset to default."
-        )
-    }
-
-    @Test
-    fun `ensure plugboard can be reset`() {
-        val pb = Plugboard()
-        val emFake = createStockEnigmaFake(pb)
-
-        emFake.addPlugboardConnectors(Connector(first = 'A', second = 'B'))
-        emFake.resetPlugboard()
-
-        assertEquals(
-            expected = 'A',
-            actual = pb.encipher('A'),
-            message = "Failed to ensure plugboard can be reset."
-        )
-    }
-
-    private fun createStockEnigmaFake(plugboard: Plugboard) : Enigma = Enigma(
+    private fun createStockEnigmaFake(plugboard: Plugboard = Plugboard()) : Enigma = Enigma(
         type = EnigmaType.ENIGMA_I,
         rotorUnit = RotorUnit(
             reflector = ReflectorType.B.create(),
@@ -149,4 +16,140 @@ class EnigmaSettingsTest {
         ),
         plugboard = plugboard
     )
+
+    @TestFactory
+    fun `ensure positions can be changed`() = listOf(
+        listOf(Position('X'), Position('Y'), Position('Z')),
+        listOf(Position('A'), Position('B'), Position('C')),
+    ).map { positions ->
+        DynamicTest.dynamicTest("Test setting positions to: '${positions}'.") {
+            val enigma = createStockEnigmaFake()
+            enigma.setRotorPositions(*positions.toTypedArray())
+
+            assertEquals(
+                expected = positions.map { it.character },
+                actual = enigma.getRotorPositions().map { it.character },
+                message = "Failed to ensure positions can be changed."
+            )
+        }
+    }
+
+    @TestFactory
+    fun `ensure invalid positions count throws`() = listOf(
+        listOf(),
+        listOf(Position('A'), Position('B')),
+        listOf(Position('A'), Position('B'), Position('C'), Position('D')),
+    ).map { positions ->
+        DynamicTest.dynamicTest("Invalid positions count '${positions.size}' should throw.") {
+            val enigma = createStockEnigmaFake()
+            val exception = assertFailsWith<IllegalArgumentException>(
+                block = {
+                    enigma.setRotorPositions(*positions.toTypedArray())
+                },
+                message = "Failed to ensure invalid positions count throws."
+            )
+            exception.message?.let {
+                assertContains(it, "number of rotor positions must equal the number of rotors", ignoreCase = true)
+            }
+        }
+    }
+
+    @Test
+    fun `ensure positions can be reset`() {
+        val enigma = createStockEnigmaFake()
+        enigma.setRotorPositions(Position('X'), Position('Y'), Position('Z'))
+        enigma.resetRotorPositions()
+
+        assertEquals(
+            expected = listOf('A', 'A', 'A'),
+            actual = enigmaSingle.getRotorPositions().map { it.character },
+            message = "Failed to ensure positions can be reset."
+        )
+    }
+
+    @Test
+    fun `ensure plugboard can be reset`() {
+        val plugboard = Plugboard()
+        val enigma = createStockEnigmaFake(plugboard)
+        enigma.addPlugboardConnectors(Connector(first = 'A', second = 'B'))
+        enigma.resetPlugboard()
+
+        assertEquals(
+            expected = 'A',
+            actual = plugboard.encipher('A'),
+            message = "Failed to ensure plugboard can be reset."
+        )
+    }
+
+    private val plugboardSingle = Plugboard()
+    private val enigmaSingle = createStockEnigmaFake(plugboardSingle)
+    private val connectorsList = listOf(
+        listOf(Connector('A', 'B'), Connector('C', 'D')),
+        listOf(Connector('E', 'F'), Connector('G', 'H')),
+        listOf(Connector('I', 'J'), Connector('K', 'L')),
+    )
+
+    @TestFactory
+    fun `ensure connectors can be added`() = connectorsList.mapIndexed { index, connectors ->
+        DynamicTest.dynamicTest(
+            "Test adding connectors: '${connectors.map { "${it.first}${it.first}" } }'."
+        ) {
+            enigmaSingle.addPlugboardConnectors(*connectors.toTypedArray())
+
+            // Test that all connectors are added, including connectors added in previous test case sequence.
+            connectorsList.filterIndexed { i, _ -> i <= index }.forEach {
+                it.forEach { connector ->
+                    assertEquals(
+                        expected = connector.second,
+                        actual = plugboardSingle.encipher(connector.first),
+                        message = "Failed to ensure connectors can be added."
+                    )
+                    assertEquals(
+                        expected = connector.first,
+                        actual = plugboardSingle.encipher(connector.second),
+                        message = "Failed to ensure connectors can be added."
+                    )
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun `ensure connectors can be replaced`() = connectorsList.mapIndexed { index, connectors ->
+        DynamicTest.dynamicTest(
+            "Test connectors '${connectors.map { "${it.first}${it.first}" } }' replaced previous connectors."
+        ) {
+            enigmaSingle.replacePlugboardConnectors(*connectors.toTypedArray())
+
+            // Test connectors (from previous test case sequences) have been removed.
+            connectorsList.filterIndexed { i, _ -> i < index } .forEach {
+                it.forEach { connector ->
+                    assertEquals(
+                        expected = connector.first,
+                        actual = plugboardSingle.encipher(connector.first),
+                        message = "Failed to ensure previous connectors were removed."
+                    )
+                    assertEquals(
+                        expected = connector.second,
+                        actual = plugboardSingle.encipher(connector.second),
+                        message = "Failed to ensure previous connectors were removed."
+                    )
+                }
+            }
+
+            // Test connectors (of current test case sequence) have been added.
+            connectors.forEach {connector ->
+                assertEquals(
+                    expected = connector.second,
+                    actual = plugboardSingle.encipher(connector.first),
+                    message = "Failed to ensure connectors were added."
+                )
+                assertEquals(
+                    expected = connector.first,
+                    actual = plugboardSingle.encipher(connector.second),
+                    message = "Failed to ensure connectors were added."
+                )
+            }
+        }
+    }
 }
