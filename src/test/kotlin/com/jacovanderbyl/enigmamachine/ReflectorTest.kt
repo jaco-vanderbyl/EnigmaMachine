@@ -1,39 +1,50 @@
 package com.jacovanderbyl.enigmamachine
 
+import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestFactory
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.assertFalse
 
 class ReflectorTest {
-    private val cipherSet = "ZYXWVUTSRQPONMLKJIHGFEDCBA"
-    private val cipherSetMap = CipherSetMap(cipherSet)
-    private val reflector = Reflector(
-        cipherSetMap = cipherSetMap,
+    private fun createReflector(
+        cipherSet: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        compatibility: Set<EnigmaType> = setOf()
+    ) : Reflector = Reflector(
         type = ReflectorType.B,
-        compatibility = setOf(EnigmaType.ENIGMA_I)
+        cipherSetMap = CipherSetMap(cipherSet),
+        compatibility = compatibility
     )
 
-    @Test
-    fun `ensure reflector enciphers correctly given a cipher set map`() {
-        cipherSetMap.characterSet.forEachIndexed { index, character ->
-            assertEquals(
-                expected = cipherSet[index],
-                actual = reflector.encipher(character),
-                message = "Failed to ensure reflector enciphers correctly given a cipher set map."
-            )
+    @TestFactory
+    fun `ensure encipher works with different cipher sets`() = listOf(
+        "ZYXWVUTSRQPONMLKJIHGFEDCBA",
+        "YRUHQSLDPXNGOKMIEBFZCWVJAT",
+        "FVPJIAOYEDRZXWGCTKUQSBNMHL",
+    ).map { cipherSet ->
+        DynamicTest.dynamicTest("Test encipher with cipher set: '${cipherSet}'.") {
+            val reflector = createReflector(cipherSet = cipherSet)
+            Enigma.CHARACTER_SET.forEachIndexed { index, char ->
+                assertEquals(
+                    expected = cipherSet[index],
+                    actual = reflector.encipher(char),
+                    message = "Failed to ensure encipher works."
+                )
+            }
         }
     }
 
     @Test
-    fun `ensure reflector compatibility works correctly`() {
+    fun `ensure compatibility works`() {
+        val reflector = createReflector(compatibility = setOf(EnigmaType.ENIGMA_I))
         assertTrue(
             actual = reflector.isCompatible(EnigmaType.ENIGMA_I),
-            message = "Failed to ensure reflector compatibility works correctly."
+            message = "Failed to ensure compatibility works - should be compatible."
         )
         assertFalse(
             actual = reflector.isCompatible(EnigmaType.ENIGMA_M3),
-            message = "Failed to ensure reflector compatibility works correctly."
+            message = "Failed to ensure compatibility works - should not be compatible."
         )
     }
 }
