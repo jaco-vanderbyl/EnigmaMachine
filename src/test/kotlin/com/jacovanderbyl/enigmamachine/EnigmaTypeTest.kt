@@ -68,6 +68,7 @@ class EnigmaTypeTest {
         else -> throw IllegalArgumentException()
     }
 
+    // Given plaintext 'AAAAA'
     private fun expectedCiphers(enigmaType: EnigmaType) = when (enigmaType) {
         EnigmaType.ENIGMA_I -> "SCSUX"
         EnigmaType.ENIGMA_M3 -> "MWMJL"
