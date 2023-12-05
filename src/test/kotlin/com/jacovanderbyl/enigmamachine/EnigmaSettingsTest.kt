@@ -137,7 +137,7 @@ class EnigmaSettingsTest {
                 }
             }
 
-            // Test connectors (of current test case sequence) have been added.
+            // Test connectors (from current test case sequence) have been added.
             connectors.forEach {connector ->
                 assertEquals(
                     expected = connector.second,
