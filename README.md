@@ -37,8 +37,8 @@ import com.jacovanderbyl.enigmamachine.*
 val enigmaList = EnigmaType.entries.map { it.name }
 val reflectorList = ReflectorType.entries.map { it.name }
 val rotorList = RotorType.entries.map { it.name }
-val ringSettingList = Keys.CHARACTER_SET.map { Keys.CHARACTER_SET.indexOf(it) + 1 }
-val positionList = Keys.CHARACTER_SET.map { it }
+val ringSettingList = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 }
+val positionList = Enigma.CHARACTER_SET.map { it }
 
 println(enigmaList)      // prints: [ENIGMA_I, ENIGMA_M3]
 println(reflectorList)   // prints: [B, C]
