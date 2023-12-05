@@ -15,7 +15,7 @@ class Position(val character: Char = 'A') {
     companion object {
         fun fromString(position: String) : Position {
             require(position.length == 1) {
-                "A rotor starting position must be a single character. Given: '${position}'."
+                "Invalid string length. A rotor starting position must be a single character. Given: '${position}'."
             }
 
             return Position(position[0])

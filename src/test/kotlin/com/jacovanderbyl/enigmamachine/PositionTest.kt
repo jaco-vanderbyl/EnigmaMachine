@@ -8,59 +8,64 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class PositionTest {
-    private val invalidCharacters = listOf(' ', 'a', '@')
-
     @TestFactory
-    fun `ensure position throws on invalid characters`() = invalidCharacters.map { character ->
-        DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
+    fun `ensure invalid character throws`() = listOf(
+        ' ',
+        'a',
+        '@',
+    ).map { char ->
+        DynamicTest.dynamicTest("Invalid character '${char}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
-                block = { Position(character) },
-                message = "Failed to ensure position throws on invalid characters."
+                block = { Position(char) },
+                message = "Failed to ensure invalid character throws."
             )
-            exception.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid character") }
+            exception.message?.let {
+                assertContains(it, "invalid character", ignoreCase = true)
+            }
         }
     }
 
     @Test
-    fun `ensure default position character is 'A'`() {
+    fun `ensure default character is 'A'`() {
         assertEquals(
             expected = 'A',
             actual = Position().character,
-            message = "Failed to ensure default position character is 'A'."
+            message = "Failed to ensure default character is 'A'."
         )
     }
 
     @Test
-    fun `ensure position index equals character set index of character`() {
+    fun `ensure index equals character's index in enigma character set`() {
         Enigma.CHARACTER_SET.forEachIndexed { index, character ->
             assertEquals(
                 expected = index,
                 actual = Position(character).index,
-                message = "Failed to ensure position index equals character set index of character."
+                message = "Failed to ensure index equals character's index in enigma character set."
             )
         }
     }
 
     @Test
-    fun `ensure named constructor can create object from string`() {
+    fun `ensure named constructor works`() {
         assertEquals(
             expected = 'A',
             actual = Position.fromString("A").character,
-            message = "Failed to ensure named constructor can create object from string."
+            message = "Failed to ensure named constructor works."
         )
     }
 
-    private val bogusPositionStrings = listOf("AA", "A,A")
-
     @TestFactory
-    fun `ensure named constructor only accepts one-character string`() = bogusPositionStrings.map { position ->
-        DynamicTest.dynamicTest("Non one-character string '${position}' should throw.") {
+    fun `ensure invalid string length throws`() = listOf(
+        "AA",
+        "A,A",
+    ).map { position ->
+        DynamicTest.dynamicTest("Invalid string length '${position.length}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = { Position.fromString(position) },
-                message = "Failed to ensure named constructor only accepts one-character string."
+                message = "Failed to ensure invalid string length throws."
             )
-            exception.message?.let { msg ->
-                assertContains(charSequence = msg, other = "position must be a single character")
+            exception.message?.let {
+                assertContains(it, "invalid string length", ignoreCase = true)
             }
         }
     }

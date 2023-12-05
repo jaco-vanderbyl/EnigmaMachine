@@ -17,6 +17,15 @@ class EnigmaSettingsTest {
         plugboard = plugboard
     )
 
+    @Test
+    fun `ensure character set is correct`() {
+        assertEquals(
+            expected = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            actual = Enigma.CHARACTER_SET,
+            message = "Failed to ensure character set is correct."
+        )
+    }
+
     @TestFactory
     fun `ensure positions can be changed`() = listOf(
         listOf(Position('X'), Position('Y'), Position('Z')),
