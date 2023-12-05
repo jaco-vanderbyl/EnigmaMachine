@@ -21,7 +21,7 @@ class Connector(val first: Char, val second: Char) {
     companion object {
         fun fromString(characterPair: String) : Connector {
             require(characterPair.length == 2) {
-                "Invalid length. A connector pair must be two characters. Given: '${characterPair}'."
+                "Invalid string length. A connector pair must be two characters. Given: '${characterPair}'."
             }
             return Connector(characterPair[0], characterPair[1])
         }
