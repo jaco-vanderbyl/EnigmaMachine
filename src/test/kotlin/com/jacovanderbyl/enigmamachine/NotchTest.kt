@@ -3,50 +3,51 @@ package com.jacovanderbyl.enigmamachine
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
-
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class NotchTest {
     @Test
-    fun `ensure notch characters are set correctly`() {
+    fun `ensure notch characters are correct`() {
         assertEquals(
             expected = setOf('A', 'B'),
             actual = Notch(setOf('A', 'B')).characters,
-            message = "Failed to ensure enigma key character set is uppercase alphabet."
+            message = "Failed to ensure notch characters are correct."
         )
     }
 
-    private val invalidCharacters = listOf(' ', 'a', '@')
-
     @TestFactory
-    fun `ensure invalid notch character throws`() = invalidCharacters.map { character ->
-        DynamicTest.dynamicTest("Invalid notch character '${character}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
+    fun `ensure invalid character throws`() = listOf(
+        ' ',
+        'a',
+        '@',
+    ).map { character ->
+        DynamicTest.dynamicTest("Invalid character '${character}' should throw.") {
+            val exception = assertFailsWith<IllegalArgumentException>(
                 block = { Notch(setOf(character)) },
-                message = "Failed to ensure invalid notch character throws."
+                message = "Failed to ensure invalid character throws."
             )
-            ex.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid notch character") }
+            exception.message?.let {
+                assertContains(it, "invalid character", ignoreCase = true)
+            }
         }
     }
 
-    private val badCharacterCounts = listOf(
+    @TestFactory
+    fun `ensure invalid character count throws`() = listOf(
         setOf(),
         setOf(
             'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','@'
         )
-    )
-
-    @TestFactory
-    fun `ensure bad notch character count throws`() = badCharacterCounts.map { characterSet ->
-        DynamicTest.dynamicTest("Bad notch character count '${characterSet}' should throw.") {
-            val ex = assertFailsWith<IllegalArgumentException>(
-                block = { Notch(characterSet) },
-                message = "Failed to ensure bad notch character count throws."
+    ).map { chars ->
+        DynamicTest.dynamicTest("Invalid character count '${chars.size}' should throw.") {
+            val exception = assertFailsWith<IllegalArgumentException>(
+                block = { Notch(chars) },
+                message = "Failed to ensure invalid character count throws."
             )
-            ex.message?.let { msg ->
-                assertContains(charSequence = msg, other = "cannot have more notches than the character set size")
+            exception.message?.let {
+                assertContains(it, other = "invalid character count", ignoreCase = true)
             }
         }
     }

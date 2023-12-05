@@ -22,10 +22,10 @@ class EnigmaBuilder {
             plugboardConnectors: String? = null
         ): Enigma {
             require(type in EnigmaType.entries.map { it.name }) {
-                "Type is invalid. Valid: '${EnigmaType.entries.map { it.name }}'. Given: '${type}'."
+                "Invalid enigma type. Valid: '${EnigmaType.entries.map { it.name }}'. Given: '${type}'."
             }
             require(reflector in ReflectorType.entries.map { it.name }) {
-                "Reflector is invalid. Valid: '${ReflectorType.entries.map { it.name }}'. Given: '${reflector}'."
+                "Invalid reflector type. Valid: '${ReflectorType.entries.map { it.name }}'. Given: '${reflector}'."
             }
 
             return EnigmaType.valueOf(type).create(
@@ -44,14 +44,14 @@ class EnigmaBuilder {
         ) : Array<Rotor> {
             if (positions.isNotEmpty()) {
                 require(rotors.size == positions.size) {
-                    "Number of positions must equal number of rotors: '${rotors.size}'. " +
+                    "Invalid position count. Number of positions must equal number of rotors: '${rotors.size}'. " +
                             "Given: '${positions.size}'."
                 }
             }
             if (ringSettings.isNotEmpty()) {
                 require(rotors.size == ringSettings.size) {
-                    "Number of ring settings must equal number of rotors: '${rotors.size}'. " +
-                            "Given: '${ringSettings.size}'."
+                    "Invalid ring setting count. Number of ring settings must equal number of " +
+                            "rotors: '${rotors.size}'. Given: '${ringSettings.size}'."
                 }
             }
 
@@ -62,7 +62,7 @@ class EnigmaBuilder {
 
         private fun makeRotor(rotor: String, position: String?, ringSetting: String?): Rotor {
             require(rotor in RotorType.entries.map { it.name }) {
-                "Rotor is invalid. Valid: '${RotorType.entries.map { it.name }}'. Given: '${rotor}'."
+                "Invalid rotor type. Valid: '${RotorType.entries.map { it.name }}'. Given: '${rotor}'."
             }
 
             return RotorType.valueOf(rotor).create(

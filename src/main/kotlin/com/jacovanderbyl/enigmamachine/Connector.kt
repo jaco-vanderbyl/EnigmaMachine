@@ -8,20 +8,20 @@ package com.jacovanderbyl.enigmamachine
 class Connector(val first: Char, val second: Char) {
     init {
         require(first in Enigma.CHARACTER_SET) {
-            "First character is invalid. Character must be in: '${Enigma.CHARACTER_SET}'. Given: '${first}'."
+            "Invalid character for first. Valid: '${Enigma.CHARACTER_SET}'. Given: '${first}'."
         }
         require(second in Enigma.CHARACTER_SET) {
-            "Second character is invalid. Character must be in: '${Enigma.CHARACTER_SET}'. Given: '${second}'."
+            "Invalid character for second. Valid: '${Enigma.CHARACTER_SET}'. Given: '${second}'."
         }
         require(first != second) {
-            "The first and second characters cannot be the same. Given: '${first}${second}'."
+            "Invalid character pair. First and second characters are the same. Given: '${first}${second}'."
         }
     }
 
     companion object {
         fun fromString(characterPair: String) : Connector {
             require(characterPair.length == 2) {
-                "A connector pair must be two characters. Given: '${characterPair}'."
+                "Invalid length. A connector pair must be two characters. Given: '${characterPair}'."
             }
             return Connector(characterPair[0], characterPair[1])
         }

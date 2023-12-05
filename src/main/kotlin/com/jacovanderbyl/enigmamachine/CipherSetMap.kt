@@ -13,7 +13,7 @@ class CipherSetMap(private val cipherSet: String) : CanEncipherBidirectionally {
 
     init {
         require(String(cipherSet.toCharArray().apply { sort() }) == characterSet) {
-            "The provided cipher set '$cipherSet' does not map to: '${characterSet}'."
+            "Invalid cipher set. The provided cipher set '$cipherSet' does not map to: '${characterSet}'."
         }
     }
 

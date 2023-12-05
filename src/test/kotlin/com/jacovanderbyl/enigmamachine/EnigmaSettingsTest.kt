@@ -35,21 +35,21 @@ class EnigmaSettingsTest {
     }
 
     @TestFactory
-    fun `ensure invalid positions count throws`() = listOf(
+    fun `ensure invalid position count throws`() = listOf(
         listOf(),
         listOf(Position('A'), Position('B')),
         listOf(Position('A'), Position('B'), Position('C'), Position('D')),
     ).map { positions ->
-        DynamicTest.dynamicTest("Invalid positions count '${positions.size}' should throw.") {
+        DynamicTest.dynamicTest("Invalid position count '${positions.size}' should throw.") {
             val enigma = createStockEnigma()
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
                     enigma.setRotorPositions(*positions.toTypedArray())
                 },
-                message = "Failed to ensure invalid positions count throws."
+                message = "Failed to ensure invalid position count throws."
             )
             exception.message?.let {
-                assertContains(it, "number of rotor positions must equal the number of rotors", ignoreCase = true)
+                assertContains(it, "invalid position count", ignoreCase = true)
             }
         }
     }

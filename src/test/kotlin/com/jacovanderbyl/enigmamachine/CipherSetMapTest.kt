@@ -34,7 +34,7 @@ class CipherSetMapTest {
                 message = "Failed to ensure invalid cipher set throws."
             )
             exception.message?.let {
-                assertContains(it, "cipher set '${cipherSet}' does not map", ignoreCase = true)
+                assertContains(it, "invalid cipher set", ignoreCase = true)
             }
         }
     }

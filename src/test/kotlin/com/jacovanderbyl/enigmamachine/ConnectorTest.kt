@@ -17,30 +17,30 @@ class ConnectorTest {
         DynamicTest.dynamicTest("Invalid character '${char}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = { Connector(first = char, second = 'A') },
-                message = "Failed to ensure invalid character throws for first letter."
+                message = "Failed to ensure invalid character throws for first."
             )
             exception.message?.let {
-                assertContains(it, "first character is invalid", ignoreCase = true)
+                assertContains(it, "invalid character for first", ignoreCase = true)
             }
 
             val exception2 = assertFailsWith<IllegalArgumentException>(
                 block = { Connector(first = 'A', second = char) },
-                message = "Failed to ensure invalid character throws for second letter."
+                message = "Failed to ensure invalid character throws for second."
             )
             exception2.message?.let {
-                assertContains(it, "second character is invalid", ignoreCase = true)
+                assertContains(it, "invalid character for second", ignoreCase = true)
             }
         }
     }
 
     @Test
-    fun `ensure first and second letters are different`() {
+    fun `ensure invalid character pair throws - first and second must be different`() {
         val exception = assertFailsWith<IllegalArgumentException>(
             block = { Connector(first = 'A', second = 'A') },
-            message = "Failed to ensure first and second letters are different."
+            message = "Failed to ensure first and second are different."
         )
         exception.message?.let {
-            assertContains(it, "first and second characters cannot be the same", ignoreCase = true)
+            assertContains(it, "invalid character pair", ignoreCase = true)
         }
     }
 
@@ -65,17 +65,17 @@ class ConnectorTest {
     }
 
     @TestFactory
-    fun `ensure named constructor param is 2-character string`() = listOf(
+    fun `ensure invalid string length throws`() = listOf(
         "A",
         "ABC"
     ).map { characterPair ->
-        DynamicTest.dynamicTest("Invalid character pair string '${characterPair}' should throw.") {
+        DynamicTest.dynamicTest("Invalid string length '${characterPair.length}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = { Connector.fromString(characterPair) },
-                message = "Failed to ensure named constructor param is 2-character string."
+                message = "Failed to ensure invalid string length throws."
             )
             exception.message?.let {
-                assertContains(it, "connector pair must be two characters", ignoreCase = true)
+                assertContains(it, "invalid string length", ignoreCase = true)
             }
         }
     }

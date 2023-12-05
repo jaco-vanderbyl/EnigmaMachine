@@ -57,7 +57,7 @@ class EnigmaBuilderTest {
     }
 
     @Test
-    fun `ensure invalid type throws`() {
+    fun `ensure invalid enigma type throws`() {
         val exception = assertFailsWith<IllegalArgumentException>(
             block = {
                 EnigmaBuilder.makeFromCsv(
@@ -66,10 +66,10 @@ class EnigmaBuilderTest {
                     rotors = "I,V,III"
                 )
             },
-            message = "Failed to ensure invalid type throws."
+            message = "Failed to ensure invalid enigma type throws."
         )
         exception.message?.let {
-            assertContains(it, "type is invalid", ignoreCase = true)
+            assertContains(it, "invalid enigma type", ignoreCase = true)
         }
     }
 
@@ -86,7 +86,7 @@ class EnigmaBuilderTest {
             message = "Failed to ensure invalid reflector type throws."
         )
         exception.message?.let {
-            assertContains(it, "reflector is invalid", ignoreCase = true)
+            assertContains(it, "invalid reflector type", ignoreCase = true)
         }
     }
 
@@ -108,18 +108,18 @@ class EnigmaBuilderTest {
                 message = "Failed to ensure invalid rotor type throws."
             )
             exception.message?.let {
-                assertContains(it, "Rotor is invalid", ignoreCase = true)
+                assertContains(it, "Invalid rotor type", ignoreCase = true)
             }
         }
     }
 
     @TestFactory
-    fun `ensure invalid ring settings count throws`() = listOf(
+    fun `ensure invalid ring setting count throws`() = listOf(
         "1",
         "1,1",
         "1,1,1,1",
     ).map { ringSettings ->
-        DynamicTest.dynamicTest("Invalid ring settings count '${ringSettings}' should throw.") {
+        DynamicTest.dynamicTest("Invalid ring setting count '${ringSettings}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
                     EnigmaBuilder.makeFromCsv(
@@ -129,21 +129,21 @@ class EnigmaBuilderTest {
                         ringSettings = ringSettings
                     )
                 },
-                message = "Failed to ensure invalid ring settings count throws."
+                message = "Failed to ensure invalid ring setting count throws."
             )
             exception.message?.let {
-                assertContains(it, "number of ring settings must equal number of rotors", ignoreCase = true)
+                assertContains(it, "invalid ring setting count", ignoreCase = true)
             }
         }
     }
 
     @TestFactory
-    fun `ensure invalid positions count throws`() = listOf(
+    fun `ensure invalid position count throws`() = listOf(
         "A",
         "A,A",
         "A,A,A,A",
     ).map { positions ->
-        DynamicTest.dynamicTest("Invalid positions count '${positions}' should throw.") {
+        DynamicTest.dynamicTest("Invalid position count '${positions}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
                     EnigmaBuilder.makeFromCsv(
@@ -153,10 +153,10 @@ class EnigmaBuilderTest {
                         startingPositions = positions
                     )
                 },
-                message = "Failed to ensure invalid positions count throws."
+                message = "Failed to ensure invalid position count throws."
             )
             exception.message?.let {
-                assertContains(it, "number of positions must equal number of rotors", ignoreCase = true)
+                assertContains(it, "invalid position count", ignoreCase = true)
             }
         }
     }
