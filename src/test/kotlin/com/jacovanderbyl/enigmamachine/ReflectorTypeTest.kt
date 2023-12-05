@@ -50,10 +50,10 @@ class ReflectorTypeTest {
     fun `ensure factory creates reflector that enciphers correctly`() = ReflectorType.entries.map { reflectorType ->
         DynamicTest.dynamicTest("Test factory creation of reflector type: '${reflectorType}'.") {
             val reflector = reflectorType.create()
-            Enigma.CHARACTER_SET.forEachIndexed { index, character ->
+            Enigma.CHARACTER_SET.forEachIndexed { index, char ->
                 assertEquals(
                     expected = expectedCipherSets(reflectorType)[index],
-                    actual = reflector.encipher(character),
+                    actual = reflector.encipher(char),
                     message = "ensure factory creates reflector that enciphers correctly."
                 )
             }

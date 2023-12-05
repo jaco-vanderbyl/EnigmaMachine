@@ -51,13 +51,13 @@ class PlugboardTest {
         }
 
         // Test unconnected characters encipher correctly
-        Enigma.CHARACTER_SET.filterNot { character ->
-            character in connectorList.map { connector -> connector.first } ||
-            character in connectorList.map { connector -> connector.second }
-        }.forEach { character ->
+        Enigma.CHARACTER_SET.filterNot { char ->
+            char in connectorList.map { connector -> connector.first } ||
+            char in connectorList.map { connector -> connector.second }
+        }.forEach { char ->
             assertEquals(
-                expected = character,
-                actual = plugboard.encipher(character),
+                expected = char,
+                actual = plugboard.encipher(char),
                 message = "Failed to ensure encipher works - with unconnected characters."
             )
         }

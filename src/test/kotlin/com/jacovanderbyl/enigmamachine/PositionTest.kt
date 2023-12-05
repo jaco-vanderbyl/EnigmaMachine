@@ -36,10 +36,10 @@ class PositionTest {
 
     @Test
     fun `ensure index equals character's index in enigma character set`() {
-        Enigma.CHARACTER_SET.forEachIndexed { index, character ->
+        Enigma.CHARACTER_SET.forEachIndexed { index, char ->
             assertEquals(
                 expected = index,
-                actual = Position(character).index,
+                actual = Position(char).index,
                 message = "Failed to ensure index equals character's index in enigma character set."
             )
         }

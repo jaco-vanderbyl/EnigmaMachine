@@ -52,10 +52,10 @@ class CipherSetMapTest {
 
     @Test
     fun `ensure encipher works in reverse`() {
-        cipherSet.forEachIndexed { index, character ->
+        cipherSet.forEachIndexed { index, char ->
             assertEquals(
                 expected = cipherSetMap.characterSet[index],
-                actual = cipherSetMap.encipher(character, reverse = true),
+                actual = cipherSetMap.encipher(char, reverse = true),
                 message = "Failed to ensure encipher works in reverse."
             )
         }

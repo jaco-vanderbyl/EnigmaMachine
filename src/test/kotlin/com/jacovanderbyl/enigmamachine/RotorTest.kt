@@ -24,9 +24,9 @@ class RotorTest {
     fun `ensure step moves rotor forward one position`() {
         val rotor = createRotor()
 
-        Enigma.CHARACTER_SET.repeat(2).forEach { character ->
+        Enigma.CHARACTER_SET.repeat(2).forEach { char ->
             assertEquals(
-                expected = character,
+                expected = char,
                 actual = rotor.position.character,
                 message = "Failed to ensure step moves rotor forward one position."
             )
