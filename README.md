@@ -47,10 +47,10 @@ println(ringSettingList) // prints: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 
 println(positionList)    // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
 ```
 
-### Build 'stock' Enigma Machine
+### Make 'stock' Enigma Machine
 'Stock' Enigma Machine is here defined as having:
 * B-reflector
-* I, II and III rotors (from left to right)
+* I, II and III rotors (from left to right), III being the entry rotor
 * All ring settings set to default, i.e. '1'
 * All rotor start positions set to default, i.e. 'A'
 * No plugboard connectors
@@ -71,7 +71,7 @@ val enigmaM3 = EnigmaBuilder.make(
 )
 ```
 
-### Build with an arrangement of rotors, ring settings, starting positions, and a reflector
+### Make with an arrangement of rotors, ring settings, starting positions, and a reflector
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
@@ -84,7 +84,7 @@ val enigmaI = EnigmaBuilder.make(
 )
 ```
 
-### Build with plugboard connectors
+### Make with plugboard connectors
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
