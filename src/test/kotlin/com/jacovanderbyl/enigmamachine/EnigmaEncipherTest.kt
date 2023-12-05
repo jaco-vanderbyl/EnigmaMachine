@@ -29,17 +29,6 @@ class EnigmaEncipherTest {
         plugboard = Plugboard()
     )
 
-    private val ciphertextFileNames = listOf(
-        "B-I-II-III-A-A-A-1-1-1",
-        "B-I-II-III-Q-E-V-1-1-1",
-        "B-I-II-III-A-A-A-5-11-24",
-        "B-I-II-III-Q-E-V-5-11-24",
-        "B-IV-V-VI-A-B-C-1-2-3",
-        "C-VI-VII-VIII-Z-R-S-26-8-15",
-        "C-VI-VII-VIII-Z-R-S-26-8-15-AB-CD-EF-GH-IJ-KL-MN-OP-QR-ST",
-        "C-VI-VII-VIII-Z-R-S-26-8-15-UV-WX-YZ",
-    )
-
     private fun createEnigmaFake(fileName: String) : Enigma = when (fileName) {
         "B-I-II-III-A-A-A-1-1-1" -> {
             Enigma(
