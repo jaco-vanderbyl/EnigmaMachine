@@ -43,10 +43,50 @@ class RotorTypeTest {
     }
 
     @TestFactory
-    fun `ensure factory creates rotors correctly`() = RotorType.entries.map { rotorType ->
+    fun `ensure factory creates with correct type`() = RotorType.entries.map { rotorType ->
         DynamicTest.dynamicTest("Test factory creation of rotor type: '${rotorType}'.") {
             val rotor = rotorType.create()
+            assertEquals(
+                expected = rotorType,
+                actual = rotor.type,
+                message = "Failed to ensure factory creates with correct type."
+            )
+        }
+    }
 
+    @TestFactory
+    fun `ensure factory creates with correct notch positions`() = RotorType.entries.map { rotorType ->
+        DynamicTest.dynamicTest("Test factory creation of rotor type: '${rotorType}'.") {
+            val rotor = rotorType.create()
+            Enigma.CHARACTER_SET.forEach { position ->
+                rotor.position = Position(position)
+                assertEquals(
+                    expected = position in expectedNotchPositions(rotorType),
+                    actual = rotor.isInNotchedPosition(),
+                    message = "Failed to ensure factory creates with correct notch positions."
+                )
+            }
+        }
+    }
+
+    @TestFactory
+    fun `ensure factory creates with correct compatibility`() = RotorType.entries.map { rotorType ->
+        DynamicTest.dynamicTest("Test factory creation of rotor type: '${rotorType}'.") {
+            val rotor = rotorType.create()
+            EnigmaType.entries.forEach { enigmaType ->
+                assertEquals(
+                    expected = enigmaType in expectedCompatibility(rotorType),
+                    actual = rotor.isCompatible(enigmaType),
+                    message = "Failed to ensure factory creates with correct compatibility."
+                )
+            }
+        }
+    }
+
+    @TestFactory
+    fun `ensure factory creates rotor that enciphers correctly`() = RotorType.entries.map { rotorType ->
+        DynamicTest.dynamicTest("Test factory creation of rotor type: '${rotorType}'.") {
+            val rotor = rotorType.create()
             Enigma.CHARACTER_SET.forEachIndexed { index, char ->
                 assertEquals(
                     expected = expectedCipherSets(rotorType)[index],
@@ -54,47 +94,29 @@ class RotorTypeTest {
                     message = "Failed to ensure factory creates rotor that enciphers correctly."
                 )
             }
-
-            assertEquals(
-                expected = rotorType,
-                actual = rotor.type,
-                message = "Failed to ensure factory creates rotor with correct type."
-            )
-
-            EnigmaType.entries.forEach { enigmaType ->
-                assertEquals(
-                    expected = enigmaType in expectedCompatibility(rotorType),
-                    actual = rotor.isCompatible(enigmaType),
-                    message = "Failed to ensure factory creates rotor with correct compatibility."
-                )
-            }
-
-            Enigma.CHARACTER_SET.forEach { position ->
-                rotor.position = Position(position)
-                assertEquals(
-                    expected = position in expectedNotchPositions(rotorType),
-                    actual = rotor.isInNotchedPosition(),
-                    message = "Failed to ensure factory creates rotor with correct notch positions."
-                )
-            }
         }
     }
 
     @Test
-    fun `ensure factory creates rotors correctly given position and ring setting`() {
+    fun `ensure factory creates with given position`() {
         RotorType.entries.forEach { rotorType ->
-            val rotor = rotorType.create(Position('L'), RingSetting(24))
-
+            val rotor = rotorType.create(position = Position('L'))
             assertEquals(
                 expected = 'L',
                 actual = rotor.position.character,
-                message = "Failed to ensure factory creates rotor correctly given position."
+                message = "Failed to ensure factory creates with given position."
             )
+        }
+    }
 
+    @Test
+    fun `ensure factory creates with given ring setting`() {
+        RotorType.entries.forEach { rotorType ->
+            val rotor = rotorType.create(ringSetting = RingSetting(24))
             assertEquals(
                 expected = 24,
                 actual = rotor.ringSetting.value,
-                message = "Failed to ensure factory creates rotor correctly given ring setting."
+                message = "Failed to ensure factory creates with given ring setting."
             )
         }
     }

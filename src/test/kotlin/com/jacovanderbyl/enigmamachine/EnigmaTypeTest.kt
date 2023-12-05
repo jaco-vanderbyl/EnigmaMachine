@@ -75,7 +75,7 @@ class EnigmaTypeTest {
     }
 
     @TestFactory
-    fun `ensure factory creates enigma correctly`() = EnigmaType.entries.map { enigmaType ->
+    fun `ensure factory creates with correct type`() = EnigmaType.entries.map { enigmaType ->
         DynamicTest.dynamicTest("Test factory creation of enigma type: '${enigmaType}'.") {
             val enigma = enigmaType.create(
                 rotorUnit = RotorUnit(
@@ -87,7 +87,20 @@ class EnigmaTypeTest {
             assertEquals(
                 expected = enigmaType,
                 actual = enigma.type,
-                message = "Failed to ensure factory creates enigma with correct type."
+                message = "Failed to ensure factory creates with correct type."
+            )
+        }
+    }
+
+    @TestFactory
+    fun `ensure factory creates enigma that enciphers correctly`() = EnigmaType.entries.map { enigmaType ->
+        DynamicTest.dynamicTest("Test factory creation of enigma type: '${enigmaType}'.") {
+            val enigma = enigmaType.create(
+                rotorUnit = RotorUnit(
+                    reflector = validReflector(enigmaType),
+                    rotors = validRotors(enigmaType)
+                ),
+                plugboard = Plugboard()
             )
             assertEquals(
                 expected = expectedCiphers(enigmaType),
