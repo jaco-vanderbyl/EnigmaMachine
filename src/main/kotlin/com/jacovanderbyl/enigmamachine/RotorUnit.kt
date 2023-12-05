@@ -94,7 +94,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      *     - It starts with the entry rotor (right-most), which does a substitution.
      *     - Then, the left-next rotor takes the substituted letter and substitutes it with yet another letter.
      *     - This is repeated for every rotor, until the left-most rotor passes a letter to the reflector.
-     *     - The reflector does its own substitution, and it then sends (reflects) a letter back to the left-most rotor.
+     *     - The reflector does its own substitution, and then sends (reflects) the letter back to the left-most rotor.
      *     - Substitutions happen again for each rotor, in reverse, back to the entry rotor, which does the
      *       final substitution for the unit.
      *
