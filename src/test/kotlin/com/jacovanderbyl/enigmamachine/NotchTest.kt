@@ -47,7 +47,7 @@ class NotchTest {
                 message = "Failed to ensure invalid character count throws."
             )
             exception.message?.let {
-                assertContains(it, other = "invalid character count", ignoreCase = true)
+                assertContains(it, "invalid character count", ignoreCase = true)
             }
         }
     }

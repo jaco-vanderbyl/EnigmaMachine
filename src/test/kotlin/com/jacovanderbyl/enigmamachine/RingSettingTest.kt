@@ -8,59 +8,65 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class RingSettingTest {
-    private val invalidValues = listOf(0, 27, 100)
-
     @TestFactory
-    fun `ensure ring setting throws on invalid value`() = invalidValues.map { value ->
+    fun `ensure invalid value throws`() = listOf(
+        0,
+        27,
+        100,
+    ).map { value ->
         DynamicTest.dynamicTest("Invalid value '${value}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = { RingSetting(value) },
-                message = "Failed to ensure ring setting throws on invalid value."
+                message = "Failed to ensure invalid value throws."
             )
-            exception.message?.let { msg -> assertContains(charSequence = msg, other = "Invalid value") }
+            exception.message?.let {
+                assertContains(it, "invalid value", ignoreCase = true)
+            }
         }
     }
 
     @Test
-    fun `ensure default ring setting value is '1'`() {
+    fun `ensure default value is '1'`() {
         assertEquals(
             expected = 1,
             actual = RingSetting().value,
-            message = "Failed to ensure default ring setting value is '1'."
+            message = "Failed to ensure default value is: 1."
         )
     }
 
     @Test
-    fun `ensure ring setting index is one less than value`() {
+    fun `ensure index is one less than value`() {
         (1..Enigma.CHARACTER_SET.length).forEachIndexed { index, value ->
             assertEquals(
                 expected = index,
                 actual = RingSetting(value).index,
-                message = "Failed to ensure ring setting index is one less than value."
+                message = "Failed to ensure index is one less than value."
             )
         }
     }
 
     @Test
-    fun `ensure named constructor can create object from string`() {
+    fun `ensure named constructor works`() {
         assertEquals(
             expected = 1,
             actual = RingSetting.fromString("1").value,
-            message = "Failed to ensure named constructor can create object from string."
+            message = "Failed to ensure named constructor works."
         )
     }
 
-    private val bogusRingSettingStrings = listOf(" ", "One", "A")
-
     @TestFactory
-    fun `ensure named constructor only accepts integer in string`() = bogusRingSettingStrings.map { value ->
-        DynamicTest.dynamicTest("Non integer string '${value}' should throw.") {
+    fun `ensure invalid number representation throws`() = listOf(
+        " ",
+        "One",
+        "A",
+    ).map { value ->
+        DynamicTest.dynamicTest("Invalid invalid number representation '${value}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = { RingSetting.fromString(value) },
-                message = "Failed to ensure named constructor only accepts integer in string."
+                message = "Failed to ensure invalid number representation throws."
             )
-            exception.message?.let { msg ->
-                assertContains(charSequence = msg, other = "ring setting string must be an integer")
+            exception.message?.let {
+                assertContains(it, "invalid number representation", ignoreCase = true)
             }
         }
     }

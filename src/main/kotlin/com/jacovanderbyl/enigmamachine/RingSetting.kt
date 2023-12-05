@@ -18,7 +18,7 @@ class RingSetting(val value: Int = 1) {
     companion object {
         fun fromString(setting: String) : RingSetting {
             require(setting.toIntOrNull() != null) {
-                "A rotor ring setting string must be an integer. Given: '${setting}'."
+                "Invalid number representation. A rotor ring setting string must be an integer. Given: '${setting}'."
             }
 
             return RingSetting(setting.toInt())
