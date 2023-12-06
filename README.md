@@ -34,17 +34,17 @@ Alternatively, go to Build menu and choose Build Project.
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
-val enigmaList = EnigmaType.entries.map { it.name }
-val reflectorList = ReflectorType.entries.map { it.name }
-val rotorList = RotorType.entries.map { it.name }
-val ringSettingList = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 }
-val positionList = Enigma.CHARACTER_SET.map { it }
+val enigmaTypes = EnigmaType.entries.map { it.name }
+val reflectorTypes = ReflectorType.entries.map { it.name }
+val rotorTypes = RotorType.entries.map { it.name }
+val ringSettings = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 }
+val positions = Enigma.CHARACTER_SET.map { it }
 
-println(enigmaList)      // prints: [ENIGMA_I, ENIGMA_M3]
-println(reflectorList)   // prints: [B, C]
-println(rotorList)       // prints: [I, II, III, IV, V, VI, VII, VIII]
-println(ringSettingList) // prints: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-println(positionList)    // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
+println(enigmaTypes)    // prints: [ENIGMA_I, ENIGMA_M3]
+println(reflectorTypes) // prints: [B, C]
+println(rotorTypes)     // prints: [I, II, III, IV, V, VI, VII, VIII]
+println(ringSettings)   // prints: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+println(positions)      // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
 ```
 
 ### Make 'stock' Enigma Machine
