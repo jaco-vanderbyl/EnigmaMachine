@@ -46,7 +46,7 @@ class ConnectorTest {
 
     @Test
     fun `ensure named constructor works`() {
-        val connector = Connector.fromString(characterPair = "AB")
+        val connector = Connector.fromString("AB")
         assertEquals(
             expected = "AB",
             actual = "${connector.first}${connector.second}",
@@ -56,7 +56,7 @@ class ConnectorTest {
 
     @Test
     fun `ensure named constructor works with string list`() {
-        val connectorList = Connector.fromStrings(characterPairs = listOf("AB", "CD", "EF"))
+        val connectorList = Connector.fromStrings(listOf("AB", "CD", "EF"))
         assertEquals(
             expected = listOf("AB", "CD", "EF"),
             actual = connectorList.map { "${it.first}${it.second}" },

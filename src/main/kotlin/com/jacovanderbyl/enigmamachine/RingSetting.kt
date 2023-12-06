@@ -20,12 +20,13 @@ class RingSetting(val value: Int = 1) {
     companion object {
         fun list() : List<Int> = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 }
 
-        fun fromString(setting: String) : RingSetting {
-            require(setting.toIntOrNull() != null) {
-                "Invalid number representation. A rotor ring setting string must be an integer. Given: '${setting}'."
+        fun fromString(ringSetting: String) : RingSetting {
+            require(ringSetting.toIntOrNull() != null) {
+                "Invalid number representation. A rotor ring setting string must be an integer. " +
+                        "Given: '${ringSetting}'."
             }
 
-            return RingSetting(setting.toInt())
+            return RingSetting(ringSetting.toInt())
         }
     }
 }

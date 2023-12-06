@@ -18,14 +18,14 @@ class Connector(val first: Char, val second: Char) {
     }
 
     companion object {
-        fun fromString(characterPair: String) : Connector {
-            require(characterPair.length == 2) {
-                "Invalid string length. A connector pair must be two characters. Given: '${characterPair}'."
+        fun fromString(connector: String) : Connector {
+            require(connector.length == 2) {
+                "Invalid string length. A connector pair must be two characters. Given: '${connector}'."
             }
-            return Connector(characterPair[0], characterPair[1])
+            return Connector(connector[0], connector[1])
         }
 
-        fun fromStrings(characterPairs: List<String>) : List<Connector> = characterPairs.map {
+        fun fromStrings(connectors: List<String>) : List<Connector> = connectors.map {
             fromString(it)
         }
     }
