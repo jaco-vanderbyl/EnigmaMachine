@@ -25,8 +25,8 @@ class Connector(val first: Char, val second: Char) {
             return Connector(characterPair[0], characterPair[1])
         }
 
-        fun fromStrings(characterPairs: List<String>) : Array<Connector> = characterPairs.map {
+        fun fromStrings(characterPairs: List<String>) : List<Connector> = characterPairs.map {
             fromString(it)
-        }.toTypedArray()
+        }
     }
 }

@@ -33,9 +33,19 @@ class EnigmaBuilder {
             return EnigmaType.valueOf(type).create(
                 rotorUnit = RotorUnit(
                     reflector = ReflectorType.valueOf(reflector).create(),
-                    rotors = setOf(*makeRotors(split(rotors), split(startingPositions), split(ringSettings)))
+                    rotors = setOf(
+                        *makeRotors(
+                            split(rotors),
+                            split(startingPositions),
+                            split(ringSettings)
+                        ).toTypedArray()
+                    )
                 ),
-                plugboard = Plugboard(*Connector.fromStrings(split(plugboardConnectors)))
+                plugboard = Plugboard(
+                    *Connector.fromStrings(
+                        split(plugboardConnectors)
+                    ).toTypedArray()
+                )
             )
         }
 
@@ -43,7 +53,7 @@ class EnigmaBuilder {
             rotors: List<String>,
             positions: List<String>,
             ringSettings: List<String>
-        ) : Array<Rotor> {
+        ) : List<Rotor> {
             if (positions.isNotEmpty()) {
                 require(rotors.size == positions.size) {
                     "Invalid position count. Number of positions must equal number of rotors: '${rotors.size}'. " +
@@ -59,7 +69,7 @@ class EnigmaBuilder {
 
             return rotors.mapIndexed { index, rotor ->
                 makeRotor(rotor, positions.getOrNull(index), ringSettings.getOrNull(index))
-            }.toTypedArray()
+            }
         }
 
         private fun makeRotor(rotor: String, position: String?, ringSetting: String?) : Rotor {
