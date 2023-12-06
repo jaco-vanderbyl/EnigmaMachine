@@ -108,13 +108,6 @@ class EnigmaTypeTest {
         else -> throw IllegalArgumentException()
     }
 
-    private fun incompatibleReflector(enigmaType: EnigmaType) : Reflector = when (enigmaType) {
-        EnigmaType.ENIGMA_I -> createIncompatibleReflector()
-        EnigmaType.ENIGMA_M3 -> createIncompatibleReflector()
-        EnigmaType.ENIGMA_M4 -> createIncompatibleReflector()
-        else -> throw IllegalArgumentException()
-    }
-
     // Given plaintext 'AAAAA' and the configuration define in valid validRotors and validReflector
     private fun expectedCiphers(enigmaType: EnigmaType) : String = when (enigmaType) {
         EnigmaType.ENIGMA_I -> "SCSUX"
@@ -226,7 +219,7 @@ class EnigmaTypeTest {
                 block = {
                     enigmaType.create(
                         rotorUnit = RotorUnit(
-                            reflector = incompatibleReflector(enigmaType),
+                            reflector = createIncompatibleReflector(),
                             rotors = validRotors(enigmaType)
                         ),
                         plugboard = Plugboard()
