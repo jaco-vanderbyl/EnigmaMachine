@@ -23,11 +23,11 @@ class EnigmaBuilder {
             startingPositions: String? = null,
             plugboardConnectors: String? = null
         ) : Enigma {
-            require(type in EnigmaType.entries.map { it.name }) {
-                "Invalid enigma type. Valid: '${EnigmaType.entries.map { it.name }}'. Given: '${type}'."
+            require(type in EnigmaType.list()) {
+                "Invalid enigma type. Valid: '${EnigmaType.list()}'. Given: '${type}'."
             }
-            require(reflector in ReflectorType.entries.map { it.name }) {
-                "Invalid reflector type. Valid: '${ReflectorType.entries.map { it.name }}'. Given: '${reflector}'."
+            require(reflector in ReflectorType.list()) {
+                "Invalid reflector type. Valid: '${ReflectorType.list()}'. Given: '${reflector}'."
             }
 
             return EnigmaType.valueOf(type).create(
@@ -73,8 +73,8 @@ class EnigmaBuilder {
         }
 
         private fun makeRotor(rotor: String, position: String?, ringSetting: String?) : Rotor {
-            require(rotor in RotorType.entries.map { it.name }) {
-                "Invalid rotor type. Valid: '${RotorType.entries.map { it.name }}'. Given: '${rotor}'."
+            require(rotor in RotorType.list()) {
+                "Invalid rotor type. Valid: '${RotorType.list()}'. Given: '${rotor}'."
             }
 
             return RotorType.valueOf(rotor).create(
