@@ -66,12 +66,12 @@ class Rotor(
     private fun offset() : Int = position.index - ringSetting.index
 
     private fun shiftIndex(index: Int, shiftBy: Int) : Int {
-        val shiftByIndex = shiftBy % characterSet.length
+        val shiftedIndex = index + shiftBy % characterSet.length
 
         return when {
-            index + shiftByIndex >= characterSet.length -> index + shiftByIndex - characterSet.length
-            index + shiftByIndex < 0                    -> index + shiftByIndex + characterSet.length
-            else                                        -> index + shiftByIndex
+            shiftedIndex >= characterSet.length -> shiftedIndex - characterSet.length
+            shiftedIndex < 0                    -> shiftedIndex + characterSet.length
+            else                                -> shiftedIndex
         }
     }
 }
