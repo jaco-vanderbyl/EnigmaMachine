@@ -2,37 +2,21 @@ package com.jacovanderbyl.enigmamachine
 
 /**
  * Represents a rotor, used to substitute one letter with another.
- *
- * A single rotor performs a simple letter-substitution, but multiple rotors are mounted side by side on a spindle in
- * the rotor unit, and the rotors turn with every letter substitution. From wikipedia: Enigma's security comes
- * from using several rotors in series (usually three or four) and the regular stepping movement of the rotors,
- * thus implementing a polyalphabetic substitution cipher.
- *
- * This class simulates two behaviours:
- *     - Stepping:
- *           Turning the rotor one position. E.g. turing from position 'A' to 'B'.
- *     - Enciphering:
- *           Substituting one letter for another, given a cipher set map (representing the internal wiring).
  */
-class Rotor(
+open class Rotor(
     val type: RotorType,
-    private val cipherSetMap: CipherSetMap,
-    private val notch: Notch,
+    protected val cipherSetMap: CipherSetMap,
     private val compatibility: Set<EnigmaType>,
     var position: Position,
-    var ringSetting: RingSetting
+    var ringSetting: RingSetting,
 ) : CanEncipherBidirectionally, HasCompatibility {
-    private val characterSet: String = cipherSetMap.characterSet
+    protected val characterSet: String = cipherSetMap.characterSet
 
-    fun step() {
-        position = Position(characterSet[shiftIndex(position.index, shiftBy = 1)])
-    }
+    override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
 
     fun resetPosition() {
         position = Position()
     }
-
-    fun isInNotchedPosition() : Boolean = position.character in notch.characters
 
     /**
      * Substitute one character for another, simulating rotor wiring, position, and ring setting.
@@ -61,11 +45,7 @@ class Rotor(
         return characterSet[finalCharacterIndex]
     }
 
-    override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
-
-    private fun offset() : Int = position.index - ringSetting.index
-
-    private fun shiftIndex(index: Int, shiftBy: Int) : Int {
+    protected fun shiftIndex(index: Int, shiftBy: Int) : Int {
         val shiftedIndex = index + shiftBy % characterSet.length
 
         return when {
@@ -74,4 +54,6 @@ class Rotor(
             else                                -> shiftedIndex
         }
     }
+
+    private fun offset() : Int = position.index - ringSetting.index
 }

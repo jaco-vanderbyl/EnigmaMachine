@@ -8,13 +8,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EnigmaTypeTest {
-    private fun createIncompatibleRotor() : Rotor = Rotor(
-        cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-        notch = Notch(Position('A')),
+    private fun createIncompatibleRotor() : StepRotor = StepRotor(
         type = RotorType.V,
+        cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
         compatibility = setOf(),
         position = Position(),
-        ringSetting = RingSetting()
+        ringSetting = RingSetting(),
+        notch = Notch(Position('A'))
     )
 
     private fun createIncompatibleReflector() : Reflector = Reflector(

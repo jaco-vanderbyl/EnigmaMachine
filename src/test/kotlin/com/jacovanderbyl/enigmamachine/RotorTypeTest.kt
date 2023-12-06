@@ -58,13 +58,15 @@ class RotorTypeTest {
     fun `ensure factory creates with correct notch positions`() = RotorType.entries.map { rotorType ->
         DynamicTest.dynamicTest("Test factory creation of rotor type: '${rotorType}'.") {
             val rotor = rotorType.create()
-            Enigma.CHARACTER_SET.forEach { position ->
-                rotor.position = Position(position)
-                assertEquals(
-                    expected = position in expectedNotchPositions(rotorType),
-                    actual = rotor.isInNotchedPosition(),
-                    message = "Failed to ensure factory creates with correct notch positions."
-                )
+            if (rotor is StepRotor) {
+                Enigma.CHARACTER_SET.forEach { position ->
+                    rotor.position = Position(position)
+                    assertEquals(
+                        expected = position in expectedNotchPositions(rotorType),
+                        actual = rotor.isInNotchedPosition(),
+                        message = "Failed to ensure factory creates with correct notch positions."
+                    )
+                }
             }
         }
     }

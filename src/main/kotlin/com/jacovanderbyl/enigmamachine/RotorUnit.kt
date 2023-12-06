@@ -5,7 +5,7 @@ package com.jacovanderbyl.enigmamachine
  *
  * This class simulates two behaviours:
  *     - Stepping:
- *           When and how the rotors turn, which happens after each key-press on the Enigma Machine.
+ *           When and how the step rotors turn, which happens after each key-press on the Enigma Machine.
  *     - Enciphering:
  *           Taking a 'plaintext' input letter and substituting it with a 'ciphertext' letter.
  *
@@ -27,9 +27,9 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      * Simulate rotor stepping.
      *
      * To understand how the stepping mechanism works, it's required to know the following:
-     *     - There are different types of rotors.
-     *     - Every rotor is a disc with 26 positions, each indicated by a letter of the alphabet.
-     *     - Every rotor has at least one notch cut out at a specific letter position.
+     *     - There are different types of step rotors.
+     *     - Every step rotor is a disc with 26 positions, each indicated by a letter of the alphabet.
+     *     - Every step rotor has at least one notch cut out at a specific letter position.
      *       E.g. RotorI has notch at 'Q', RotorII at 'E', and RotorIII at 'V'. RotorVI has two notches, at 'M' and 'Z'.
      *     - The different types of rotors fit together, and they can be arranged in any order. The Enigma I, the most
      *       common Enigma Machine model, accepted a unit of 3 rotors, but other models could accept up to 8.
@@ -75,7 +75,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
     fun stepRotors() {
         var previousSteppedOutOfNotch = false
 
-        rotors.reversed().forEachIndexed { index, rotor ->
+        rotors.filterIsInstance<StepRotor>().reversed().forEachIndexed { index, rotor ->
             val isEntryRotor = index == 0
             val isNextToEntryRotor = index == 1
             val isNotchedAndNextToEntryRotor = rotor.isInNotchedPosition() && isNextToEntryRotor
