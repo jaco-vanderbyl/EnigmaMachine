@@ -1,8 +1,8 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Represents a map between the Enigma Machine character set and a given cipher set,
- * used to substitute one character for another.
+ * Represents a map between the Enigma Machine character set and a given cipher set.
+ * Used by reflectors and rotors to do letter-substitution.
  *
  * E.g.:
  *     Enigma Character Set: ABCDEFGHIJKLMNOPQRSTUVWXYZ
