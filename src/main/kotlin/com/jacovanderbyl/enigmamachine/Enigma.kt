@@ -58,8 +58,8 @@ class Enigma(
 
     fun setRotorPositions(vararg positions: Position) {
         require(positions.size == rotorUnit.rotors.size) {
-            "Invalid position count. The number of rotor positions must equal the number of rotors in the" +
-                    "unit: '${rotorUnit.rotors.size}'. Given: '${positions.size}'."
+            "Invalid position count. The number of rotor positions must equal the number of rotors " +
+                    "in the unit: '${rotorUnit.rotors.size}'. Given: '${positions.size}'."
         }
 
         positions.forEachIndexed { index, position ->
