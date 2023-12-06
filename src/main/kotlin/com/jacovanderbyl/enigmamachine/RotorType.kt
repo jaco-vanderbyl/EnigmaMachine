@@ -86,4 +86,8 @@ enum class RotorType {
     };
 
     abstract fun create(position: Position = Position(), ringSetting: RingSetting = RingSetting()) : Rotor
+
+    companion object {
+        fun list() : List<String> = entries.map { it.name }
+    }
 }

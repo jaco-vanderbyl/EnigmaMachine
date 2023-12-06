@@ -34,11 +34,11 @@ Alternatively, go to Build menu and choose Build Project.
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
 
-val enigmaTypes = EnigmaType.entries.map { it.name }
-val reflectorTypes = ReflectorType.entries.map { it.name }
-val rotorTypes = RotorType.entries.map { it.name }
-val ringSettings = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 }
-val positions = Enigma.CHARACTER_SET.map { it }
+val enigmaTypes = EnigmaType.list()
+val reflectorTypes = ReflectorType.list()
+val rotorTypes = RotorType.list()
+val ringSettings = RingSetting.list()
+val positions = Position.list()
 
 println(enigmaTypes)    // prints: [ENIGMA_I, ENIGMA_M3]
 println(reflectorTypes) // prints: [B, C]

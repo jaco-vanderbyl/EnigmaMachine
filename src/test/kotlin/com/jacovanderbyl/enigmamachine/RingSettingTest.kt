@@ -70,4 +70,13 @@ class RingSettingTest {
             }
         }
     }
+
+    @Test
+    fun `ensure list of available ring settings is correct`() {
+        assertEquals(
+            expected = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 },
+            actual = RingSetting.list(),
+            message = "Failed to ensure list of available ring settings is correct."
+        )
+    }
 }

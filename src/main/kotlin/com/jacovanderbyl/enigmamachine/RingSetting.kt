@@ -9,7 +9,7 @@ package com.jacovanderbyl.enigmamachine
  */
 class RingSetting(val value: Int = 1) {
     init {
-        require(value in 1..Enigma.CHARACTER_SET.length) {
+        require(value in list()) {
             "Invalid value. The ring setting must be an integer between 1 and ${Enigma.CHARACTER_SET.length}. " +
                     "Given: '${value}'."
         }
@@ -18,6 +18,8 @@ class RingSetting(val value: Int = 1) {
     val index = value - 1
 
     companion object {
+        fun list(): List<Int> = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 }
+
         fun fromString(setting: String) : RingSetting {
             require(setting.toIntOrNull() != null) {
                 "Invalid number representation. A rotor ring setting string must be an integer. Given: '${setting}'."

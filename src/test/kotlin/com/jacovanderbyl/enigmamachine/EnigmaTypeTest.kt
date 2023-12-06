@@ -1,6 +1,7 @@
 package com.jacovanderbyl.enigmamachine
 
 import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -190,5 +191,14 @@ class EnigmaTypeTest {
                 assertContains(it, "incompatible reflector", ignoreCase = true)
             }
         }
+    }
+
+    @Test
+    fun `ensure list of available enigma types is correct`() {
+        assertEquals(
+            expected = EnigmaType.entries.map { it.name },
+            actual = EnigmaType.list(),
+            message = "Failed to ensure list of available enigma types is correct."
+        )
     }
 }

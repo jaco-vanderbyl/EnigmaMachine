@@ -1,6 +1,7 @@
 package com.jacovanderbyl.enigmamachine
 
 import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -58,5 +59,14 @@ class ReflectorTypeTest {
                 )
             }
         }
+    }
+
+    @Test
+    fun `ensure list of available reflector types is correct`() {
+        assertEquals(
+            expected = ReflectorType.entries.map { it.name },
+            actual = ReflectorType.list(),
+            message = "Failed to ensure list of available reflector types is correct."
+        )
     }
 }

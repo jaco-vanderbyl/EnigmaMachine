@@ -69,4 +69,13 @@ class PositionTest {
             }
         }
     }
+
+    @Test
+    fun `ensure list of available positions is correct`() {
+        assertEquals(
+            expected = Enigma.CHARACTER_SET.map { it },
+            actual = Position.list(),
+            message = "Failed to ensure list of available positions is correct."
+        )
+    }
 }

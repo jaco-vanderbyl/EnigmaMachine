@@ -120,4 +120,13 @@ class RotorTypeTest {
             )
         }
     }
+
+    @Test
+    fun `ensure list of available rotor types is correct`() {
+        assertEquals(
+            expected = RotorType.entries.map { it.name },
+            actual = RotorType.list(),
+            message = "Failed to ensure list of available rotor types is correct."
+        )
+    }
 }

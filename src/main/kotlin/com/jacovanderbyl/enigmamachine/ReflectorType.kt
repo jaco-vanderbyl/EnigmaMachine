@@ -20,4 +20,8 @@ enum class ReflectorType {
     };
 
     abstract fun create() : Reflector
+
+    companion object {
+        fun list() : List<String> = entries.map { it.name }
+    }
 }

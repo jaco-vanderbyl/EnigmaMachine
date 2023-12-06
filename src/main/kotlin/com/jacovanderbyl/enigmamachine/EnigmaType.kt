@@ -32,4 +32,8 @@ enum class EnigmaType {
             "Incompatible reflector. '${rotorUnit.reflector.type}' reflector is not compatible with '${enigmaType}'."
         }
     }
+
+    companion object {
+        fun list() : List<String> = entries.map { it.name }
+    }
 }
