@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ReflectorTypeTest {
@@ -40,13 +41,20 @@ class ReflectorTypeTest {
         DynamicTest.dynamicTest("Test factory creation of reflector type: '${reflectorType}'.") {
             val reflector = reflectorType.create()
 
-            // Currently all reflector types are compatible with all Enigma Types. assertFalse case should be added
-            // when that is no longer the case.
-            expectedCompatibility(reflectorType).forEach { enigmaType ->
-                assertTrue(
-                    actual = reflector.isCompatible(enigmaType),
-                    message = "Failed to ensure factory creates with correct compatibility."
-                )
+            EnigmaType.entries.forEach { enigmaType ->
+                if (enigmaType in expectedCompatibility(reflectorType)) {
+                    assertTrue(
+                        actual = reflector.isCompatible(enigmaType),
+                        message = "Failed to ensure factory creates with correct compatibility. '${reflectorType}' " +
+                                "should be compatible with '${enigmaType}'."
+                    )
+                } else {
+                    assertFalse(
+                        actual = reflector.isCompatible(enigmaType),
+                        message = "Failed to ensure factory creates with correct compatibility. '${reflectorType}' " +
+                                "should not be compatible with '${enigmaType}'."
+                    )
+                }
             }
         }
     }
