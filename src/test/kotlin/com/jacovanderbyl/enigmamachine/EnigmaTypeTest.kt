@@ -26,12 +26,19 @@ class EnigmaTypeTest {
     private fun validRotors(enigmaType: EnigmaType) : Set<Rotor> = when (enigmaType) {
         EnigmaType.ENIGMA_I -> setOf(RotorType.I.create(), RotorType.V.create(), RotorType.III.create())
         EnigmaType.ENIGMA_M3 -> setOf(RotorType.VI.create(), RotorType.VII.create(), RotorType.VIII.create())
+        EnigmaType.ENIGMA_M4 -> setOf(
+            RotorType.BETA.create(),
+            RotorType.VI.create(),
+            RotorType.VII.create(),
+            RotorType.VIII.create(),
+        )
         else -> throw IllegalArgumentException()
     }
 
     private fun validReflector(enigmaType: EnigmaType) : Reflector = when (enigmaType) {
         EnigmaType.ENIGMA_I -> ReflectorType.B.create()
         EnigmaType.ENIGMA_M3 -> ReflectorType.C.create()
+        EnigmaType.ENIGMA_M4 -> ReflectorType.B_THIN.create()
         else -> throw IllegalArgumentException()
     }
 
@@ -46,6 +53,18 @@ class EnigmaTypeTest {
                 setOf(RotorType.I.create(), RotorType.II.create()),
                 setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create(), RotorType.IV.create()),
             )
+        EnigmaType.ENIGMA_M4 -> listOf(
+            setOf(RotorType.BETA.create()),
+            setOf(RotorType.BETA.create(), RotorType.II.create()),
+            setOf(RotorType.BETA.create(), RotorType.II.create(), RotorType.III.create()),
+            setOf(
+                RotorType.BETA.create(),
+                RotorType.I.create(),
+                RotorType.II.create(),
+                RotorType.III.create(),
+                RotorType.IV.create()
+            ),
+        )
         else -> throw IllegalArgumentException()
     }
 
@@ -60,19 +79,47 @@ class EnigmaTypeTest {
                 setOf(RotorType.VI.create(), createIncompatibleRotor(), RotorType.VIII.create()),
                 setOf(RotorType.VI.create(), RotorType.VII.create(), createIncompatibleRotor()),
             )
+        EnigmaType.ENIGMA_M4 -> listOf(
+            setOf(
+                createIncompatibleRotor(),
+                RotorType.VI.create(),
+                RotorType.VII.create(),
+                RotorType.VIII.create(),
+            ),
+            setOf(
+                RotorType.BETA.create(),
+                createIncompatibleRotor(),
+                RotorType.VII.create(),
+                RotorType.VIII.create(),
+            ),
+            setOf(
+                RotorType.BETA.create(),
+                RotorType.VI.create(),
+                createIncompatibleRotor(),
+                RotorType.VIII.create(),
+            ),
+            setOf(
+                RotorType.BETA.create(),
+                RotorType.VI.create(),
+                RotorType.VII.create(),
+                createIncompatibleRotor(),
+            ),
+        )
         else -> throw IllegalArgumentException()
     }
 
     private fun incompatibleReflector(enigmaType: EnigmaType) : Reflector = when (enigmaType) {
         EnigmaType.ENIGMA_I -> createIncompatibleReflector()
         EnigmaType.ENIGMA_M3 -> createIncompatibleReflector()
+        EnigmaType.ENIGMA_M4 -> createIncompatibleReflector()
         else -> throw IllegalArgumentException()
     }
 
-    // Given plaintext 'AAAAA'
+    // Given plaintext 'AAAAA' and the configuration define in valid validRotors and validReflector
     private fun expectedCiphers(enigmaType: EnigmaType) : String = when (enigmaType) {
         EnigmaType.ENIGMA_I -> "SCSUX"
         EnigmaType.ENIGMA_M3 -> "MWMJL"
+        EnigmaType.ENIGMA_M4 -> "GJUBB"
         else -> throw IllegalArgumentException()
     }
 
@@ -190,6 +237,30 @@ class EnigmaTypeTest {
             exception.message?.let {
                 assertContains(it, "incompatible reflector", ignoreCase = true)
             }
+        }
+    }
+
+    @Test
+    fun `ensure invalid rotor type at order index 0 throws for M4`() {
+        val exception = assertFailsWith<IllegalArgumentException>(
+            block = {
+                EnigmaType.ENIGMA_M4.create(
+                    rotorUnit = RotorUnit(
+                        reflector = validReflector(EnigmaType.ENIGMA_M4),
+                        rotors = setOf(
+                            RotorType.V.create(),
+                            RotorType.VI.create(),
+                            RotorType.VII.create(),
+                            RotorType.VIII.create(),
+                        )
+                    ),
+                    plugboard = Plugboard()
+                )
+            },
+            message = "Failed to ensure invalid rotor type at order index 0 throws for M4."
+        )
+        exception.message?.let {
+            assertContains(it, "invalid rotor type at order index", ignoreCase = true)
         }
     }
 

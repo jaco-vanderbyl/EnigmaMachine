@@ -2,8 +2,9 @@
 Kotlin library that simulates Enigma Machine enciphering.
 
 Supports the following models:
-* Wehrmacht Enigma I — The most common wartime Enigma Machine, used by the German Army.
-* Kriegsmarine Enigma M3 — A modified Enigma I model, used by German navy.
+* **_Wehrmacht_ Enigma I** — Most common wartime Enigma, used by the German army.
+* **_Kriegsmarine_ Enigma M3** — Modified Enigma I model, used by German navy.
+* **_Kriegsmarine_ Enigma M4** — More secure version of M3, used by German navy, particularly in their U-boats
 
 From [wikipedia](https://en.wikipedia.org/wiki/Enigma_machine):
 > The Enigma machine is a cipher device developed and used in the early- to mid-20th century to protect commercial,
@@ -40,9 +41,9 @@ val rotorTypes = RotorType.list()
 val ringSettings = RingSetting.list()
 val positions = Position.list()
 
-println(enigmaTypes)    // prints: [ENIGMA_I, ENIGMA_M3]
-println(reflectorTypes) // prints: [B, C]
-println(rotorTypes)     // prints: [I, II, III, IV, V, VI, VII, VIII]
+println(enigmaTypes)    // prints: [ENIGMA_I, ENIGMA_M3, ENIGMA_M4]
+println(reflectorTypes) // prints: [B, C, B_THIN, C_THIN]
+println(rotorTypes)     // prints: [I, II, III, IV, V, VI, VII, VIII, BETA, GAMMA]
 println(ringSettings)   // prints: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
 println(positions)      // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
 ```

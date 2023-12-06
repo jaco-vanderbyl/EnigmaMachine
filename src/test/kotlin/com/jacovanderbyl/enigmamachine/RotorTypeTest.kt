@@ -15,6 +15,8 @@ class RotorTypeTest {
         RotorType.VI -> "JPGVOUMFYQBENHZRDKASXLICTW"
         RotorType.VII -> "NZJHGRCXMYSWBOUFAIVLPEKQDT"
         RotorType.VIII -> "FKQHTLXOCBJSPDZRAMEWNIUYGV"
+        RotorType.BETA -> "LEYJVCNIXWPBQMDRTAKZGFUHOS"
+        RotorType.GAMMA -> "FSOKANUERHMBTIYCWLQPZXVGJD"
         else -> throw IllegalArgumentException()
     }
 
@@ -31,14 +33,16 @@ class RotorTypeTest {
     }
 
     private fun expectedCompatibility(rotorType: RotorType) : Set<EnigmaType> = when (rotorType) {
-        RotorType.I -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
-        RotorType.II -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
-        RotorType.III -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
-        RotorType.IV -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
-        RotorType.V -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
-        RotorType.VI -> setOf(EnigmaType.ENIGMA_M3)
-        RotorType.VII -> setOf(EnigmaType.ENIGMA_M3)
-        RotorType.VIII -> setOf(EnigmaType.ENIGMA_M3)
+        RotorType.I -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.II -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.III -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.IV -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.V -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.VI -> setOf(EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.VII -> setOf(EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.VIII -> setOf(EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.BETA -> setOf(EnigmaType.ENIGMA_M4)
+        RotorType.GAMMA -> setOf(EnigmaType.ENIGMA_M4)
         else -> throw IllegalArgumentException()
     }
 

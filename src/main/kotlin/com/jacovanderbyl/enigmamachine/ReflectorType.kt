@@ -17,6 +17,20 @@ enum class ReflectorType {
             cipherSetMap = CipherSetMap("FVPJIAOYEDRZXWGCTKUQSBNMHL"),
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         )
+    },
+    B_THIN {
+        override fun create() : Reflector = Reflector(
+            type = B_THIN,
+            cipherSetMap = CipherSetMap("ENKQAUYWJICOPBLMDXZVFTHRGS"),
+            compatibility = setOf(EnigmaType.ENIGMA_M4)
+        )
+    },
+    C_THIN {
+        override fun create() : Reflector = Reflector(
+            type = C_THIN,
+            cipherSetMap = CipherSetMap("RDOBJNTKVEHMLFCWZAXGYIPSUQ"),
+            compatibility = setOf(EnigmaType.ENIGMA_M4)
+        )
     };
 
     abstract fun create() : Reflector

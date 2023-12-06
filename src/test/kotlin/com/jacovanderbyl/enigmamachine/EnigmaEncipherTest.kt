@@ -144,6 +144,40 @@ class EnigmaEncipherTest {
                 type = EnigmaType.ENIGMA_M3
             )
         }
+        "B_THIN-BETA-VI-VII-VIII-E-Z-R-S-10-26-8-15-UV-WX-YZ" -> {
+            Enigma(
+                rotorUnit = RotorUnit(
+                    reflector = ReflectorType.B_THIN.create(),
+                    rotors = setOf(
+                        RotorType.BETA.create(Position('E'), RingSetting(10)),
+                        RotorType.VI.create(Position('Z'), RingSetting(26)),
+                        RotorType.VII.create(Position('R'), RingSetting(8)),
+                        RotorType.VIII.create(Position('S'), RingSetting(15))
+                    )
+                ),
+                plugboard = Plugboard(
+                    Connector('U', 'V'), Connector('W', 'X'), Connector('Y', 'Z')
+                ),
+                type = EnigmaType.ENIGMA_M4
+            )
+        }
+        "C_THIN-GAMMA-VI-VII-VIII-E-Z-R-S-10-26-8-15-UV-WX-YZ" -> {
+            Enigma(
+                rotorUnit = RotorUnit(
+                    reflector = ReflectorType.C_THIN.create(),
+                    rotors = setOf(
+                        RotorType.GAMMA.create(Position('E'), RingSetting(10)),
+                        RotorType.VI.create(Position('Z'), RingSetting(26)),
+                        RotorType.VII.create(Position('R'), RingSetting(8)),
+                        RotorType.VIII.create(Position('S'), RingSetting(15))
+                    )
+                ),
+                plugboard = Plugboard(
+                    Connector('U', 'V'), Connector('W', 'X'), Connector('Y', 'Z')
+                ),
+                type = EnigmaType.ENIGMA_M4
+            )
+        }
         else -> createStockEnigma()
     }
 
@@ -198,6 +232,8 @@ class EnigmaEncipherTest {
         "C-VI-VII-VIII-Z-R-S-26-8-15",
         "C-VI-VII-VIII-Z-R-S-26-8-15-AB-CD-EF-GH-IJ-KL-MN-OP-QR-ST",
         "C-VI-VII-VIII-Z-R-S-26-8-15-UV-WX-YZ",
+        "B_THIN-BETA-VI-VII-VIII-E-Z-R-S-10-26-8-15-UV-WX-YZ",
+        "C_THIN-GAMMA-VI-VII-VIII-E-Z-R-S-10-26-8-15-UV-WX-YZ",
     ).map { fileName ->
         DynamicTest.dynamicTest("Test encipher with configuration: '${fileName}'.") {
             val enigma = createEnigma(fileName)
