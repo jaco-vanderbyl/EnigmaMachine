@@ -6,23 +6,30 @@ package com.jacovanderbyl.enigmamachine
 enum class EnigmaType {
     ENIGMA_I {
         override fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma {
-            checkRequirements(ENIGMA_I, rotorUnit)
+            requireRotorCount(ENIGMA_I, rotorUnit)
+            requireCompatibility(ENIGMA_I, rotorUnit)
+
             return Enigma(type = ENIGMA_I, rotorUnit = rotorUnit, plugboard = plugboard)
         }
     },
     ENIGMA_M3 {
         override fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma {
-            checkRequirements(ENIGMA_M3, rotorUnit)
+            requireRotorCount(ENIGMA_M3, rotorUnit)
+            requireCompatibility(ENIGMA_M3, rotorUnit)
+
             return Enigma(type = ENIGMA_M3, rotorUnit = rotorUnit, plugboard = plugboard)
         }
     };
 
     abstract fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma
 
-    protected fun checkRequirements(enigmaType: EnigmaType, rotorUnit: RotorUnit) {
+    protected fun requireRotorCount(enigmaType: EnigmaType, rotorUnit: RotorUnit) {
         require(rotorUnit.rotors.count() == 3) {
-            "Invalid rotor count. '${enigmaType}' must have 3 rotors. Given: '${rotorUnit.rotors.count()}'."
+            "Invalid rotor count. '${enigmaType}' must have '3' rotors. Given: '${rotorUnit.rotors.count()}'."
         }
+    }
+
+    protected fun requireCompatibility(enigmaType: EnigmaType, rotorUnit: RotorUnit) {
         rotorUnit.rotors.forEach { rotor ->
             require(rotor.isCompatible(enigmaType)) {
                 "Incompatible rotor. '${rotor.type}' rotor is not compatible with '${enigmaType}'."
