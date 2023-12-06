@@ -18,7 +18,7 @@ class RingSetting(val value: Int = 1) {
     val index = value - 1
 
     companion object {
-        fun list(): List<Int> = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 }
+        fun list() : List<Int> = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 }
 
         fun fromString(setting: String) : RingSetting {
             require(setting.toIntOrNull() != null) {

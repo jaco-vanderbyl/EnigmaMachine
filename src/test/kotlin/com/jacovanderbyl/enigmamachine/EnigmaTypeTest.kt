@@ -23,19 +23,19 @@ class EnigmaTypeTest {
         compatibility = setOf()
     )
 
-    private fun validRotors(enigmaType: EnigmaType) = when (enigmaType) {
+    private fun validRotors(enigmaType: EnigmaType) : Set<Rotor> = when (enigmaType) {
         EnigmaType.ENIGMA_I -> setOf(RotorType.I.create(), RotorType.V.create(), RotorType.III.create())
         EnigmaType.ENIGMA_M3 -> setOf(RotorType.VI.create(), RotorType.VII.create(), RotorType.VIII.create())
         else -> throw IllegalArgumentException()
     }
 
-    private fun validReflector(enigmaType: EnigmaType) = when (enigmaType) {
+    private fun validReflector(enigmaType: EnigmaType) : Reflector = when (enigmaType) {
         EnigmaType.ENIGMA_I -> ReflectorType.B.create()
         EnigmaType.ENIGMA_M3 -> ReflectorType.C.create()
         else -> throw IllegalArgumentException()
     }
 
-    private fun invalidRotorCount(enigmaType: EnigmaType) = when (enigmaType) {
+    private fun invalidRotorCount(enigmaType: EnigmaType) : List<Set<Rotor>> = when (enigmaType) {
         EnigmaType.ENIGMA_I -> listOf(
                 setOf(RotorType.I.create()),
                 setOf(RotorType.I.create(), RotorType.II.create()),
@@ -49,7 +49,7 @@ class EnigmaTypeTest {
         else -> throw IllegalArgumentException()
     }
 
-    private fun incompatibleRotors(enigmaType: EnigmaType) = when (enigmaType) {
+    private fun incompatibleRotors(enigmaType: EnigmaType) : List<Set<Rotor>> = when (enigmaType) {
         EnigmaType.ENIGMA_I -> listOf(
                 setOf(createIncompatibleRotor(), RotorType.I.create(), RotorType.II.create()),
                 setOf(RotorType.I.create(), createIncompatibleRotor(), RotorType.II.create()),
@@ -63,14 +63,14 @@ class EnigmaTypeTest {
         else -> throw IllegalArgumentException()
     }
 
-    private fun incompatibleReflector(enigmaType: EnigmaType) = when (enigmaType) {
+    private fun incompatibleReflector(enigmaType: EnigmaType) : Reflector = when (enigmaType) {
         EnigmaType.ENIGMA_I -> createIncompatibleReflector()
         EnigmaType.ENIGMA_M3 -> createIncompatibleReflector()
         else -> throw IllegalArgumentException()
     }
 
     // Given plaintext 'AAAAA'
-    private fun expectedCiphers(enigmaType: EnigmaType) = when (enigmaType) {
+    private fun expectedCiphers(enigmaType: EnigmaType) : String = when (enigmaType) {
         EnigmaType.ENIGMA_I -> "SCSUX"
         EnigmaType.ENIGMA_M3 -> "MWMJL"
         else -> throw IllegalArgumentException()
@@ -113,7 +113,7 @@ class EnigmaTypeTest {
     }
 
     @TestFactory
-    fun `ensure invalid rotor count throws`(): List<DynamicTest> {
+    fun `ensure invalid rotor count throws`() : List<DynamicTest> {
         val tests = mutableListOf<DynamicTest>()
 
         EnigmaType.entries.forEach { enigmaType ->
@@ -144,7 +144,7 @@ class EnigmaTypeTest {
     }
 
     @TestFactory
-    fun `ensure incompatible rotor throws`(): List<DynamicTest> {
+    fun `ensure incompatible rotor throws`() : List<DynamicTest> {
         val tests = mutableListOf<DynamicTest>()
 
         EnigmaType.entries.forEach { enigmaType ->

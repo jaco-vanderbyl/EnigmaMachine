@@ -6,7 +6,7 @@ import org.junit.jupiter.api.TestFactory
 import kotlin.test.assertEquals
 
 class RotorTypeTest {
-    private fun expectedCipherSets(rotorType: RotorType) = when (rotorType) {
+    private fun expectedCipherSets(rotorType: RotorType) : String = when (rotorType) {
         RotorType.I -> "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
         RotorType.II -> "AJDKSIRUXBLHWTMCQGZNPYFVOE"
         RotorType.III -> "BDFHJLCPRTXVZNYEIWGAKMUSQO"
@@ -18,7 +18,7 @@ class RotorTypeTest {
         else -> throw IllegalArgumentException()
     }
 
-    private fun expectedNotchPositions(rotorType: RotorType) = when (rotorType) {
+    private fun expectedNotchPositions(rotorType: RotorType) : Set<Char> = when (rotorType) {
         RotorType.I -> setOf('Q')
         RotorType.II -> setOf('E')
         RotorType.III -> setOf('V')
@@ -30,7 +30,7 @@ class RotorTypeTest {
         else -> throw IllegalArgumentException()
     }
 
-    private fun expectedCompatibility(rotorType: RotorType) = when (rotorType) {
+    private fun expectedCompatibility(rotorType: RotorType) : Set<EnigmaType> = when (rotorType) {
         RotorType.I -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         RotorType.II -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         RotorType.III -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)

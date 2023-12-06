@@ -7,13 +7,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ReflectorTypeTest {
-    private fun expectedCipherSets(reflectorType: ReflectorType) = when (reflectorType) {
+    private fun expectedCipherSets(reflectorType: ReflectorType) : String = when (reflectorType) {
         ReflectorType.B -> "YRUHQSLDPXNGOKMIEBFZCWVJAT"
         ReflectorType.C -> "FVPJIAOYEDRZXWGCTKUQSBNMHL"
         else -> throw IllegalArgumentException()
     }
 
-    private fun expectedCompatibility(reflectorType: ReflectorType) = when (reflectorType) {
+    private fun expectedCompatibility(reflectorType: ReflectorType) : Set<EnigmaType> = when (reflectorType) {
         ReflectorType.B -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         ReflectorType.C -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         else -> throw IllegalArgumentException()
