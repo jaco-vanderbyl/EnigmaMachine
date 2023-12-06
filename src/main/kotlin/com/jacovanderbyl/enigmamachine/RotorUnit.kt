@@ -65,8 +65,8 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      *     R-F-X  (Rule1: W→X) ⇒ (Rule3: E→F steps out of notch) ⇒ (Rule2: Q→R steps out of notch) ⇒ no further effect
      *            because there is not another rotor to the left
      *
-     * In this function the stepping rules are applied as follows: it loops over the rotors in the unit, starting with
-     * the entry rotor (last item in the rotor set), and then, to determine if the current rotor in the loop
+     * In this function the stepping rules are applied as follows: it loops over the step rotors in the unit, starting
+     * with the entry rotor (last item in the rotor set), and then, to determine if the current rotor in the loop
      * should step, one of three conditions must be true:
      *     a) the rotor _is_ the entry rotor, or
      *     b) the previous rotor stepped out of its notched position, or
