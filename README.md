@@ -18,19 +18,30 @@ From [wikipedia](https://en.wikipedia.org/wiki/Enigma_machine):
 > Entering ciphertext transforms it back into readable plaintext. The rotor mechanism changes the electrical
 > connections between the keys and the lights with each keypress.
 
-## Build and test
-It is recommended to use the latest released version of Intellij IDEA (Community or Ultimate Edition).
-You can download IntelliJ IDEA [here](https://www.jetbrains.com/idea/download).
+## Requirements
+* [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
-After cloning the project, import the project in IntelliJ by choosing the project directory in the Open project dialog.
+## Build the project
+It is recommended to open the project in the latest released version of
+[Intellij IDEA](https://www.jetbrains.com/idea/download) (Community or Ultimate Edition), which will
+automatically install the appropriate version of Gradle — the required build tool for the project.
 
-**Build**: IntelliJ should build the project automatically using Gradle.
-Alternatively, go to Build menu and choose Build Project.
+### IntelliJ IDEA
+Clone the repo and open the project in IntelliJ IDEA. The IDE will automatically build the project.
 
-**Test**: Right-click on `/src/test` and choose Run Tests.
+### Gradle Wrapper
+To build manually, clone the repo, change to the project root directory, and run the following command from console:
+```
+$ ./gradlew build
+```
+In Windows:
+```
+$ .\gradlew.bat build
+```
+_The Gradle Wrapper is the preferred way of starting a Gradle build. The Wrapper downloads (if needed) and then 
+invokes a specific version of Gradle declared in the build._
 
-## Usage
-
+## Library usage
 ### List available Enigma Machines, Reflectors, Rotors, Ring Settings, and Positions
 ```kotlin
 import com.jacovanderbyl.enigmamachine.*
