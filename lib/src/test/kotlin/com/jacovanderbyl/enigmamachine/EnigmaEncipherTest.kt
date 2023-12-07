@@ -18,7 +18,7 @@ import kotlin.test.assertFailsWith
  *  With this configuration 'AAAAA' will produce the encoded sequence 'BDZGO'
  */
 class EnigmaEncipherTest {
-    private val plaintext = ClassLoader.getSystemResource("./plaintext").readText()
+    private val plaintext = ClassLoader.getSystemResource("plaintext").readText()
 
     private fun createStockEnigma() : Enigma = Enigma(
         type = EnigmaType.ENIGMA_I,
