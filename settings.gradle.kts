@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = "kotlin-enigma-machine"
-include("lib")
+include("kotlin-enigma-machine")
