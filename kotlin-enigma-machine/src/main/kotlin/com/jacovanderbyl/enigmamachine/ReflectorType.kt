@@ -4,30 +4,30 @@ package com.jacovanderbyl.enigmamachine
  * Serves as Reflector Factory.
  */
 enum class ReflectorType {
-    B {
+    REFLECTOR_B {
         override fun create() : Reflector = Reflector(
-            type = B,
+            type = REFLECTOR_B,
             cipherSetMap = CipherSetMap("YRUHQSLDPXNGOKMIEBFZCWVJAT"),
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         )
     },
-    C {
+    REFLECTOR_C {
         override fun create() : Reflector = Reflector(
-            type = C,
+            type = REFLECTOR_C,
             cipherSetMap = CipherSetMap("FVPJIAOYEDRZXWGCTKUQSBNMHL"),
             compatibility = setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
         )
     },
-    B_THIN {
+    REFLECTOR_B_THIN {
         override fun create() : Reflector = Reflector(
-            type = B_THIN,
+            type = REFLECTOR_B_THIN,
             cipherSetMap = CipherSetMap("ENKQAUYWJICOPBLMDXZVFTHRGS"),
             compatibility = setOf(EnigmaType.ENIGMA_M4)
         )
     },
-    C_THIN {
+    REFLECTOR_C_THIN {
         override fun create() : Reflector = Reflector(
-            type = C_THIN,
+            type = REFLECTOR_C_THIN,
             cipherSetMap = CipherSetMap("RDOBJNTKVEHMLFCWZAXGYIPSUQ"),
             compatibility = setOf(EnigmaType.ENIGMA_M4)
         )

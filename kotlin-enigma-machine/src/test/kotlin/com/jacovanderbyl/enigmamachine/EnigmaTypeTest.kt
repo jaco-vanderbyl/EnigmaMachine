@@ -9,7 +9,7 @@ import kotlin.test.assertFailsWith
 
 class EnigmaTypeTest {
     private fun createIncompatibleRotor() : StepRotor = StepRotor(
-        type = RotorType.V,
+        type = RotorType.ROTOR_V,
         cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
         compatibility = setOf(),
         position = Position(),
@@ -19,50 +19,68 @@ class EnigmaTypeTest {
 
     private fun createIncompatibleReflector() : Reflector = Reflector(
         cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-        type = ReflectorType.B,
+        type = ReflectorType.REFLECTOR_B,
         compatibility = setOf()
     )
 
     private fun validRotors(enigmaType: EnigmaType) : Set<Rotor> = when (enigmaType) {
-        EnigmaType.ENIGMA_I -> setOf(RotorType.I.create(), RotorType.V.create(), RotorType.III.create())
-        EnigmaType.ENIGMA_M3 -> setOf(RotorType.VI.create(), RotorType.VII.create(), RotorType.VIII.create())
+        EnigmaType.ENIGMA_I -> setOf(
+            RotorType.ROTOR_I.create(),
+            RotorType.ROTOR_V.create(),
+            RotorType.ROTOR_III.create()
+        )
+        EnigmaType.ENIGMA_M3 -> setOf(
+            RotorType.ROTOR_VI.create(),
+            RotorType.ROTOR_VII.create(),
+            RotorType.ROTOR_VIII.create()
+        )
         EnigmaType.ENIGMA_M4 -> setOf(
-            RotorType.BETA.create(),
-            RotorType.VI.create(),
-            RotorType.VII.create(),
-            RotorType.VIII.create(),
+            RotorType.ROTOR_BETA.create(),
+            RotorType.ROTOR_VI.create(),
+            RotorType.ROTOR_VII.create(),
+            RotorType.ROTOR_VIII.create(),
         )
         else -> throw IllegalArgumentException()
     }
 
     private fun validReflector(enigmaType: EnigmaType) : Reflector = when (enigmaType) {
-        EnigmaType.ENIGMA_I -> ReflectorType.B.create()
-        EnigmaType.ENIGMA_M3 -> ReflectorType.C.create()
-        EnigmaType.ENIGMA_M4 -> ReflectorType.B_THIN.create()
+        EnigmaType.ENIGMA_I -> ReflectorType.REFLECTOR_B.create()
+        EnigmaType.ENIGMA_M3 -> ReflectorType.REFLECTOR_C.create()
+        EnigmaType.ENIGMA_M4 -> ReflectorType.REFLECTOR_B_THIN.create()
         else -> throw IllegalArgumentException()
     }
 
     private fun invalidRotorCount(enigmaType: EnigmaType) : List<Set<Rotor>> = when (enigmaType) {
         EnigmaType.ENIGMA_I -> listOf(
-                setOf(RotorType.I.create()),
-                setOf(RotorType.I.create(), RotorType.II.create()),
-                setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create(), RotorType.IV.create()),
+                setOf(RotorType.ROTOR_I.create()),
+                setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create()),
+                setOf(
+                    RotorType.ROTOR_I.create(),
+                    RotorType.ROTOR_II.create(),
+                    RotorType.ROTOR_III.create(),
+                    RotorType.ROTOR_IV.create()
+                ),
             )
         EnigmaType.ENIGMA_M3 -> listOf(
-                setOf(RotorType.I.create()),
-                setOf(RotorType.I.create(), RotorType.II.create()),
-                setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create(), RotorType.IV.create()),
+                setOf(RotorType.ROTOR_I.create()),
+                setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create()),
+                setOf(
+                    RotorType.ROTOR_I.create(),
+                    RotorType.ROTOR_II.create(),
+                    RotorType.ROTOR_III.create(),
+                    RotorType.ROTOR_IV.create()
+                ),
             )
         EnigmaType.ENIGMA_M4 -> listOf(
-            setOf(RotorType.BETA.create()),
-            setOf(RotorType.BETA.create(), RotorType.II.create()),
-            setOf(RotorType.BETA.create(), RotorType.II.create(), RotorType.III.create()),
+            setOf(RotorType.ROTOR_BETA.create()),
+            setOf(RotorType.ROTOR_BETA.create(), RotorType.ROTOR_II.create()),
+            setOf(RotorType.ROTOR_BETA.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create()),
             setOf(
-                RotorType.BETA.create(),
-                RotorType.I.create(),
-                RotorType.II.create(),
-                RotorType.III.create(),
-                RotorType.IV.create()
+                RotorType.ROTOR_BETA.create(),
+                RotorType.ROTOR_I.create(),
+                RotorType.ROTOR_II.create(),
+                RotorType.ROTOR_III.create(),
+                RotorType.ROTOR_IV.create()
             ),
         )
         else -> throw IllegalArgumentException()
@@ -70,38 +88,38 @@ class EnigmaTypeTest {
 
     private fun incompatibleRotors(enigmaType: EnigmaType) : List<Set<Rotor>> = when (enigmaType) {
         EnigmaType.ENIGMA_I -> listOf(
-                setOf(createIncompatibleRotor(), RotorType.I.create(), RotorType.II.create()),
-                setOf(RotorType.I.create(), createIncompatibleRotor(), RotorType.II.create()),
-                setOf(RotorType.I.create(), RotorType.II.create(), createIncompatibleRotor()),
+                setOf(createIncompatibleRotor(), RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create()),
+                setOf(RotorType.ROTOR_I.create(), createIncompatibleRotor(), RotorType.ROTOR_II.create()),
+                setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), createIncompatibleRotor()),
             )
         EnigmaType.ENIGMA_M3 -> listOf(
-                setOf(createIncompatibleRotor(), RotorType.VII.create(), RotorType.VIII.create()),
-                setOf(RotorType.VI.create(), createIncompatibleRotor(), RotorType.VIII.create()),
-                setOf(RotorType.VI.create(), RotorType.VII.create(), createIncompatibleRotor()),
+                setOf(createIncompatibleRotor(), RotorType.ROTOR_VII.create(), RotorType.ROTOR_VIII.create()),
+                setOf(RotorType.ROTOR_VI.create(), createIncompatibleRotor(), RotorType.ROTOR_VIII.create()),
+                setOf(RotorType.ROTOR_VI.create(), RotorType.ROTOR_VII.create(), createIncompatibleRotor()),
             )
         EnigmaType.ENIGMA_M4 -> listOf(
             setOf(
                 createIncompatibleRotor(),
-                RotorType.VI.create(),
-                RotorType.VII.create(),
-                RotorType.VIII.create(),
+                RotorType.ROTOR_VI.create(),
+                RotorType.ROTOR_VII.create(),
+                RotorType.ROTOR_VIII.create(),
             ),
             setOf(
-                RotorType.BETA.create(),
+                RotorType.ROTOR_BETA.create(),
                 createIncompatibleRotor(),
-                RotorType.VII.create(),
-                RotorType.VIII.create(),
+                RotorType.ROTOR_VII.create(),
+                RotorType.ROTOR_VIII.create(),
             ),
             setOf(
-                RotorType.BETA.create(),
-                RotorType.VI.create(),
+                RotorType.ROTOR_BETA.create(),
+                RotorType.ROTOR_VI.create(),
                 createIncompatibleRotor(),
-                RotorType.VIII.create(),
+                RotorType.ROTOR_VIII.create(),
             ),
             setOf(
-                RotorType.BETA.create(),
-                RotorType.VI.create(),
-                RotorType.VII.create(),
+                RotorType.ROTOR_BETA.create(),
+                RotorType.ROTOR_VI.create(),
+                RotorType.ROTOR_VII.create(),
                 createIncompatibleRotor(),
             ),
         )
@@ -241,10 +259,10 @@ class EnigmaTypeTest {
                     rotorUnit = RotorUnit(
                         reflector = validReflector(EnigmaType.ENIGMA_M4),
                         rotors = setOf(
-                            RotorType.V.create(),
-                            RotorType.VI.create(),
-                            RotorType.VII.create(),
-                            RotorType.VIII.create(),
+                            RotorType.ROTOR_V.create(),
+                            RotorType.ROTOR_VI.create(),
+                            RotorType.ROTOR_VII.create(),
+                            RotorType.ROTOR_VIII.create(),
                         )
                     ),
                     plugboard = Plugboard()

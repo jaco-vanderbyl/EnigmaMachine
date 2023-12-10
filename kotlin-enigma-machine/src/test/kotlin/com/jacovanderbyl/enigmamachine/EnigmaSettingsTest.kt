@@ -11,8 +11,8 @@ class EnigmaSettingsTest {
     private fun createStockEnigma(plugboard: Plugboard = Plugboard()) : Enigma = Enigma(
         type = EnigmaType.ENIGMA_I,
         rotorUnit = RotorUnit(
-            reflector = ReflectorType.B.create(),
-            rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
+            reflector = ReflectorType.REFLECTOR_B.create(),
+            rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create())
         ),
         plugboard = plugboard
     )

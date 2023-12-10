@@ -12,7 +12,7 @@ class ReflectorTest {
         cipherSet: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
         compatibility: Set<EnigmaType> = setOf()
     ) : Reflector = Reflector(
-        type = ReflectorType.B,
+        type = ReflectorType.REFLECTOR_B,
         cipherSetMap = CipherSetMap(cipherSet),
         compatibility = compatibility
     )

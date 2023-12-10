@@ -7,42 +7,42 @@ import kotlin.test.assertEquals
 
 class RotorTypeTest {
     private fun expectedCipherSets(rotorType: RotorType) : String = when (rotorType) {
-        RotorType.I -> "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
-        RotorType.II -> "AJDKSIRUXBLHWTMCQGZNPYFVOE"
-        RotorType.III -> "BDFHJLCPRTXVZNYEIWGAKMUSQO"
-        RotorType.IV -> "ESOVPZJAYQUIRHXLNFTGKDCMWB"
-        RotorType.V -> "VZBRGITYUPSDNHLXAWMJQOFECK"
-        RotorType.VI -> "JPGVOUMFYQBENHZRDKASXLICTW"
-        RotorType.VII -> "NZJHGRCXMYSWBOUFAIVLPEKQDT"
-        RotorType.VIII -> "FKQHTLXOCBJSPDZRAMEWNIUYGV"
-        RotorType.BETA -> "LEYJVCNIXWPBQMDRTAKZGFUHOS"
-        RotorType.GAMMA -> "FSOKANUERHMBTIYCWLQPZXVGJD"
+        RotorType.ROTOR_I -> "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
+        RotorType.ROTOR_II -> "AJDKSIRUXBLHWTMCQGZNPYFVOE"
+        RotorType.ROTOR_III -> "BDFHJLCPRTXVZNYEIWGAKMUSQO"
+        RotorType.ROTOR_IV -> "ESOVPZJAYQUIRHXLNFTGKDCMWB"
+        RotorType.ROTOR_V -> "VZBRGITYUPSDNHLXAWMJQOFECK"
+        RotorType.ROTOR_VI -> "JPGVOUMFYQBENHZRDKASXLICTW"
+        RotorType.ROTOR_VII -> "NZJHGRCXMYSWBOUFAIVLPEKQDT"
+        RotorType.ROTOR_VIII -> "FKQHTLXOCBJSPDZRAMEWNIUYGV"
+        RotorType.ROTOR_BETA -> "LEYJVCNIXWPBQMDRTAKZGFUHOS"
+        RotorType.ROTOR_GAMMA -> "FSOKANUERHMBTIYCWLQPZXVGJD"
         else -> throw IllegalArgumentException()
     }
 
     private fun expectedNotchPositions(rotorType: RotorType) : Set<Char> = when (rotorType) {
-        RotorType.I -> setOf('Q')
-        RotorType.II -> setOf('E')
-        RotorType.III -> setOf('V')
-        RotorType.IV -> setOf('J')
-        RotorType.V -> setOf('Z')
-        RotorType.VI -> setOf('Z', 'M')
-        RotorType.VII -> setOf('Z', 'M')
-        RotorType.VIII -> setOf('Z', 'M')
+        RotorType.ROTOR_I -> setOf('Q')
+        RotorType.ROTOR_II -> setOf('E')
+        RotorType.ROTOR_III -> setOf('V')
+        RotorType.ROTOR_IV -> setOf('J')
+        RotorType.ROTOR_V -> setOf('Z')
+        RotorType.ROTOR_VI -> setOf('Z', 'M')
+        RotorType.ROTOR_VII -> setOf('Z', 'M')
+        RotorType.ROTOR_VIII -> setOf('Z', 'M')
         else -> throw IllegalArgumentException()
     }
 
     private fun expectedCompatibility(rotorType: RotorType) : Set<EnigmaType> = when (rotorType) {
-        RotorType.I -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
-        RotorType.II -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
-        RotorType.III -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
-        RotorType.IV -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
-        RotorType.V -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
-        RotorType.VI -> setOf(EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
-        RotorType.VII -> setOf(EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
-        RotorType.VIII -> setOf(EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
-        RotorType.BETA -> setOf(EnigmaType.ENIGMA_M4)
-        RotorType.GAMMA -> setOf(EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_I -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_II -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_III -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_IV -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_V -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_VI -> setOf(EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_VII -> setOf(EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_VIII -> setOf(EnigmaType.ENIGMA_M3, EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_BETA -> setOf(EnigmaType.ENIGMA_M4)
+        RotorType.ROTOR_GAMMA -> setOf(EnigmaType.ENIGMA_M4)
         else -> throw IllegalArgumentException()
     }
 

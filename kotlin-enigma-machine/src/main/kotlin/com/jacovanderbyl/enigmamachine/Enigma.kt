@@ -1,5 +1,8 @@
 package com.jacovanderbyl.enigmamachine
 
+import com.jacovanderbyl.enigmamachine.log.EnigmaLogStep
+import com.jacovanderbyl.enigmamachine.log.Logger
+
 /**
  * Represents an Enigma Machine with a plugboard and a rotor unit (which contains a reflector and a set of rotors).
  *
@@ -19,8 +22,17 @@ package com.jacovanderbyl.enigmamachine
 class Enigma(
     val type: EnigmaType,
     private val rotorUnit: RotorUnit,
-    private val plugboard: Plugboard
+    private val plugboard: Plugboard,
+    val logger: Logger? = null
 ) : CanEncipher {
+    init {
+        if (logger is Logger) {
+            rotorUnit.reflector.addLogger(logger)
+            rotorUnit.rotors.forEach { it.addLogger(logger) }
+            plugboard.addLogger(logger)
+        }
+    }
+
     companion object {
         // Represents the 26 keys on the Enigma Machine's keyboard.
         const val CHARACTER_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -44,7 +56,10 @@ class Enigma(
             "Invalid character. Valid: '${CHARACTER_SET}'. Given: '${character}'."
         }
 
+        val positions = getRotorPositions().map { it.character }.joinToString("")
         rotorUnit.stepRotors()
+        val newPositions = getRotorPositions().map { it.character }.joinToString("")
+        logger?.add(EnigmaLogStep.fromEnigma(positions, newPositions, enigma = this))
 
         var substituteCharacter = character
         substituteCharacter = plugboard.encipher(substituteCharacter)
@@ -67,9 +82,9 @@ class Enigma(
         }
     }
 
-    fun getRotorPositions() : List<Position> {
-        return rotorUnit.rotors.map { it.position }
-    }
+    fun getRotors(): Set<Rotor> = rotorUnit.rotors
+
+    fun getRotorPositions() : List<Position> = rotorUnit.rotors.map { it.position }
 
     fun resetRotorPositions() {
         rotorUnit.resetRotorPositions()

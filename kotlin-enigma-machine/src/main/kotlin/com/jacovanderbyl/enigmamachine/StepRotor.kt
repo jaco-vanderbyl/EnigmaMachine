@@ -14,7 +14,7 @@ class StepRotor(
     compatibility: Set<EnigmaType>,
     position: Position,
     ringSetting: RingSetting,
-    private val notch: Notch
+    val notch: Notch
 ) : Rotor(type, cipherSetMap, compatibility, position, ringSetting) {
     fun step() {
         position = Position(characterSet[shiftIndex(position.index, shiftBy = 1)])

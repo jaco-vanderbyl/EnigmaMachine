@@ -9,14 +9,14 @@ import kotlin.test.assertFailsWith
 class RotorUnitTest {
     @TestFactory
     fun `ensure duplicate rotor type throws`() = listOf(
-        setOf(RotorType.I.create(), RotorType.I.create()),
-        setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create(), RotorType.II.create()),
+        setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_I.create()),
+        setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create(), RotorType.ROTOR_II.create()),
     ).map { rotors ->
         DynamicTest.dynamicTest("Duplicate rotor type '${rotors.map { it.type } }' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
                     RotorUnit(
-                        reflector = ReflectorType.B.create(),
+                        reflector = ReflectorType.REFLECTOR_B.create(),
                         rotors = rotors
                     )
                 },
@@ -35,8 +35,8 @@ class RotorUnitTest {
     ).map { positions ->
         DynamicTest.dynamicTest("Test setting positions to: '${positions}'.") {
             val rotorUnit = RotorUnit(
-                reflector = ReflectorType.B.create(),
-                rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
+                reflector = ReflectorType.REFLECTOR_B.create(),
+                rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create())
             )
             positions.forEachIndexed { index, position ->
                 rotorUnit.setRotorPosition(index, position)
@@ -57,8 +57,8 @@ class RotorUnitTest {
     ).map { positions ->
         DynamicTest.dynamicTest("Test that positions '${positions}' are reset.") {
             val rotorUnit = RotorUnit(
-                reflector = ReflectorType.B.create(),
-                rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
+                reflector = ReflectorType.REFLECTOR_B.create(),
+                rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create())
             )
             positions.forEachIndexed { index, position ->
                 rotorUnit.setRotorPosition(index, position)
@@ -84,8 +84,8 @@ class RotorUnitTest {
     ).map {
         DynamicTest.dynamicTest("Rotor unit should encipher '${it.key}' to '${it.value}}'.") {
             val rotorUnit = RotorUnit(
-                reflector = ReflectorType.B.create(),
-                rotors = setOf(RotorType.I.create(), RotorType.II.create(), RotorType.III.create())
+                reflector = ReflectorType.REFLECTOR_B.create(),
+                rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create())
             )
 
             assertEquals(
@@ -107,11 +107,11 @@ class RotorUnitTest {
     ).map {
         DynamicTest.dynamicTest("Rotor unit should encipher '${it.key}' to '${it.value}}'.") {
             val rotorUnit = RotorUnit(
-                reflector = ReflectorType.B.create(),
+                reflector = ReflectorType.REFLECTOR_B.create(),
                 rotors = setOf(
-                    RotorType.I.create(Position('X')),
-                    RotorType.II.create(Position('Y')),
-                    RotorType.III.create(Position('Z')),
+                    RotorType.ROTOR_I.create(Position('X')),
+                    RotorType.ROTOR_II.create(Position('Y')),
+                    RotorType.ROTOR_III.create(Position('Z')),
                 )
             )
 
@@ -134,11 +134,11 @@ class RotorUnitTest {
     ).map {
         DynamicTest.dynamicTest("Rotor unit should encipher '${it.key}' to '${it.value}}'.") {
             val rotorUnit = RotorUnit(
-                reflector = ReflectorType.B.create(),
+                reflector = ReflectorType.REFLECTOR_B.create(),
                 rotors = setOf(
-                    RotorType.I.create(ringSetting = RingSetting(9)),
-                    RotorType.II.create(ringSetting = RingSetting(17)),
-                    RotorType.III.create(ringSetting = RingSetting(22)),
+                    RotorType.ROTOR_I.create(ringSetting = RingSetting(9)),
+                    RotorType.ROTOR_II.create(ringSetting = RingSetting(17)),
+                    RotorType.ROTOR_III.create(ringSetting = RingSetting(22)),
                 )
             )
 
@@ -151,11 +151,11 @@ class RotorUnitTest {
     }
 
     private val rotorUnitForNormalStep = RotorUnit(
-        reflector = ReflectorType.B.create(),
+        reflector = ReflectorType.REFLECTOR_B.create(),
         rotors = setOf(
-            RotorType.I.create(),
-            RotorType.II.create(),
-            RotorType.III.create(Position('S'))
+            RotorType.ROTOR_I.create(),
+            RotorType.ROTOR_II.create(),
+            RotorType.ROTOR_III.create(Position('S'))
         )
     )
 
@@ -180,11 +180,11 @@ class RotorUnitTest {
     }
 
     private val rotorUnitForDoubleStep = RotorUnit(
-        reflector = ReflectorType.B.create(),
+        reflector = ReflectorType.REFLECTOR_B.create(),
         rotors = setOf(
-            RotorType.I.create(),
-            RotorType.II.create(Position('D')),
-            RotorType.III.create(Position('S'))
+            RotorType.ROTOR_I.create(),
+            RotorType.ROTOR_II.create(Position('D')),
+            RotorType.ROTOR_III.create(Position('S'))
         )
     )
 

@@ -1,34 +1,41 @@
 package com.jacovanderbyl.enigmamachine
 
+import com.jacovanderbyl.enigmamachine.log.Logger
+
 /**
  * Serves as Enigma Factory.
  */
 enum class EnigmaType {
     ENIGMA_I {
+        override val rotorCount = 3
         override fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma {
-            requireRotorCount(ENIGMA_I, rotorUnit, 3)
+            requireRotorCount(ENIGMA_I, rotorUnit, rotorCount)
             requireCompatibility(ENIGMA_I, rotorUnit)
 
-            return Enigma(type = ENIGMA_I, rotorUnit = rotorUnit, plugboard = plugboard)
+            return Enigma(type = ENIGMA_I, rotorUnit = rotorUnit, plugboard = plugboard, logger = Logger())
         }
     },
     ENIGMA_M3 {
+        override val rotorCount = 3
         override fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma {
-            requireRotorCount(ENIGMA_M3, rotorUnit, 3)
+            requireRotorCount(ENIGMA_M3, rotorUnit, rotorCount)
             requireCompatibility(ENIGMA_M3, rotorUnit)
 
-            return Enigma(type = ENIGMA_M3, rotorUnit = rotorUnit, plugboard = plugboard)
+            return Enigma(type = ENIGMA_M3, rotorUnit = rotorUnit, plugboard = plugboard, logger = Logger())
         }
     },
     ENIGMA_M4 {
+        override val rotorCount = 4
         override fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma {
-            requireRotorCount(ENIGMA_M4, rotorUnit, count = 4)
+            requireRotorCount(ENIGMA_M4, rotorUnit, rotorCount)
             requireCompatibility(ENIGMA_M4, rotorUnit)
-            requireRotorTypeForM4(rotorUnit.rotors.first(), setOf(RotorType.BETA, RotorType.GAMMA))
+            requireRotorTypeForM4(rotorUnit.rotors.first(), setOf(RotorType.ROTOR_BETA, RotorType.ROTOR_GAMMA))
 
-            return Enigma(type = ENIGMA_M4, rotorUnit = rotorUnit, plugboard = plugboard)
+            return Enigma(type = ENIGMA_M4, rotorUnit = rotorUnit, plugboard = plugboard, logger = Logger())
         }
     };
+
+    abstract val rotorCount: Int
 
     abstract fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma
 

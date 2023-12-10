@@ -44,8 +44,6 @@ invokes a specific version of Gradle declared in the build._
 ## Library usage
 ### List available Enigma Machines, Reflectors, Rotors, Ring Settings, and Positions
 ```kotlin
-import com.jacovanderbyl.enigmamachine.*
-
 val enigmaTypes = EnigmaType.list()
 val reflectorTypes = ReflectorType.list()
 val rotorTypes = RotorType.list()
@@ -53,8 +51,8 @@ val ringSettings = RingSetting.list()
 val positions = Position.list()
 
 println(enigmaTypes)    // prints: [ENIGMA_I, ENIGMA_M3, ENIGMA_M4]
-println(reflectorTypes) // prints: [B, C, B_THIN, C_THIN]
-println(rotorTypes)     // prints: [I, II, III, IV, V, VI, VII, VIII, BETA, GAMMA]
+println(reflectorTypes) // prints: [REFLECTOR_B, REFLECTOR_C, REFLECTOR_B_THIN, REFLECTOR_C_THIN]
+println(rotorTypes)     // prints: [ROTOR_I, ROTOR_II, ROTOR_III, ROTOR_IV, ROTOR_V, ROTOR_VI, ROTOR_VII, ROTOR_VIII, ROTOR_BETA, ROTOR_GAMMA]
 println(ringSettings)   // prints: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
 println(positions)      // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
 ```
@@ -68,8 +66,6 @@ println(positions)      // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O,
 * No plugboard connectors
 
 ```kotlin
-import com.jacovanderbyl.enigmamachine.*
-
 val enigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "B",
@@ -85,8 +81,6 @@ val enigmaM3 = EnigmaBuilder.make(
 
 ### Make with an arrangement of rotors, ring settings, starting positions, and a reflector
 ```kotlin
-import com.jacovanderbyl.enigmamachine.*
-
 val enigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "C",
@@ -98,8 +92,6 @@ val enigmaI = EnigmaBuilder.make(
 
 ### Make with plugboard connectors
 ```kotlin
-import com.jacovanderbyl.enigmamachine.*
-
 val enigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "C",
@@ -112,8 +104,6 @@ val enigmaI = EnigmaBuilder.make(
 
 ### Encipher plaintext and 'decipher' ciphertext
 ```kotlin
-import com.jacovanderbyl.enigmamachine.*
-
 val firstEnigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "B",
@@ -133,4 +123,150 @@ val plaintext = secondEnigmaI.encipher(ciphertext)
 println(plaintextInput) // prints: AAAAA
 println(ciphertext)     // prints: BDZGO
 println(plaintext)      // prints: AAAAA
+```
+
+### In-memory logs of internal workings
+#### Print letter substitution journey
+```kotlin
+val enigma = EnigmaBuilder.make(
+    type = "ENIGMA_I",
+    reflector = "B",
+    rotors = "I,II,III"
+)
+
+enigma.encipher('A')
+enigma.logger?.print(LogType.SUBSTITUTE)
+```
+Prints:
+```
+Log Types requested for printing : [SUBSTITUTE].
+Log Types available for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
+
+LOG TYPE   | RESULT       | ACTOR            | INFO
+SUBSTITUTE | A -> A       | PLUGBOARD        | No connectors
+SUBSTITUTE | B -> D       | ROTOR_III        | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => BDFHJLCPRTXVZNYEIWGAKMUSQO
+SUBSTITUTE | C -> D       | ROTOR_II         | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => AJDKSIRUXBLHWTMCQGZNPYFVOE
+SUBSTITUTE | D -> F       | ROTOR_I          | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => EKMFLGDQVZNTOWYHXUSPAIBRCJ
+SUBSTITUTE | F -> S       | REFLECTOR_B      | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => YRUHQSLDPXNGOKMIEBFZCWVJAT
+SUBSTITUTE | S -> S       | ROTOR_I          | Cipher set map: EKMFLGDQVZNTOWYHXUSPAIBRCJ => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+SUBSTITUTE | S -> E       | ROTOR_II         | Cipher set map: AJDKSIRUXBLHWTMCQGZNPYFVOE => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+SUBSTITUTE | F -> C       | ROTOR_III        | Cipher set map: BDFHJLCPRTXVZNYEIWGAKMUSQO => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
+```
+
+#### Print all log types - example 1
+```kotlin
+val enigma = EnigmaBuilder.make(
+    type = "ENIGMA_I",
+    reflector = "B",
+    rotors = "I,II,III"
+)
+
+enigma.encipher('A')
+enigma.logger?.print()
+```
+Prints:
+```
+Log Types requested for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
+Log Types available for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
+
+LOG TYPE   | RESULT       | ACTOR            | INFO
+STEP       | AAA -> AAB   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+SUBSTITUTE | A -> A       | PLUGBOARD        | No connectors
+SHIFT      | A .. B       | ROTOR_III        | Rotor offset: 1 = offset 1 (Position B) minus offset 0 (Ring Setting 1)
+SUBSTITUTE | B -> D       | ROTOR_III        | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => BDFHJLCPRTXVZNYEIWGAKMUSQO
+DE_SHIFT   | D .. C       | ROTOR_III        | Rotor offset: 1
+SHIFT      | C .. C       | ROTOR_II         | Rotor offset: 0 = offset 0 (Position A) minus offset 0 (Ring Setting 1)
+SUBSTITUTE | C -> D       | ROTOR_II         | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => AJDKSIRUXBLHWTMCQGZNPYFVOE
+DE_SHIFT   | D .. D       | ROTOR_II         | Rotor offset: 0
+SHIFT      | D .. D       | ROTOR_I          | Rotor offset: 0 = offset 0 (Position A) minus offset 0 (Ring Setting 1)
+SUBSTITUTE | D -> F       | ROTOR_I          | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => EKMFLGDQVZNTOWYHXUSPAIBRCJ
+DE_SHIFT   | F .. F       | ROTOR_I          | Rotor offset: 0
+SUBSTITUTE | F -> S       | REFLECTOR_B      | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => YRUHQSLDPXNGOKMIEBFZCWVJAT
+SHIFT      | S .. S       | ROTOR_I          | Rotor offset: 0 = offset 0 (Position A) minus offset 0 (Ring Setting 1)
+SUBSTITUTE | S -> S       | ROTOR_I          | Cipher set map: EKMFLGDQVZNTOWYHXUSPAIBRCJ => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+DE_SHIFT   | S .. S       | ROTOR_I          | Rotor offset: 0
+SHIFT      | S .. S       | ROTOR_II         | Rotor offset: 0 = offset 0 (Position A) minus offset 0 (Ring Setting 1)
+SUBSTITUTE | S -> E       | ROTOR_II         | Cipher set map: AJDKSIRUXBLHWTMCQGZNPYFVOE => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+DE_SHIFT   | E .. E       | ROTOR_II         | Rotor offset: 0
+SHIFT      | E .. F       | ROTOR_III        | Rotor offset: 1 = offset 1 (Position B) minus offset 0 (Ring Setting 1)
+SUBSTITUTE | F -> C       | ROTOR_III        | Cipher set map: BDFHJLCPRTXVZNYEIWGAKMUSQO => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+DE_SHIFT   | C .. B       | ROTOR_III        | Rotor offset: 1
+SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
+```
+
+#### Print all log types - example 2
+```kotlin
+val enigma = EnigmaBuilder.make(
+    type = "ENIGMA_M4",
+    reflector = "C_THIN",
+    rotors = "GAMMA,VI,V,VIII",
+    ringSettings = "5,14,9,24",
+    startingPositions = "P,W,N,B",
+    plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
+)
+
+enigma.encipher('A')
+enigma.logger?.print()
+```
+Prints:
+```
+Log Types requested for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
+Log Types available for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
+
+LOG TYPE   | RESULT       | ACTOR            | INFO
+STEP       | PWNB -> PWNC | ENIGMA_M4        | Rotor types: ROTOR_GAMMA—ROTOR_VI—ROTOR_V—ROTOR_VIII; Notch characters: [_]—[Z, M]—[Z]—[Z, M]
+SUBSTITUTE | A -> A       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW JN IX LQ 
+SHIFT      | A .. F       | ROTOR_VIII       | Rotor offset: -21 = offset 2 (Position C) minus offset 23 (Ring Setting 24)
+SUBSTITUTE | F -> L       | ROTOR_VIII       | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => FKQHTLXOCBJSPDZRAMEWNIUYGV
+DE_SHIFT   | L .. G       | ROTOR_VIII       | Rotor offset: -21
+SHIFT      | G .. L       | ROTOR_V          | Rotor offset: 5 = offset 13 (Position N) minus offset 8 (Ring Setting 9)
+SUBSTITUTE | L -> D       | ROTOR_V          | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => VZBRGITYUPSDNHLXAWMJQOFECK
+DE_SHIFT   | D .. Y       | ROTOR_V          | Rotor offset: 5
+SHIFT      | Y .. H       | ROTOR_VI         | Rotor offset: 9 = offset 22 (Position W) minus offset 13 (Ring Setting 14)
+SUBSTITUTE | H -> F       | ROTOR_VI         | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => JPGVOUMFYQBENHZRDKASXLICTW
+DE_SHIFT   | F .. W       | ROTOR_VI         | Rotor offset: 9
+SHIFT      | W .. H       | ROTOR_GAMMA      | Rotor offset: 11 = offset 15 (Position P) minus offset 4 (Ring Setting 5)
+SUBSTITUTE | H -> E       | ROTOR_GAMMA      | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => FSOKANUERHMBTIYCWLQPZXVGJD
+DE_SHIFT   | E .. T       | ROTOR_GAMMA      | Rotor offset: 11
+SUBSTITUTE | T -> G       | REFLECTOR_C_THIN | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => RDOBJNTKVEHMLFCWZAXGYIPSUQ
+SHIFT      | G .. R       | ROTOR_GAMMA      | Rotor offset: 11 = offset 15 (Position P) minus offset 4 (Ring Setting 5)
+SUBSTITUTE | R -> I       | ROTOR_GAMMA      | Cipher set map: FSOKANUERHMBTIYCWLQPZXVGJD => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+DE_SHIFT   | I .. X       | ROTOR_GAMMA      | Rotor offset: 11
+SHIFT      | X .. G       | ROTOR_VI         | Rotor offset: 9 = offset 22 (Position W) minus offset 13 (Ring Setting 14)
+SUBSTITUTE | G -> C       | ROTOR_VI         | Cipher set map: JPGVOUMFYQBENHZRDKASXLICTW => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+DE_SHIFT   | C .. T       | ROTOR_VI         | Rotor offset: 9
+SHIFT      | T .. Y       | ROTOR_V          | Rotor offset: 5 = offset 13 (Position N) minus offset 8 (Ring Setting 9)
+SUBSTITUTE | Y -> H       | ROTOR_V          | Cipher set map: VZBRGITYUPSDNHLXAWMJQOFECK => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+DE_SHIFT   | H .. C       | ROTOR_V          | Rotor offset: 5
+SHIFT      | C .. H       | ROTOR_VIII       | Rotor offset: -21 = offset 2 (Position C) minus offset 23 (Ring Setting 24)
+SUBSTITUTE | H -> D       | ROTOR_VIII       | Cipher set map: FKQHTLXOCBJSPDZRAMEWNIUYGV => ABCDEFGHIJKLMNOPQRSTUVWXYZ
+DE_SHIFT   | D .. Y       | ROTOR_VIII       | Rotor offset: -21
+SUBSTITUTE | Y -> M       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW JN IX LQ 
+```
+#### Print rotor stepping
+```kotlin
+    val enigma = EnigmaBuilder.make(
+        type = "ENIGMA_I",
+        reflector = "B",
+        rotors = "I,II,III",
+        startingPositions = "A,D,S"
+    )
+
+    enigma.logger?.restrictTo(LogType.STEP) // Only record STEP logs to avoid the max log size limit.
+    enigma.encipher("AAAAAA")
+    enigma.logger?.print(LogType.STEP)
+```
+Prints:
+```
+Log Types requested for printing : [STEP].
+Log Types available for printing : [STEP].
+
+LOG TYPE   | RESULT       | ACTOR            | INFO
+STEP       | ADS -> ADT   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADT -> ADU   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADU -> ADV   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADV -> AEW   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | AEW -> BFX   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | BFX -> BFY   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
 ```

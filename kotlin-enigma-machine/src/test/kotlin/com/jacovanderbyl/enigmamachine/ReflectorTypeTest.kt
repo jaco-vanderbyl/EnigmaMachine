@@ -9,18 +9,18 @@ import kotlin.test.assertTrue
 
 class ReflectorTypeTest {
     private fun expectedCipherSets(reflectorType: ReflectorType) : String = when (reflectorType) {
-        ReflectorType.B -> "YRUHQSLDPXNGOKMIEBFZCWVJAT"
-        ReflectorType.C -> "FVPJIAOYEDRZXWGCTKUQSBNMHL"
-        ReflectorType.B_THIN -> "ENKQAUYWJICOPBLMDXZVFTHRGS"
-        ReflectorType.C_THIN -> "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
+        ReflectorType.REFLECTOR_B -> "YRUHQSLDPXNGOKMIEBFZCWVJAT"
+        ReflectorType.REFLECTOR_C -> "FVPJIAOYEDRZXWGCTKUQSBNMHL"
+        ReflectorType.REFLECTOR_B_THIN -> "ENKQAUYWJICOPBLMDXZVFTHRGS"
+        ReflectorType.REFLECTOR_C_THIN -> "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
         else -> throw IllegalArgumentException()
     }
 
     private fun expectedCompatibility(reflectorType: ReflectorType) : Set<EnigmaType> = when (reflectorType) {
-        ReflectorType.B -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
-        ReflectorType.C -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
-        ReflectorType.B_THIN -> setOf(EnigmaType.ENIGMA_M4)
-        ReflectorType.C_THIN -> setOf(EnigmaType.ENIGMA_M4)
+        ReflectorType.REFLECTOR_B -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
+        ReflectorType.REFLECTOR_C -> setOf(EnigmaType.ENIGMA_I, EnigmaType.ENIGMA_M3)
+        ReflectorType.REFLECTOR_B_THIN -> setOf(EnigmaType.ENIGMA_M4)
+        ReflectorType.REFLECTOR_C_THIN -> setOf(EnigmaType.ENIGMA_M4)
         else -> throw IllegalArgumentException()
     }
 

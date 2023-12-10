@@ -23,16 +23,16 @@ class EnigmaBuilder {
             startingPositions: String? = null,
             plugboardConnectors: String? = null
         ) : Enigma {
-            require(type in EnigmaType.list()) {
+            require(enigmaType(type) in EnigmaType.list()) {
                 "Invalid enigma type. Valid: '${EnigmaType.list()}'. Given: '${type}'."
             }
-            require(reflector in ReflectorType.list()) {
+            require(reflectorType(reflector) in ReflectorType.list()) {
                 "Invalid reflector type. Valid: '${ReflectorType.list()}'. Given: '${reflector}'."
             }
 
-            return EnigmaType.valueOf(type).create(
+            return EnigmaType.valueOf(enigmaType(type)).create(
                 rotorUnit = RotorUnit(
-                    reflector = ReflectorType.valueOf(reflector).create(),
+                    reflector = ReflectorType.valueOf(reflectorType(reflector)).create(),
                     rotors = setOf(
                         *makeRotors(
                             split(rotors),
@@ -73,11 +73,11 @@ class EnigmaBuilder {
         }
 
         private fun makeRotor(rotor: String, position: String?, ringSetting: String?) : Rotor {
-            require(rotor in RotorType.list()) {
+            require(rotorType(rotor) in RotorType.list()) {
                 "Invalid rotor type. Valid: '${RotorType.list()}'. Given: '${rotor}'."
             }
 
-            return RotorType.valueOf(rotor).create(
+            return RotorType.valueOf(rotorType(rotor)).create(
                 position = if (position != null) Position.fromString(position) else Position(),
                 ringSetting = if (ringSetting != null) RingSetting.fromString(ringSetting) else RingSetting()
             )
@@ -86,6 +86,21 @@ class EnigmaBuilder {
         private fun split(str: String?) : List<String> = when (str.isNullOrEmpty()) {
             true -> listOf()
             false -> str.filterNot { it.isWhitespace() }.split(",")
+        }
+
+        private fun enigmaType(type: String) : String = when (type.contains("ENIGMA_")) {
+            true -> type
+            false -> "ENIGMA_$type"
+        }
+
+        private fun rotorType(rotorType: String) : String = when (rotorType.contains("ROTOR_")) {
+            true -> rotorType
+            false -> "ROTOR_$rotorType"
+        }
+
+        private fun reflectorType(reflectorType: String) : String = when (reflectorType.contains("REFLECTOR_")) {
+            true -> reflectorType
+            false -> "REFLECTOR_$reflectorType"
         }
     }
 }

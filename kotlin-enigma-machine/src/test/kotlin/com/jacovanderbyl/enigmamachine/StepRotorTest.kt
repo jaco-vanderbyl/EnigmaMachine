@@ -10,7 +10,7 @@ class StepRotorTest {
     private val notchCharacters = setOf(Position('C'), Position('J'), Position('W'))
 
     private fun createRotor() : StepRotor = StepRotor(
-        type = RotorType.I,
+        type = RotorType.ROTOR_I,
         cipherSetMap = CipherSetMap(cipherSet),
         compatibility = setOf(EnigmaType.ENIGMA_I),
         position = Position(),

@@ -1,5 +1,10 @@
 package com.jacovanderbyl.enigmamachine
 
+import com.jacovanderbyl.enigmamachine.log.Logger
+import com.jacovanderbyl.enigmamachine.log.RotorLogDeshift
+import com.jacovanderbyl.enigmamachine.log.RotorLogShift
+import com.jacovanderbyl.enigmamachine.log.RotorLogSubstitute
+
 /**
  * Represents a rotor, used to substitute one letter with another.
  */
@@ -10,7 +15,9 @@ open class Rotor(
     var position: Position,
     var ringSetting: RingSetting,
 ) : CanEncipherBidirectionally, HasCompatibility {
-    protected val characterSet: String = cipherSetMap.characterSet
+    val characterSet: String = cipherSetMap.characterSet
+    val cipherSet: String = cipherSetMap.cipherSet
+    private var logger: Logger? = null
 
     override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
 
@@ -34,15 +41,25 @@ open class Rotor(
         val characterIndex = characterSet.indexOf(character)
         val characterIndexWithOffset = shiftIndex(characterIndex, shiftBy = offset())
         val characterWithOffset = characterSet[characterIndexWithOffset]
+        logger?.add(RotorLogShift.fromRotor(character, characterWithOffset, rotor = this))
 
         // Step 2 - Simulate wiring to substitute given character with new character. Allow bidirectional substitutions.
         val substituteCharacter = cipherSetMap.encipher(characterWithOffset, reverse)
+        logger?.add(RotorLogSubstitute.fromRotor(characterWithOffset, substituteCharacter, reverse, rotor = this))
 
         // Step 3 - Revert offset (applied in step 1) to substitute character's index.
         val substituteCharacterIndex = characterSet.indexOf(substituteCharacter)
         val finalCharacterIndex = shiftIndex(substituteCharacterIndex, shiftBy = offset() * -1)
+        val finalCharacter = characterSet[finalCharacterIndex]
+        logger?.add(RotorLogDeshift.fromRotor(substituteCharacter, finalCharacter, rotor = this))
 
-        return characterSet[finalCharacterIndex]
+        return finalCharacter
+    }
+
+    fun offset() : Int = position.index - ringSetting.index
+
+    fun addLogger(logger: Logger) {
+        this.logger = logger
     }
 
     protected fun shiftIndex(index: Int, shiftBy: Int) : Int {
@@ -54,6 +71,4 @@ open class Rotor(
             else                                -> shiftedIndex
         }
     }
-
-    private fun offset() : Int = position.index - ringSetting.index
 }

@@ -11,7 +11,7 @@ class RotorTest {
     private val cipherSet = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
 
     private fun createRotor() : Rotor = Rotor(
-        type = RotorType.I,
+        type = RotorType.ROTOR_I,
         cipherSetMap = CipherSetMap(cipherSet),
         compatibility = setOf(EnigmaType.ENIGMA_I),
         position = Position(),

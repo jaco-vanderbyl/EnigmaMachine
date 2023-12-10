@@ -1,5 +1,8 @@
 package com.jacovanderbyl.enigmamachine
 
+import com.jacovanderbyl.enigmamachine.log.Logger
+import com.jacovanderbyl.enigmamachine.log.PlugboardLog
+
 /**
  * Represents a plugboard, which has 26 letters, each of which can be connected with one other letter (therefore
  * allowing up to 13 connectors), and these connections are used to substitute one letter with another.
@@ -7,7 +10,9 @@ package com.jacovanderbyl.enigmamachine
  * The plugboard adds significant cryptographic strength to the machine.
  */
 class Plugboard(vararg connectors: Connector) : CanEncipher {
+    val connectorList = connectors.toList()
     private val connectorMap = mutableMapOf<Char,Char>()
+    private var logger: Logger? = null
 
     init {
         addConnectors(*connectors)
@@ -21,7 +26,9 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
             "Invalid character. Valid: '${Enigma.CHARACTER_SET}'. Given: '${character}'."
         }
 
-        return connectorMap.getOrDefault(character, character)
+        val substituteCharacter = connectorMap.getOrDefault(character, character)
+        logger?.add(PlugboardLog.fromPlugboard(character, substituteCharacter, plugboard = this))
+        return substituteCharacter
     }
 
     fun reset() {
@@ -38,5 +45,9 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
             connectorMap[it.first] = it.second
             connectorMap[it.second] = it.first
         }
+    }
+
+    fun addLogger(logger: Logger) {
+        this.logger = logger
     }
 }

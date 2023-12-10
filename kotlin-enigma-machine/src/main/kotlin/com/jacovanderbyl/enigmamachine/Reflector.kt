@@ -1,5 +1,8 @@
 package com.jacovanderbyl.enigmamachine
 
+import com.jacovanderbyl.enigmamachine.log.Logger
+import com.jacovanderbyl.enigmamachine.log.ReflectorLog
+
 /**
  * Represents a reflector, used to substitute a letter for another given a cipher set map.
  *
@@ -12,7 +15,19 @@ class Reflector(
     private val cipherSetMap: CipherSetMap,
     private val compatibility: Set<EnigmaType>
 ) : CanEncipher, HasCompatibility {
-    override fun encipher(character: Char) : Char = cipherSetMap.encipher(character)
+    val characterSet: String = cipherSetMap.characterSet
+    val cipherSet: String = cipherSetMap.cipherSet
+    private var logger: Logger? = null
+
+    override fun encipher(character: Char) : Char {
+        val substituteCharacter = cipherSetMap.encipher(character)
+        logger?.add(ReflectorLog.fromReflector(character, substituteCharacter, reflector = this))
+        return substituteCharacter
+    }
 
     override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
+
+    fun addLogger(logger: Logger) {
+        this.logger = logger
+    }
 }
