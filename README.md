@@ -68,12 +68,13 @@ println(positions)      // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O,
 ```kotlin
 val enigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
-    reflector = "B",
-    rotors = "I,II,III"
+    reflector = "REFLECTOR_B",
+    rotors = "ROTOR_I, ROTOR_II, ROTOR_III"
 )
 
+// Note that type prefixes ('ENIGMA_', 'REFLECTOR', 'ROTOR_') may be omitted.
 val enigmaM3 = EnigmaBuilder.make(
-    type = "ENIGMA_M3",
+    type = "M3",
     reflector = "B",
     rotors = "I,II,III"
 )
