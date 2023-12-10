@@ -247,16 +247,16 @@ SUBSTITUTE | Y -> M       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW 
 ```
 #### Print rotor stepping
 ```kotlin
-    val enigma = EnigmaBuilder.make(
-        type = "ENIGMA_I",
-        reflector = "B",
-        rotors = "I,II,III",
-        startingPositions = "A,D,S"
-    )
+val enigma = EnigmaBuilder.make(
+    type = "ENIGMA_I",
+    reflector = "B",
+    rotors = "I,II,III",
+    startingPositions = "A,D,S"
+)
 
-    enigma.logger?.restrictTo(LogType.STEP) // Only record STEP logs to avoid the max log size limit.
-    enigma.encipher("AAAAAA")
-    enigma.logger?.print(LogType.STEP)
+enigma.logger?.restrictTo(LogType.STEP) // Only record STEP logs to avoid the max log size limit.
+enigma.encipher("AAAAAA")
+enigma.logger?.print(LogType.STEP)
 ```
 Prints:
 ```
