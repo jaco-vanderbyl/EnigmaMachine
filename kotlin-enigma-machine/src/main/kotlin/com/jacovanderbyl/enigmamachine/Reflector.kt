@@ -15,8 +15,6 @@ class Reflector(
     private val cipherSetMap: CipherSetMap,
     private val compatibility: Set<EnigmaType>
 ) : CanEncipher, HasCompatibility {
-    val characterSet: String = cipherSetMap.characterSet
-    val cipherSet: String = cipherSetMap.cipherSet
     var logger: Logger? = null
 
     override fun encipher(character: Char) : Char {
@@ -26,4 +24,6 @@ class Reflector(
     }
 
     override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
+
+    fun getCipherSetMaps() : Pair<String,String> = cipherSetMap.characterSet to cipherSetMap.cipherSet
 }

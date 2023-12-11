@@ -26,8 +26,8 @@ class RotorLogSubstitute(
             first,
             second,
             rotor.type.name,
-            rotor.characterSet,
-            rotor.cipherSet,
+            rotor.getCipherSetMaps().first,
+            rotor.getCipherSetMaps().second,
             reverse
         )
     }

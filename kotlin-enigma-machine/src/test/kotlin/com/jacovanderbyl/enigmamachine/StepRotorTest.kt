@@ -12,10 +12,10 @@ class StepRotorTest {
     private fun createRotor() : StepRotor = StepRotor(
         type = RotorType.ROTOR_I,
         cipherSetMap = CipherSetMap(cipherSet),
+        notch = Notch(*notchCharacters.toTypedArray()),
         compatibility = setOf(EnigmaType.ENIGMA_I),
-        position = Position(),
         ringSetting = RingSetting(),
-        notch = Notch(*notchCharacters.toTypedArray())
+        position = Position()
     )
 
     @Test

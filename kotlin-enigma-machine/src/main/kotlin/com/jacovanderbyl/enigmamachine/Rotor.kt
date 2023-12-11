@@ -10,13 +10,12 @@ import com.jacovanderbyl.enigmamachine.log.RotorLogSubstitute
  */
 open class Rotor(
     val type: RotorType,
-    protected val cipherSetMap: CipherSetMap,
+    private val cipherSetMap: CipherSetMap,
     private val compatibility: Set<EnigmaType>,
     var position: Position,
     var ringSetting: RingSetting,
 ) : CanEncipherBidirectionally, HasCompatibility {
-    val characterSet: String = cipherSetMap.characterSet
-    val cipherSet: String = cipherSetMap.cipherSet
+    protected val characterSet: String = Enigma.CHARACTER_SET
     var logger: Logger? = null
 
     override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
@@ -57,6 +56,8 @@ open class Rotor(
     }
 
     fun offset() : Int = position.index - ringSetting.index
+
+    fun getCipherSetMaps() : Pair<String,String> = cipherSetMap.characterSet to cipherSetMap.cipherSet
 
     protected fun shiftIndex(index: Int, shiftBy: Int) : Int {
         val shiftedIndex = index + shiftBy % characterSet.length

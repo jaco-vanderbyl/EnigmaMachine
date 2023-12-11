@@ -11,10 +11,10 @@ package com.jacovanderbyl.enigmamachine
 class StepRotor(
     type: RotorType,
     cipherSetMap: CipherSetMap,
+    val notch: Notch,
     compatibility: Set<EnigmaType>,
     position: Position,
-    ringSetting: RingSetting,
-    val notch: Notch
+    ringSetting: RingSetting
 ) : Rotor(type, cipherSetMap, compatibility, position, ringSetting) {
     fun step() {
         position = Position(characterSet[shiftIndex(position.index, shiftBy = 1)])

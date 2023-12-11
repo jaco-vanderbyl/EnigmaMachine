@@ -8,14 +8,14 @@ package com.jacovanderbyl.enigmamachine
  * the positions of the wiring, relative to the turnover-point and start position.
  */
 class RingSetting(val value: Int = 1) {
+    val index = value - 1
+
     init {
         require(value in list()) {
             "Invalid value. The ring setting must be an integer between 1 and ${Enigma.CHARACTER_SET.length}. " +
                     "Given: '${value}'."
         }
     }
-
-    val index = value - 1
 
     companion object {
         fun list() : List<Int> = Enigma.CHARACTER_SET.map { Enigma.CHARACTER_SET.indexOf(it) + 1 }

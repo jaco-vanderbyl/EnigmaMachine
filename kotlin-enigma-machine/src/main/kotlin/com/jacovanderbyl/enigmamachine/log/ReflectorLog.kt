@@ -25,8 +25,8 @@ class ReflectorLog(
             first,
             second,
             reflector.type.name,
-            reflector.characterSet,
-            reflector.cipherSet,
+            reflector.getCipherSetMaps().first,
+            reflector.getCipherSetMaps().second,
         )
     }
 }
