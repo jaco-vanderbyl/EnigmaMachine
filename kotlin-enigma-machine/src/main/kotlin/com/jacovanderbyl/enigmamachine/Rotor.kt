@@ -17,7 +17,7 @@ open class Rotor(
 ) : CanEncipherBidirectionally, HasCompatibility {
     val characterSet: String = cipherSetMap.characterSet
     val cipherSet: String = cipherSetMap.cipherSet
-    private var logger: Logger? = null
+    var logger: Logger? = null
 
     override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
 
@@ -57,10 +57,6 @@ open class Rotor(
     }
 
     fun offset() : Int = position.index - ringSetting.index
-
-    fun addLogger(logger: Logger) {
-        this.logger = logger
-    }
 
     protected fun shiftIndex(index: Int, shiftBy: Int) : Int {
         val shiftedIndex = index + shiftBy % characterSet.length

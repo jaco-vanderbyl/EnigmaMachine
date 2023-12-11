@@ -17,7 +17,7 @@ class Reflector(
 ) : CanEncipher, HasCompatibility {
     val characterSet: String = cipherSetMap.characterSet
     val cipherSet: String = cipherSetMap.cipherSet
-    private var logger: Logger? = null
+    var logger: Logger? = null
 
     override fun encipher(character: Char) : Char {
         val substituteCharacter = cipherSetMap.encipher(character)
@@ -26,8 +26,4 @@ class Reflector(
     }
 
     override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
-
-    fun addLogger(logger: Logger) {
-        this.logger = logger
-    }
 }

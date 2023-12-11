@@ -22,16 +22,15 @@ import com.jacovanderbyl.enigmamachine.log.Logger
 class Enigma(
     val type: EnigmaType,
     private val rotorUnit: RotorUnit,
-    private val plugboard: Plugboard,
-    val logger: Logger? = null
+    private val plugboard: Plugboard
 ) : CanEncipher {
-    init {
-        if (logger is Logger) {
-            rotorUnit.reflector.addLogger(logger)
-            rotorUnit.rotors.forEach { it.addLogger(logger) }
-            plugboard.addLogger(logger)
+    var logger: Logger? = null
+        set(value) {
+            field = value
+            rotorUnit.reflector.logger = value
+            rotorUnit.rotors.forEach { it.logger = value }
+            plugboard.logger = value
         }
-    }
 
     companion object {
         // Represents the 26 keys on the Enigma Machine's keyboard.

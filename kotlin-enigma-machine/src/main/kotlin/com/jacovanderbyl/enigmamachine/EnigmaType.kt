@@ -12,7 +12,7 @@ enum class EnigmaType {
             requireRotorCount(ENIGMA_I, rotorUnit, rotorCount)
             requireCompatibility(ENIGMA_I, rotorUnit)
 
-            return Enigma(type = ENIGMA_I, rotorUnit = rotorUnit, plugboard = plugboard, logger = Logger())
+            return Enigma(type = ENIGMA_I, rotorUnit = rotorUnit, plugboard = plugboard)
         }
     },
     ENIGMA_M3 {
@@ -21,7 +21,7 @@ enum class EnigmaType {
             requireRotorCount(ENIGMA_M3, rotorUnit, rotorCount)
             requireCompatibility(ENIGMA_M3, rotorUnit)
 
-            return Enigma(type = ENIGMA_M3, rotorUnit = rotorUnit, plugboard = plugboard, logger = Logger())
+            return Enigma(type = ENIGMA_M3, rotorUnit = rotorUnit, plugboard = plugboard)
         }
     },
     ENIGMA_M4 {
@@ -31,7 +31,7 @@ enum class EnigmaType {
             requireCompatibility(ENIGMA_M4, rotorUnit)
             requireRotorTypeForM4(rotorUnit.rotors.first(), setOf(RotorType.ROTOR_BETA, RotorType.ROTOR_GAMMA))
 
-            return Enigma(type = ENIGMA_M4, rotorUnit = rotorUnit, plugboard = plugboard, logger = Logger())
+            return Enigma(type = ENIGMA_M4, rotorUnit = rotorUnit, plugboard = plugboard)
         }
     };
 

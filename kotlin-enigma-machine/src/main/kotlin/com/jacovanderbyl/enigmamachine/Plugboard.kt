@@ -12,7 +12,7 @@ import com.jacovanderbyl.enigmamachine.log.PlugboardLog
 class Plugboard(vararg connectors: Connector) : CanEncipher {
     val connectorList = connectors.toList()
     private val connectorMap = mutableMapOf<Char,Char>()
-    private var logger: Logger? = null
+    var logger: Logger? = null
 
     init {
         addConnectors(*connectors)
@@ -45,9 +45,5 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
             connectorMap[it.first] = it.second
             connectorMap[it.second] = it.first
         }
-    }
-
-    fun addLogger(logger: Logger) {
-        this.logger = logger
     }
 }

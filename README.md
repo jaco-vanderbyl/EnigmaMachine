@@ -134,8 +134,10 @@ val enigma = EnigmaBuilder.make(
     reflector = "B",
     rotors = "I,II,III"
 )
+enigma.logger = Logger()
 
 enigma.encipher('A')
+
 enigma.logger?.print(LogType.SUBSTITUTE)
 ```
 Prints:
@@ -162,8 +164,10 @@ val enigma = EnigmaBuilder.make(
     reflector = "B",
     rotors = "I,II,III"
 )
+enigma.logger = Logger()
 
 enigma.encipher('A')
+
 enigma.logger?.print()
 ```
 Prints:
@@ -206,8 +210,10 @@ val enigma = EnigmaBuilder.make(
     startingPositions = "P,W,N,B",
     plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
 )
+enigma.logger = Logger()
 
 enigma.encipher('A')
+
 enigma.logger?.print()
 ```
 Prints:
@@ -253,9 +259,11 @@ val enigma = EnigmaBuilder.make(
     rotors = "I,II,III",
     startingPositions = "A,D,S"
 )
-
+enigma.logger = Logger()
 enigma.logger?.restrictTo(LogType.STEP) // Only record STEP logs to avoid the max log size limit.
+
 enigma.encipher("AAAAAA")
+
 enigma.logger?.print(LogType.STEP)
 ```
 Prints:
