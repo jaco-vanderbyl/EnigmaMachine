@@ -4,7 +4,7 @@ import com.jacovanderbyl.enigmamachine.EnigmaType
 import com.jacovanderbyl.enigmamachine.ReflectorType
 import com.jacovanderbyl.enigmamachine.RotorType
 
-class Logger(private val maxLogSize: Int = 100) {
+class Logger(var maxLogSize: Int = 100) {
     val logs = mutableListOf<Loggable>()
     private val allowedLogTypes: MutableSet<LogType> = LogType.entries.toMutableSet()
 
