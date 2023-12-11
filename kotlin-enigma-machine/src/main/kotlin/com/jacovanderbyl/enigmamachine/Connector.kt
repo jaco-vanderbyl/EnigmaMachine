@@ -25,8 +25,6 @@ class Connector(val first: Char, val second: Char) {
             return Connector(connector[0], connector[1])
         }
 
-        fun fromStrings(connectors: List<String>) : List<Connector> = connectors.map {
-            fromString(it)
-        }
+        fun fromStrings(connectors: List<String>) : List<Connector> = connectors.map { fromString(it) }
     }
 }

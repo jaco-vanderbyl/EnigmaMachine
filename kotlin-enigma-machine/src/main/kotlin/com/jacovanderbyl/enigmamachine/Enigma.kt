@@ -55,10 +55,9 @@ class Enigma(
             "Invalid character. Valid: '${CHARACTER_SET}'. Given: '${character}'."
         }
 
-        val positions = getRotorPositions().map { it.character }.joinToString("")
+        val positions = if (logger is Logger) getRotorPositionsChar().joinToString("") else ""
         rotorUnit.stepRotors()
-        val newPositions = getRotorPositions().map { it.character }.joinToString("")
-        logger?.add(EnigmaLogStep.fromEnigma(positions, newPositions, enigma = this))
+        logger?.add(EnigmaLogStep.fromEnigma(positions, getRotorPositionsChar().joinToString(""), enigma = this))
 
         var substituteCharacter = character
         substituteCharacter = plugboard.encipher(substituteCharacter)
@@ -83,7 +82,7 @@ class Enigma(
 
     fun getRotors(): Set<Rotor> = rotorUnit.rotors
 
-    fun getRotorPositions() : List<Position> = rotorUnit.rotors.map { it.position }
+    fun getRotorPositionsChar() : List<Char> = rotorUnit.rotors.map { it.position.character }
 
     fun resetRotorPositions() {
         rotorUnit.resetRotorPositions()

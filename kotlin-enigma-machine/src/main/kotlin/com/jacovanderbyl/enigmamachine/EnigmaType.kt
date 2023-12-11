@@ -1,7 +1,5 @@
 package com.jacovanderbyl.enigmamachine
 
-import com.jacovanderbyl.enigmamachine.log.Logger
-
 /**
  * Serves as Enigma Factory.
  */
