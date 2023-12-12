@@ -75,9 +75,7 @@ class Enigma(
                     "in the unit: '${rotorUnit.rotors.size}'. Given: '${positions.size}'."
         }
 
-        positions.forEachIndexed { index, position ->
-            rotorUnit.setPosition(index, position)
-        }
+        positions.forEachIndexed { rotorIndex, position -> rotorUnit.setPosition(rotorIndex, position) }
     }
 
     fun resetPositions() {
