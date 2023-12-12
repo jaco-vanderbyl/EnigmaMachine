@@ -39,7 +39,7 @@ class RotorUnitTest {
                 rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create())
             )
             positions.forEachIndexed { index, position ->
-                rotorUnit.setRotorPosition(index, position)
+                rotorUnit.setPosition(index, position)
             }
 
             assertEquals(
@@ -61,9 +61,9 @@ class RotorUnitTest {
                 rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create())
             )
             positions.forEachIndexed { index, position ->
-                rotorUnit.setRotorPosition(index, position)
+                rotorUnit.setPosition(index, position)
             }
-            rotorUnit.resetRotorPositions()
+            rotorUnit.resetPositions()
 
             assertEquals(
                 expected = listOf('A', 'A', 'A'),

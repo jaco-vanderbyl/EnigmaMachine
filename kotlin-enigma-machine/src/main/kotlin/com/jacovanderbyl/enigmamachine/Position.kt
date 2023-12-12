@@ -13,8 +13,6 @@ class Position(val character: Char = 'A') {
     }
 
     companion object {
-        fun list() : List<Char> = Enigma.CHARACTER_SET.map { it }
-
         fun fromString(position: String) : Position {
             require(position.length == 1) {
                 "Invalid string length. A rotor starting position must be a single character. Given: '${position}'."
@@ -22,5 +20,7 @@ class Position(val character: Char = 'A') {
 
             return Position(position[0])
         }
+
+        fun list() : List<Char> = Enigma.CHARACTER_SET.map { it }
     }
 }

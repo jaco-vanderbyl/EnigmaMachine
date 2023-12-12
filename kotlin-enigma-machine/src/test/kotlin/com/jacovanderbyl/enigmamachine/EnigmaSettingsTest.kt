@@ -33,11 +33,11 @@ class EnigmaSettingsTest {
     ).map { positions ->
         DynamicTest.dynamicTest("Test setting positions to: '${positions}'.") {
             val enigma = createStockEnigma()
-            enigma.setRotorPositions(*positions.toTypedArray())
+            enigma.setPositions(*positions.toTypedArray())
 
             assertEquals(
                 expected = positions.map { it.character },
-                actual = enigma.getRotorPositionsChar(),
+                actual = enigma.getPositionChars(),
                 message = "Failed to ensure positions can be changed."
             )
         }
@@ -53,7 +53,7 @@ class EnigmaSettingsTest {
             val enigma = createStockEnigma()
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
-                    enigma.setRotorPositions(*positions.toTypedArray())
+                    enigma.setPositions(*positions.toTypedArray())
                 },
                 message = "Failed to ensure invalid position count throws."
             )
@@ -66,12 +66,12 @@ class EnigmaSettingsTest {
     @Test
     fun `ensure positions can be reset`() {
         val enigma = createStockEnigma()
-        enigma.setRotorPositions(Position('X'), Position('Y'), Position('Z'))
-        enigma.resetRotorPositions()
+        enigma.setPositions(Position('X'), Position('Y'), Position('Z'))
+        enigma.resetPositions()
 
         assertEquals(
             expected = listOf('A', 'A', 'A'),
-            actual = enigmaSingle.getRotorPositionsChar(),
+            actual = enigmaSingle.getPositionChars(),
             message = "Failed to ensure positions can be reset."
         )
     }
@@ -80,8 +80,8 @@ class EnigmaSettingsTest {
     fun `ensure plugboard can be reset`() {
         val plugboard = Plugboard()
         val enigma = createStockEnigma(plugboard)
-        enigma.addPlugboardConnectors(Connector(first = 'A', second = 'B'))
-        enigma.resetPlugboard()
+        enigma.addConnectors(Connector(first = 'A', second = 'B'))
+        enigma.resetConnectors()
 
         assertEquals(
             expected = 'A',
@@ -103,7 +103,7 @@ class EnigmaSettingsTest {
         DynamicTest.dynamicTest(
             "Test adding connectors: '${connectors.map { "${it.first}${it.first}" } }'."
         ) {
-            enigmaSingle.addPlugboardConnectors(*connectors.toTypedArray())
+            enigmaSingle.addConnectors(*connectors.toTypedArray())
 
             // Test that all connectors are added, including connectors added in previous test case sequence.
             connectorsList.filterIndexed { i, _ -> i <= index }.forEach {
@@ -128,7 +128,7 @@ class EnigmaSettingsTest {
         DynamicTest.dynamicTest(
             "Test connectors '${connectors.map { "${it.first}${it.first}" } }' replaced previous connectors."
         ) {
-            enigmaSingle.replacePlugboardConnectors(*connectors.toTypedArray())
+            enigmaSingle.replaceConnectors(*connectors.toTypedArray())
 
             // Test connectors (from previous test case sequences) have been removed.
             connectorsList.filterIndexed { i, _ -> i < index } .forEach {

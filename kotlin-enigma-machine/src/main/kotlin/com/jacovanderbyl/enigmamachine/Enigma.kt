@@ -27,8 +27,8 @@ class Enigma(
     var logger: Logger? = null
         set(value) {
             field = value
-            rotorUnit.reflector.logger = value
-            rotorUnit.rotors.forEach { it.logger = value }
+            getReflector().logger = value
+            getRotors().forEach { it.logger = value }
             plugboard.logger = value
         }
 
@@ -55,9 +55,9 @@ class Enigma(
             "Invalid character. Valid: '${CHARACTER_SET}'. Given: '${character}'."
         }
 
-        val positions = if (logger is Logger) getRotorPositionsChar().joinToString("") else ""
+        val positions = if (logger is Logger) getPositionChars().joinToString("") else ""
         rotorUnit.stepRotors()
-        logger?.add(EnigmaLogStep.fromEnigma(positions, getRotorPositionsChar().joinToString(""), enigma = this))
+        logger?.add(EnigmaLogStep.fromEnigma(positions, getPositionChars().joinToString(""), enigma = this))
 
         var substituteCharacter = character
         substituteCharacter = plugboard.encipher(substituteCharacter)
@@ -69,35 +69,37 @@ class Enigma(
 
     fun encipher(plaintext: String) : String = plaintext.map { encipher(it) }.joinToString("")
 
-    fun setRotorPositions(vararg positions: Position) {
+    fun setPositions(vararg positions: Position) {
         require(positions.size == rotorUnit.rotors.size) {
             "Invalid position count. The number of rotor positions must equal the number of rotors " +
                     "in the unit: '${rotorUnit.rotors.size}'. Given: '${positions.size}'."
         }
 
         positions.forEachIndexed { index, position ->
-            rotorUnit.setRotorPosition(index, position)
+            rotorUnit.setPosition(index, position)
         }
     }
 
-    fun getRotors(): Set<Rotor> = rotorUnit.rotors
-
-    fun getRotorPositionsChar() : List<Char> = rotorUnit.rotors.map { it.position.character }
-
-    fun resetRotorPositions() {
-        rotorUnit.resetRotorPositions()
+    fun resetPositions() {
+        rotorUnit.resetPositions()
     }
 
-    fun addPlugboardConnectors(vararg connectors: Connector) {
+    fun addConnectors(vararg connectors: Connector) {
         plugboard.addConnectors(*connectors)
     }
 
-    fun replacePlugboardConnectors(vararg connectors: Connector) {
-        resetPlugboard()
+    fun replaceConnectors(vararg connectors: Connector) {
+        resetConnectors()
         plugboard.addConnectors(*connectors)
     }
 
-    fun resetPlugboard() {
+    fun resetConnectors() {
         plugboard.reset()
     }
+
+    fun getReflector() : Reflector = rotorUnit.reflector
+
+    fun getRotors(): Set<Rotor> = rotorUnit.rotors
+
+    fun getPositionChars() : List<Char> = getRotors().map { it.position.character }
 }

@@ -31,10 +31,6 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
         return substituteCharacter
     }
 
-    fun reset() {
-        connectorMap.clear()
-    }
-
     fun addConnectors(vararg connectors: Connector) {
         connectors.forEach {
             require(!connectorMap.containsKey(it.first) && !connectorMap.containsKey(it.second)) {
@@ -45,5 +41,9 @@ class Plugboard(vararg connectors: Connector) : CanEncipher {
             connectorMap[it.first] = it.second
             connectorMap[it.second] = it.first
         }
+    }
+
+    fun reset() {
+        connectorMap.clear()
     }
 }

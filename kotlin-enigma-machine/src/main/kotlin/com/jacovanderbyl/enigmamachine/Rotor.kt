@@ -18,12 +18,6 @@ open class Rotor(
     protected val characterSet: String = Enigma.CHARACTER_SET
     var logger: Logger? = null
 
-    override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
-
-    fun resetPosition() {
-        position = Position()
-    }
-
     /**
      * Substitute one character for another, simulating rotor wiring, position, and ring setting.
      *
@@ -55,7 +49,13 @@ open class Rotor(
         return finalCharacter
     }
 
+    override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
+
     fun offset() : Int = position.index - ringSetting.index
+
+    fun resetPosition() {
+        position = Position()
+    }
 
     fun getCipherSetMaps() : Pair<String,String> = cipherSetMap.characterSet to cipherSetMap.cipherSet
 
