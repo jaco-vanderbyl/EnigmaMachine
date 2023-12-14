@@ -73,10 +73,23 @@ val enigmaI = EnigmaBuilder.make(
 )
 
 // Note that type prefixes ('ENIGMA_', 'REFLECTOR', 'ROTOR_') may be omitted.
-val enigmaM3 = EnigmaBuilder.make(
-    type = "M3",
+val enigmaI = EnigmaBuilder.make(
+    type = "I",
     reflector = "B",
     rotors = "I,II,III"
+)
+
+// Alternatively, to avoid the 'stringly-typed' builder...
+val enigmaI = EnigmaType.ENIGMA_I.create(
+    rotorUnit = RotorUnit(
+        reflector = ReflectorType.REFLECTOR_B.create(),
+        rotors = setOf(
+            RotorType.ROTOR_I.create(),
+            RotorType.ROTOR_II.create(),
+            RotorType.ROTOR_III.create()
+        )
+    ),
+    plugboard = Plugboard()
 )
 ```
 
@@ -89,6 +102,19 @@ val enigmaI = EnigmaBuilder.make(
     ringSettings = "14,9,24",
     startingPositions = "W,N,Y"
 )
+
+// Alternatively
+val enigmaI = EnigmaType.ENIGMA_I.create(
+    rotorUnit = RotorUnit(
+        reflector = ReflectorType.REFLECTOR_C.create(),
+        rotors = setOf(
+            RotorType.ROTOR_I.create(ringSetting = RingSetting(14), position = Position('W')),
+            RotorType.ROTOR_V.create(ringSetting = RingSetting(9), position = Position('N')),
+            RotorType.ROTOR_III.create(ringSetting = RingSetting(24), position = Position('Y'))
+        )
+    ),
+    plugboard = Plugboard()
+)
 ```
 
 ### Make with plugboard connectors
@@ -100,6 +126,22 @@ val enigmaI = EnigmaBuilder.make(
     ringSettings = "14,9,24",
     startingPositions = "W,N,Y",
     plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
+)
+
+// Alternatively
+val enigmaI = EnigmaType.ENIGMA_I.create(
+    rotorUnit = RotorUnit(
+        reflector = ReflectorType.REFLECTOR_C.create(),
+        rotors = setOf(
+            RotorType.ROTOR_I.create(ringSetting = RingSetting(14), position = Position('W')),
+            RotorType.ROTOR_V.create(ringSetting = RingSetting(9), position = Position('N')),
+            RotorType.ROTOR_III.create(ringSetting = RingSetting(24), position = Position('Y'))
+        )
+    ),
+    plugboard = Plugboard(
+        Connector('A', 'Z'), Connector('G', 'T'), Connector('D', 'V'), Connector('K', 'U'), Connector('F', 'O'),
+        Connector('M', 'Y'), Connector('E', 'W'), Connector('J', 'N'), Connector('I', 'X'), Connector('L', 'W')
+    )
 )
 ```
 
