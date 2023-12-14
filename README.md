@@ -139,8 +139,9 @@ val enigmaI = EnigmaType.ENIGMA_I.create(
         )
     ),
     plugboard = Plugboard(
-        Connector('A', 'Z'), Connector('G', 'T'), Connector('D', 'V'), Connector('K', 'U'), Connector('F', 'O'),
-        Connector('M', 'Y'), Connector('E', 'W'), Connector('J', 'N'), Connector('I', 'X'), Connector('L', 'W')
+        Connector('S', 'Z'), Connector('G', 'T'), Connector('D', 'V'), Connector('K', 'U'),
+        Connector('F', 'O'), Connector('M', 'Y'), Connector('E', 'W'), Connector('J', 'N'),
+        Connector('I', 'X'), Connector('L', 'W')
     )
 )
 ```
