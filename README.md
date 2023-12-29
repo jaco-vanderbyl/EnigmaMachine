@@ -66,6 +66,14 @@ println(positions)      // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O,
 * No plugboard connectors
 
 ```kotlin
+import com.jacovanderbyl.enigmamachine.dsl.enigmaI
+val enigmaI = enigmaI {
+    singleReflector { reflectorB() }
+    threeRotors { rotorI(); rotorII(); rotorIII() }
+}
+
+// Alternatively
+import com.jacovanderbyl.enigmamachine.EnigmaBuilder
 val enigmaI = EnigmaBuilder.make(
     type = "ENIGMA_I",
     reflector = "REFLECTOR_B",
@@ -79,86 +87,77 @@ val enigmaI = EnigmaBuilder.make(
     rotors = "I,II,III"
 )
 
-// Alternatively, to avoid the 'stringly-typed' builder...
-val enigmaI = EnigmaType.ENIGMA_I.create(
-    rotorUnit = RotorUnit(
-        reflector = ReflectorType.REFLECTOR_B.create(),
-        rotors = setOf(
-            RotorType.ROTOR_I.create(),
-            RotorType.ROTOR_II.create(),
-            RotorType.ROTOR_III.create()
-        )
-    ),
-    plugboard = Plugboard()
-)
 ```
 
 ### Make with an arrangement of rotors, ring settings, starting positions, and a reflector
 ```kotlin
-val enigmaI = EnigmaBuilder.make(
-    type = "ENIGMA_I",
+import com.jacovanderbyl.enigmamachine.dsl.enigmaM3
+val enigmaM3 = enigmaM3 {
+    singleReflector { reflectorC() }
+    threeRotors {
+        rotorI(RingSetting.NUMBER_14, Position.W)
+        rotorV(RingSetting.NUMBER_9, Position.N)
+        rotorIII(RingSetting.NUMBER_24, Position.Y)
+    }
+}
+
+// Alternatively
+import com.jacovanderbyl.enigmamachine.EnigmaBuilder
+val enigmaM3 = EnigmaBuilder.make(
+    type = "ENIGMA_M3",
     reflector = "C",
     rotors = "I,V,III",
     ringSettings = "14,9,24",
     startingPositions = "W,N,Y"
 )
 
-// Alternatively
-val enigmaI = EnigmaType.ENIGMA_I.create(
-    rotorUnit = RotorUnit(
-        reflector = ReflectorType.REFLECTOR_C.create(),
-        rotors = setOf(
-            RotorType.ROTOR_I.create(ringSetting = RingSetting(14), position = Position('W')),
-            RotorType.ROTOR_V.create(ringSetting = RingSetting(9), position = Position('N')),
-            RotorType.ROTOR_III.create(ringSetting = RingSetting(24), position = Position('Y'))
-        )
-    ),
-    plugboard = Plugboard()
-)
+
 ```
 
 ### Make with plugboard connectors
 ```kotlin
-val enigmaI = EnigmaBuilder.make(
-    type = "ENIGMA_I",
-    reflector = "C",
-    rotors = "I,V,III",
-    ringSettings = "14,9,24",
-    startingPositions = "W,N,Y",
-    plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
-)
+import com.jacovanderbyl.enigmamachine.dsl.enigmaM4
+val enigmaM4 = enigmaM4 {
+    singleReflector { reflectorBThin() }
+    fourRotors {
+        rotorGamma(RingSetting.NUMBER_4, Position.E)
+        rotorI(RingSetting.NUMBER_14, Position.W)
+        rotorV(RingSetting.NUMBER_9, Position.N)
+        rotorIII(RingSetting.NUMBER_24, Position.Y)
+    }
+    upToThirteenConnectors {
+        connect(Plugboard.S, Plugboard.Z); connect(Plugboard.G, Plugboard.T)
+        connect(Plugboard.D, Plugboard.V); connect(Plugboard.K, Plugboard.U)
+        connect(Plugboard.F, Plugboard.O); connect(Plugboard.M, Plugboard.Y)
+        connect(Plugboard.E, Plugboard.W); connect(Plugboard.J, Plugboard.N)
+        connect(Plugboard.I, Plugboard.X); connect(Plugboard.L, Plugboard.Q)
+    }
+}
 
 // Alternatively
-val enigmaI = EnigmaType.ENIGMA_I.create(
-    rotorUnit = RotorUnit(
-        reflector = ReflectorType.REFLECTOR_C.create(),
-        rotors = setOf(
-            RotorType.ROTOR_I.create(ringSetting = RingSetting(14), position = Position('W')),
-            RotorType.ROTOR_V.create(ringSetting = RingSetting(9), position = Position('N')),
-            RotorType.ROTOR_III.create(ringSetting = RingSetting(24), position = Position('Y'))
-        )
-    ),
-    plugboard = Plugboard(
-        Connector('S', 'Z'), Connector('G', 'T'), Connector('D', 'V'), Connector('K', 'U'),
-        Connector('F', 'O'), Connector('M', 'Y'), Connector('E', 'W'), Connector('J', 'N'),
-        Connector('I', 'X'), Connector('L', 'W')
-    )
+import com.jacovanderbyl.enigmamachine.EnigmaBuilder
+val enigmaM4 = EnigmaBuilder.make(
+    type = "ENIGMA_M4",
+    reflector = "B_THIN",
+    rotors = "GAMMA,I,V,III",
+    ringSettings = "4,14,9,24",
+    startingPositions = "E,W,N,Y",
+    plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
 )
 ```
 
 ### Encipher plaintext and 'decipher' ciphertext
 ```kotlin
-val firstEnigmaI = EnigmaBuilder.make(
-    type = "ENIGMA_I",
-    reflector = "B",
-    rotors = "I,II,III"
-)
+import com.jacovanderbyl.enigmamachine.dsl.enigmaI
+val firstEnigmaI = enigmaI {
+    singleReflector { reflectorB() }
+    threeRotors { rotorI(); rotorII(); rotorIII() }
+}
 
-val secondEnigmaI = EnigmaBuilder.make(
-    type = "ENIGMA_I",
-    reflector = "B",
-    rotors = "I,II,III"
-)
+val secondEnigmaI = enigmaI {
+    singleReflector { reflectorB() }
+    threeRotors { rotorI(); rotorII(); rotorIII() }
+}
 
 val plaintextInput = "AAAAA"
 val ciphertext = firstEnigmaI.encipher(plaintextInput)
@@ -172,11 +171,11 @@ println(plaintext)      // prints: AAAAA
 ### In-memory logs of internal workings
 #### Print letter substitution journey
 ```kotlin
-val enigma = EnigmaBuilder.make(
-    type = "ENIGMA_I",
-    reflector = "B",
-    rotors = "I,II,III"
-)
+import com.jacovanderbyl.enigmamachine.dsl.enigmaI
+val enigma = enigmaI {
+    singleReflector { reflectorB() }
+    threeRotors { rotorI(); rotorII(); rotorIII() }
+}
 enigma.logger = Logger()
 
 enigma.encipher('A')
@@ -202,11 +201,11 @@ SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
 
 #### Print all log types - example 1
 ```kotlin
-val enigma = EnigmaBuilder.make(
-    type = "ENIGMA_I",
-    reflector = "B",
-    rotors = "I,II,III"
-)
+import com.jacovanderbyl.enigmamachine.dsl.enigmaI
+val enigma = enigmaI {
+    singleReflector { reflectorB() }
+    threeRotors { rotorI(); rotorII(); rotorIII() }
+}
 enigma.logger = Logger()
 
 enigma.encipher('A')
@@ -245,14 +244,24 @@ SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
 
 #### Print all log types - example 2
 ```kotlin
-val enigma = EnigmaBuilder.make(
-    type = "ENIGMA_M4",
-    reflector = "C_THIN",
-    rotors = "GAMMA,VI,V,VIII",
-    ringSettings = "5,14,9,24",
-    startingPositions = "P,W,N,B",
-    plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
-)
+import com.jacovanderbyl.enigmamachine.dsl.enigmaM4
+val enigma = enigmaM4 {
+    singleReflector { reflectorCThin() }
+    fourRotors {
+        rotorGamma(RingSetting.NUMBER_5, Position.P)
+        rotorI(RingSetting.NUMBER_14, Position.W)
+        rotorV(RingSetting.NUMBER_9, Position.N)
+        rotorIII(RingSetting.NUMBER_24, Position.B)
+    }
+    upToThirteenConnectors {
+        connect(Plugboard.S, Plugboard.Z); connect(Plugboard.G, Plugboard.T)
+        connect(Plugboard.D, Plugboard.V); connect(Plugboard.K, Plugboard.U)
+        connect(Plugboard.F, Plugboard.O); connect(Plugboard.M, Plugboard.Y)
+        connect(Plugboard.E, Plugboard.W); connect(Plugboard.J, Plugboard.N)
+        connect(Plugboard.I, Plugboard.X); connect(Plugboard.L, Plugboard.Q)
+    }
+}
+
 enigma.logger = Logger()
 
 enigma.encipher('A')
@@ -296,12 +305,15 @@ SUBSTITUTE | Y -> M       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW 
 ```
 #### Print rotor stepping
 ```kotlin
-val enigma = EnigmaBuilder.make(
-    type = "ENIGMA_I",
-    reflector = "B",
-    rotors = "I,II,III",
-    startingPositions = "A,D,S"
-)
+import com.jacovanderbyl.enigmamachine.dsl.enigmaI
+val enigmaI = enigmaI {
+    singleReflector { reflectorB() }
+    threeRotors {
+        rotorI(position = Position.A)
+        rotorII(position = Position.D)
+        rotorIII(position = Position.S)
+    }
+}
 enigma.logger = Logger()
 enigma.logger?.restrictTo(LogType.STEP) // Only record STEP logs to avoid the max log size limit.
 
