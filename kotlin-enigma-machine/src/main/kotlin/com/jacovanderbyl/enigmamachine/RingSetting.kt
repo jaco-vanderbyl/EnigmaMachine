@@ -7,7 +7,7 @@ package com.jacovanderbyl.enigmamachine
  * to the internal wiring. Notch and alphabet ring are fixed together. Changing the ring setting will therefore change
  * the positions of the wiring, relative to the turnover-point and start position.
  */
-class RingSetting(val value: Int = 1) {
+class RingSetting(val value: Int = NUMBER_1) {
     val index = value - 1
 
     init {

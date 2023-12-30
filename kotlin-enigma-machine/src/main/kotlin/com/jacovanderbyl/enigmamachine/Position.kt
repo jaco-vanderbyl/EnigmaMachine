@@ -3,7 +3,7 @@ package com.jacovanderbyl.enigmamachine
 /**
  * Represents a letter position on a rotor.
  */
-class Position(val character: Char = 'A') {
+class Position(val character: Char = A) {
     val index = Enigma.CHARACTER_SET.indexOf(character)
 
     init {
