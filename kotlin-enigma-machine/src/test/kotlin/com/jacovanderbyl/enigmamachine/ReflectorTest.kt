@@ -25,7 +25,7 @@ class ReflectorTest {
     ).map { cipherSet ->
         DynamicTest.dynamicTest("Test encipher with cipher set: '${cipherSet}'.") {
             val reflector = createReflector(cipherSet = cipherSet)
-            Enigma.CHARACTER_SET.forEachIndexed { index, char ->
+            Letter.list().forEachIndexed { index, char ->
                 assertEquals(
                     expected = cipherSet[index],
                     actual = reflector.encipher(char),

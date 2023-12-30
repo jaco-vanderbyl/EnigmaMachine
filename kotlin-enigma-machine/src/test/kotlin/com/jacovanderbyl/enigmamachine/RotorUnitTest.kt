@@ -30,8 +30,8 @@ class RotorUnitTest {
 
     @TestFactory
     fun `ensure positions can be changed`() = listOf(
-        listOf(Position('X'), Position('Y'), Position('Z')),
-        listOf(Position('A'), Position('B'), Position('C')),
+        listOf(Letter.X, Letter.Y, Letter.Z),
+        listOf(Letter.A, Letter.B, Letter.C),
     ).map { positions ->
         DynamicTest.dynamicTest("Test setting positions to: '${positions}'.") {
             val rotorUnit = RotorUnit(
@@ -52,8 +52,8 @@ class RotorUnitTest {
 
     @TestFactory
     fun `ensure positions can be reset`() = listOf(
-        listOf(Position('X'), Position('Y'), Position('Z')),
-        listOf(Position('A'), Position('B'), Position('C')),
+        listOf(Letter.X, Letter.Y, Letter.Z),
+        listOf(Letter.A, Letter.B, Letter.C),
     ).map { positions ->
         DynamicTest.dynamicTest("Test that positions '${positions}' are reset.") {
             val rotorUnit = RotorUnit(
@@ -109,9 +109,9 @@ class RotorUnitTest {
             val rotorUnit = RotorUnit(
                 reflector = ReflectorType.REFLECTOR_B.create(),
                 rotors = setOf(
-                    RotorType.ROTOR_I.create(Position('X')),
-                    RotorType.ROTOR_II.create(Position('Y')),
-                    RotorType.ROTOR_III.create(Position('Z')),
+                    RotorType.ROTOR_I.create(position = Letter.X),
+                    RotorType.ROTOR_II.create(position = Letter.Y),
+                    RotorType.ROTOR_III.create(position = Letter.Z),
                 )
             )
 
@@ -136,9 +136,9 @@ class RotorUnitTest {
             val rotorUnit = RotorUnit(
                 reflector = ReflectorType.REFLECTOR_B.create(),
                 rotors = setOf(
-                    RotorType.ROTOR_I.create(ringSetting = RingSetting(9)),
-                    RotorType.ROTOR_II.create(ringSetting = RingSetting(17)),
-                    RotorType.ROTOR_III.create(ringSetting = RingSetting(22)),
+                    RotorType.ROTOR_I.create(ringSetting = Ring.SETTING_9),
+                    RotorType.ROTOR_II.create(ringSetting = Ring.SETTING_17),
+                    RotorType.ROTOR_III.create(ringSetting = Ring.SETTING_22),
                 )
             )
 
@@ -155,7 +155,7 @@ class RotorUnitTest {
         rotors = setOf(
             RotorType.ROTOR_I.create(),
             RotorType.ROTOR_II.create(),
-            RotorType.ROTOR_III.create(Position('S'))
+            RotorType.ROTOR_III.create(position = Letter.S)
         )
     )
 
@@ -183,8 +183,8 @@ class RotorUnitTest {
         reflector = ReflectorType.REFLECTOR_B.create(),
         rotors = setOf(
             RotorType.ROTOR_I.create(),
-            RotorType.ROTOR_II.create(Position('D')),
-            RotorType.ROTOR_III.create(Position('S'))
+            RotorType.ROTOR_II.create(position = Letter.D),
+            RotorType.ROTOR_III.create(position = Letter.S)
         )
     )
 

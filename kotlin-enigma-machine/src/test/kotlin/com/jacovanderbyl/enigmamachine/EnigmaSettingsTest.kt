@@ -21,15 +21,15 @@ class EnigmaSettingsTest {
     fun `ensure character set is correct`() {
         assertEquals(
             expected = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-            actual = Enigma.CHARACTER_SET,
+            actual = Letter.characterSet(),
             message = "Failed to ensure character set is correct."
         )
     }
 
     @TestFactory
     fun `ensure positions can be changed`() = listOf(
-        listOf(Position('X'), Position('Y'), Position('Z')),
-        listOf(Position('A'), Position('B'), Position('C')),
+        listOf(Letter.X, Letter.Y, Letter.Z),
+        listOf(Letter.A, Letter.B, Letter.C),
     ).map { positions ->
         DynamicTest.dynamicTest("Test setting positions to: '${positions}'.") {
             val enigma = createStockEnigma()
@@ -46,8 +46,8 @@ class EnigmaSettingsTest {
     @TestFactory
     fun `ensure invalid position count throws`() = listOf(
         listOf(),
-        listOf(Position('A'), Position('B')),
-        listOf(Position('A'), Position('B'), Position('C'), Position('D')),
+        listOf(Letter.A, Letter.B),
+        listOf(Letter.A, Letter.B, Letter.C, Letter.D),
     ).map { positions ->
         DynamicTest.dynamicTest("Invalid position count '${positions.size}' should throw.") {
             val enigma = createStockEnigma()
@@ -66,7 +66,7 @@ class EnigmaSettingsTest {
     @Test
     fun `ensure positions can be reset`() {
         val enigma = createStockEnigma()
-        enigma.setPositions(Position('X'), Position('Y'), Position('Z'))
+        enigma.setPositions(Letter.X, Letter.Y, Letter.Z)
         enigma.resetPositions()
 
         assertEquals(
@@ -80,7 +80,7 @@ class EnigmaSettingsTest {
     fun `ensure plugboard can be reset`() {
         val plugboard = Plugboard()
         val enigma = createStockEnigma(plugboard)
-        enigma.addConnectors(Connector(first = 'A', second = 'B'))
+        enigma.addConnectors(Connector(first = Letter.A, Letter.B))
         enigma.resetConnectors()
 
         assertEquals(
@@ -93,9 +93,9 @@ class EnigmaSettingsTest {
     private val plugboardSingle = Plugboard()
     private val enigmaSingle = createStockEnigma(plugboardSingle)
     private val connectorsList = listOf(
-        listOf(Connector('A', 'B'), Connector('C', 'D')),
-        listOf(Connector('E', 'F'), Connector('G', 'H')),
-        listOf(Connector('I', 'J'), Connector('K', 'L')),
+        listOf(Connector(Letter.A, Letter.B), Connector(Letter.C, Letter.D)),
+        listOf(Connector(Letter.E, Letter.F), Connector(Letter.G, Letter.H)),
+        listOf(Connector(Letter.I, Letter.J), Connector(Letter.K, Letter.L)),
     )
 
     @TestFactory
@@ -105,17 +105,17 @@ class EnigmaSettingsTest {
         ) {
             enigmaSingle.addConnectors(*connectors.toTypedArray())
 
-            // Test that all connectors are added, including connectors added in previous test case sequence.
+            // Test that all connectors are added, including connectors added in the previous test case sequence.
             connectorsList.filterIndexed { i, _ -> i <= index }.forEach {
                 it.forEach { connector ->
                     assertEquals(
-                        expected = connector.second,
-                        actual = plugboardSingle.encipher(connector.first),
+                        expected = connector.second.character,
+                        actual = plugboardSingle.encipher(connector.first.character),
                         message = "Failed to ensure connectors can be added."
                     )
                     assertEquals(
-                        expected = connector.first,
-                        actual = plugboardSingle.encipher(connector.second),
+                        expected = connector.first.character,
+                        actual = plugboardSingle.encipher(connector.second.character),
                         message = "Failed to ensure connectors can be added."
                     )
                 }
@@ -134,28 +134,28 @@ class EnigmaSettingsTest {
             connectorsList.filterIndexed { i, _ -> i < index } .forEach {
                 it.forEach { connector ->
                     assertEquals(
-                        expected = connector.first,
-                        actual = plugboardSingle.encipher(connector.first),
+                        expected = connector.first.character,
+                        actual = plugboardSingle.encipher(connector.first.character),
                         message = "Failed to ensure previous connectors were removed."
                     )
                     assertEquals(
-                        expected = connector.second,
-                        actual = plugboardSingle.encipher(connector.second),
+                        expected = connector.second.character,
+                        actual = plugboardSingle.encipher(connector.second.character),
                         message = "Failed to ensure previous connectors were removed."
                     )
                 }
             }
 
-            // Test connectors (from current test case sequence) have been added.
+            // Test connectors (from the current test case sequence) have been added.
             connectors.forEach {connector ->
                 assertEquals(
-                    expected = connector.second,
-                    actual = plugboardSingle.encipher(connector.first),
+                    expected = connector.second.character,
+                    actual = plugboardSingle.encipher(connector.first.character),
                     message = "Failed to ensure connectors were added."
                 )
                 assertEquals(
-                    expected = connector.first,
-                    actual = plugboardSingle.encipher(connector.second),
+                    expected = connector.first.character,
+                    actual = plugboardSingle.encipher(connector.second.character),
                     message = "Failed to ensure connectors were added."
                 )
             }

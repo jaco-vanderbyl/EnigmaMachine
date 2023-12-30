@@ -10,7 +10,7 @@ import kotlin.test.assertFailsWith
 class PlugboardTest {
     private val validConnectors = listOf(
         listOf(),
-        listOf(Connector('A', 'B'), Connector('C', 'D')),
+        listOf(Connector(Letter.A, Letter.B), Connector(Letter.C, Letter.D)),
     )
 
     @TestFactory
@@ -39,21 +39,21 @@ class PlugboardTest {
         // Test connected characters encipher correctly
         connectorList.forEach { connector ->
             assertEquals(
-                expected = connector.second,
-                actual = plugboard.encipher(connector.first),
+                expected = connector.second.character,
+                actual = plugboard.encipher(connector.first.character),
                 message = "Failed to ensure encipher works - with connected characters."
             )
             assertEquals(
-                expected = connector.first,
-                actual = plugboard.encipher(connector.second),
+                expected = connector.first.character,
+                actual = plugboard.encipher(connector.second.character),
                 message = "Failed to ensure encipher works - with connected characters."
             )
         }
 
         // Test unconnected characters encipher correctly
-        Enigma.CHARACTER_SET.filterNot { char ->
-            char in connectorList.map { connector -> connector.first } ||
-            char in connectorList.map { connector -> connector.second }
+        Letter.characterSet().filterNot { char ->
+            char in connectorList.map { connector -> connector.first.character } ||
+            char in connectorList.map { connector -> connector.second.character }
         }.forEach { char ->
             assertEquals(
                 expected = char,
@@ -65,7 +65,7 @@ class PlugboardTest {
 
     @Test
     fun `ensure connectors can be reset`() {
-        val plugboard = Plugboard(Connector('A', 'B'))
+        val plugboard = Plugboard(Connector(Letter.A, Letter.B))
         plugboard.reset()
 
         assertEquals(
@@ -95,10 +95,10 @@ class PlugboardTest {
 
     @TestFactory
     fun `ensure duplicate connectors throws`() = listOf(
-        listOf(Connector('A', 'B'), Connector('A', 'Z')),
-        listOf(Connector('A', 'B'), Connector('B', 'Z')),
-        listOf(Connector('A', 'B'), Connector('Z', 'A')),
-        listOf(Connector('A', 'B'), Connector('Z', 'B')),
+        listOf(Connector(Letter.A, Letter.B), Connector(Letter.A, Letter.Z)),
+        listOf(Connector(Letter.A, Letter.B), Connector(Letter.B, Letter.Z)),
+        listOf(Connector(Letter.A, Letter.B), Connector(Letter.Z, Letter.A)),
+        listOf(Connector(Letter.A, Letter.B), Connector(Letter.Z, Letter.B)),
     ).map { connectors ->
         DynamicTest.dynamicTest(
             "Duplicate connectors '${connectors.map { "${it.first}${it.second}" } }' should throw."

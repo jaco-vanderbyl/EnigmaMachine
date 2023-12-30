@@ -7,7 +7,7 @@ class PlugboardConnectors {
     private val connectors = mutableSetOf<Connector>()
     fun get() : Set<Connector> = connectors
 
-    @Dsl fun connect(first: Char, second: Char) {
+    @Dsl fun connect(first: Letter, second: Letter) {
         connectors.add(Connector(first, second))
     }
 }

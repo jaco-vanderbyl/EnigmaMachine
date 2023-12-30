@@ -14,18 +14,18 @@ class RotorTest {
         type = RotorType.ROTOR_I,
         cipherSetMap = CipherSetMap(cipherSet),
         compatibility = setOf(EnigmaType.ENIGMA_I),
-        position = Position(),
-        ringSetting = RingSetting()
+        position = Letter.A,
+        ringSetting = Ring.SETTING_1
     )
 
     @Test
     fun `ensure rotor position can be reset to default`() {
         val rotor = createRotor()
-        rotor.position = Position('G')
+        rotor.position = Letter.G
         rotor.resetPosition()
 
         assertEquals(
-            expected = 'A',
+            expected = Letter.A.character,
             actual = rotor.position.character,
             message = "Failed to ensure rotor position can be reset to default."
         )
@@ -81,7 +81,7 @@ class RotorTest {
     ).map {
         DynamicTest.dynamicTest("Rotor should encipher '${it.key}' to '${it.value}}'.") {
             val rotor = createRotor()
-            rotor.position = Position('B')
+            rotor.position = Letter.B
 
             assertEquals(
                 expected = it.value,
@@ -107,8 +107,8 @@ class RotorTest {
     ).map {
         DynamicTest.dynamicTest("Rotor should encipher '${it.key}' to '${it.value}}'.") {
             val rotor = createRotor()
-            rotor.position = Position('G')
-            rotor.ringSetting = RingSetting(19)
+            rotor.position = Letter.G
+            rotor.ringSetting = Ring.SETTING_19
 
             assertEquals(
                 expected = it.value,

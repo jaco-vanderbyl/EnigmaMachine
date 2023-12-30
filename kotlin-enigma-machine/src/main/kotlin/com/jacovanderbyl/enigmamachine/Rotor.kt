@@ -12,16 +12,16 @@ open class Rotor(
     val type: RotorType,
     private val cipherSetMap: CipherSetMap,
     private val compatibility: Set<EnigmaType>,
-    var position: Position,
-    var ringSetting: RingSetting,
+    var position: Letter,
+    var ringSetting: Ring,
 ) : CanEncipherBidirectionally, HasCompatibility {
-    protected val characterSet: String = Enigma.CHARACTER_SET
+    protected val characterSet: String = Letter.characterSet()
     var logger: Logger? = null
 
     /**
      * Substitute one character for another, simulating rotor wiring, position, and ring setting.
      *
-     * To better understand steps, see:
+     * To better understand the steps, see:
      *     https://crypto.stackexchange.com/a/71233
      *     https://crypto.stackexchange.com/a/81585
      */
@@ -54,7 +54,7 @@ open class Rotor(
     fun offset() : Int = position.index - ringSetting.index
 
     fun resetPosition() {
-        position = Position()
+        position = Letter.A
     }
 
     fun getCipherSetMaps() : Pair<String,String> = cipherSetMap.characterSet to cipherSetMap.cipherSet

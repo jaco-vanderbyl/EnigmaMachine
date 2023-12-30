@@ -8,35 +8,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class ConnectorTest {
-    @TestFactory
-    fun `ensure invalid character throws`() = listOf(
-        ' ',
-        'a',
-        '@',
-    ).map { char ->
-        DynamicTest.dynamicTest("Invalid character '${char}' should throw.") {
-            val exception = assertFailsWith<IllegalArgumentException>(
-                block = { Connector(first = char, second = 'A') },
-                message = "Failed to ensure invalid character throws for first."
-            )
-            exception.message?.let {
-                assertContains(it, "invalid character for first", ignoreCase = true)
-            }
-
-            val exception2 = assertFailsWith<IllegalArgumentException>(
-                block = { Connector(first = 'A', second = char) },
-                message = "Failed to ensure invalid character throws for second."
-            )
-            exception2.message?.let {
-                assertContains(it, "invalid character for second", ignoreCase = true)
-            }
-        }
-    }
-
     @Test
     fun `ensure invalid character pair throws - first and second must be different`() {
         val exception = assertFailsWith<IllegalArgumentException>(
-            block = { Connector(first = 'A', second = 'A') },
+            block = { Connector(first = Letter.A, second = Letter.A) },
             message = "Failed to ensure first and second are different."
         )
         exception.message?.let {

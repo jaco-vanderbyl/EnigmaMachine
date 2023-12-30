@@ -29,7 +29,7 @@ class EnigmaLogStep(
             enigma.type.name,
             enigma.getRotors().map { it.type }.joinToString("—"),
             enigma.getRotors().map {
-                if (it is StepRotor) it.notch.characters else setOf("_")
+                if (it is StepRotor) it.notch.positions.map { it.character } else setOf("_")
             }.joinToString("—")
         )
     }

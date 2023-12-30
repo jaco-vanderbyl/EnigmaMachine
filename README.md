@@ -47,17 +47,17 @@ invokes a specific version of Gradle declared in the build._
 val enigmaTypes = EnigmaType.list()
 val reflectorTypes = ReflectorType.list()
 val rotorTypes = RotorType.list()
-val ringSettings = RingSetting.list()
-val positions = Position.list()
+val ringSettings = Ring.list()
+val positions = Letter.list()
 
 println(enigmaTypes)    // prints: [ENIGMA_I, ENIGMA_M3, ENIGMA_M4]
 println(reflectorTypes) // prints: [REFLECTOR_B, REFLECTOR_C, REFLECTOR_B_THIN, REFLECTOR_C_THIN]
 println(rotorTypes)     // prints: [ROTOR_I, ROTOR_II, ROTOR_III, ROTOR_IV, ROTOR_V, ROTOR_VI, ROTOR_VII, ROTOR_VIII, ROTOR_BETA, ROTOR_GAMMA]
-println(ringSettings)   // prints: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+println(ringSettings)   // prints: [SETTING_1, SETTING_2, SETTING_3, SETTING_4, SETTING_5, SETTING_6, SETTING_7, SETTING_8, SETTING_9, SETTING_10, SETTING_11, SETTING_12, SETTING_13, SETTING_14, SETTING_15, SETTING_16, SETTING_17, SETTING_18, SETTING_19, SETTING_20, SETTING_21, SETTING_22, SETTING_23, SETTING_24, SETTING_25, SETTING_26]
 println(positions)      // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
 ```
 
-### Make 'stock' Enigma Machine
+### Build 'stock' Enigma Machine
 'Stock' Enigma Machine is here defined as having:
 * B-reflector
 * I, II and III rotors (from left to right), III being the entry rotor
@@ -80,7 +80,7 @@ val enigmaI = EnigmaBuilder.make(
     rotors = "ROTOR_I, ROTOR_II, ROTOR_III"
 )
 
-// Note that type prefixes ('ENIGMA_', 'REFLECTOR', 'ROTOR_') may be omitted.
+// Note that type prefixes ('ENIGMA_', 'REFLECTOR', 'ROTOR_', 'SETTING_') may be omitted.
 val enigmaI = EnigmaBuilder.make(
     type = "I",
     reflector = "B",
@@ -89,15 +89,15 @@ val enigmaI = EnigmaBuilder.make(
 
 ```
 
-### Make with an arrangement of rotors, ring settings, starting positions, and a reflector
+### Build with an arrangement of rotors, ring settings, starting positions, and a reflector
 ```kotlin
 import com.jacovanderbyl.enigmamachine.dsl.enigmaM3
 val enigmaM3 = enigmaM3 {
     singleReflector { reflectorC() }
     threeRotors {
-        rotorI(RingSetting.NUMBER_14, Position.W)
-        rotorV(RingSetting.NUMBER_9, Position.N)
-        rotorIII(RingSetting.NUMBER_24, Position.Y)
+        rotorI(Ring.SETTING_14, position = Letter.W)
+        rotorV(Ring.SETTING_9, position = Letter.N)
+        rotorIII(Ring.SETTING_24, position = Letter.Y)
     }
 }
 
@@ -114,23 +114,23 @@ val enigmaM3 = EnigmaBuilder.make(
 
 ```
 
-### Make with plugboard connectors
+### Build with plugboard connectors
 ```kotlin
 import com.jacovanderbyl.enigmamachine.dsl.enigmaM4
 val enigmaM4 = enigmaM4 {
     singleReflector { reflectorBThin() }
     fourRotors {
-        rotorGamma(RingSetting.NUMBER_4, Position.E)
-        rotorI(RingSetting.NUMBER_14, Position.W)
-        rotorV(RingSetting.NUMBER_9, Position.N)
-        rotorIII(RingSetting.NUMBER_24, Position.Y)
+        rotorGamma(Ring.SETTING_4, position = Letter.E)
+        rotorI(Ring.SETTING_14, position = Letter.W)
+        rotorV(Ring.SETTING_9, position = Letter.N)
+        rotorIII(Ring.SETTING_24, position = Letter.Y)
     }
-    upToThirteenConnectors {
-        connect(Plugboard.S, Plugboard.Z); connect(Plugboard.G, Plugboard.T)
-        connect(Plugboard.D, Plugboard.V); connect(Plugboard.K, Plugboard.U)
-        connect(Plugboard.F, Plugboard.O); connect(Plugboard.M, Plugboard.Y)
-        connect(Plugboard.E, Plugboard.W); connect(Plugboard.J, Plugboard.N)
-        connect(Plugboard.I, Plugboard.X); connect(Plugboard.L, Plugboard.Q)
+    upToThirteenPlugboardConnectors {
+        connect(Letter.S, Letter.Z); connect(Letter.G, Letter.T)
+        connect(Letter.D, Letter.V); connect(Letter.K, Letter.U)
+        connect(Letter.F, Letter.O); connect(Letter.M, Letter.Y)
+        connect(Letter.E, Letter.W); connect(Letter.J, Letter.N)
+        connect(Letter.I, Letter.X); connect(Letter.L, Letter.Q)
     }
 }
 
@@ -248,17 +248,17 @@ import com.jacovanderbyl.enigmamachine.dsl.enigmaM4
 val enigma = enigmaM4 {
     singleReflector { reflectorCThin() }
     fourRotors {
-        rotorGamma(RingSetting.NUMBER_5, Position.P)
-        rotorI(RingSetting.NUMBER_14, Position.W)
-        rotorV(RingSetting.NUMBER_9, Position.N)
-        rotorIII(RingSetting.NUMBER_24, Position.B)
+        rotorGamma(Ring.SETTING_5, position = Letter.P)
+        rotorI(Ring.SETTING_14, position = Letter.W)
+        rotorV(Ring.SETTING_9, position = Letter.N)
+        rotorIII(Ring.SETTING_24, position = Letter.B)
     }
-    upToThirteenConnectors {
-        connect(Plugboard.S, Plugboard.Z); connect(Plugboard.G, Plugboard.T)
-        connect(Plugboard.D, Plugboard.V); connect(Plugboard.K, Plugboard.U)
-        connect(Plugboard.F, Plugboard.O); connect(Plugboard.M, Plugboard.Y)
-        connect(Plugboard.E, Plugboard.W); connect(Plugboard.J, Plugboard.N)
-        connect(Plugboard.I, Plugboard.X); connect(Plugboard.L, Plugboard.Q)
+    upToThirteenPlugboardConnectors {
+        connect(Letter.S, Letter.Z); connect(Letter.G, Letter.T)
+        connect(Letter.D, Letter.V); connect(Letter.K, Letter.U)
+        connect(Letter.F, Letter.O); connect(Letter.M, Letter.Y)
+        connect(Letter.E, Letter.W); connect(Letter.J, Letter.N)
+        connect(Letter.I, Letter.X); connect(Letter.L, Letter.Q)
     }
 }
 
@@ -306,12 +306,12 @@ SUBSTITUTE | Y -> M       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW 
 #### Print rotor stepping
 ```kotlin
 import com.jacovanderbyl.enigmamachine.dsl.enigmaI
-val enigmaI = enigmaI {
+val enigma = enigmaI {
     singleReflector { reflectorB() }
     threeRotors {
-        rotorI(position = Position.A)
-        rotorII(position = Position.D)
-        rotorIII(position = Position.S)
+        rotorI(position = Letter.A)
+        rotorII(position = Letter.D)
+        rotorIII(position = Letter.S)
     }
 }
 enigma.logger = Logger()

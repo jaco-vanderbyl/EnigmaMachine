@@ -32,11 +32,6 @@ class Enigma(
             plugboard.logger = value
         }
 
-    companion object {
-        // Represents the 26 keys on the Enigma Machine's keyboard.
-        const val CHARACTER_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    }
-
     /**
      * Simulate enciphering of a single character.
      *
@@ -51,8 +46,8 @@ class Enigma(
      *     3) Substituted letter is 'sent' back to the plugboard for final substitution.
      */
     override fun encipher(character: Char) : Char {
-        require(character in CHARACTER_SET) {
-            "Invalid character. Valid: '${CHARACTER_SET}'. Given: '${character}'."
+        require(character in Letter.list()) {
+            "Invalid character. Valid: '${Letter.list()}'. Given: '${character}'."
         }
 
         val positions = if (logger is Logger) getPositionChars().joinToString("") else ""
@@ -69,7 +64,7 @@ class Enigma(
 
     fun encipher(plaintext: String) : String = plaintext.map { encipher(it) }.joinToString("")
 
-    fun setPositions(vararg positions: Position) {
+    fun setPositions(vararg positions: Letter) {
         require(positions.size == rotorUnit.rotors.size) {
             "Invalid position count. The number of rotor positions must equal the number of rotors " +
                     "in the unit: '${rotorUnit.rotors.size}'. Given: '${positions.size}'."

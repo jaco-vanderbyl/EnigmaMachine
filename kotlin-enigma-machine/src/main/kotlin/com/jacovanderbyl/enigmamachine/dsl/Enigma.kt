@@ -9,7 +9,7 @@ open class Enigma {
     protected val rotors = mutableSetOf<Rotor>()
     private val connectors = mutableSetOf<Connector>()
 
-    @Dsl fun upToThirteenConnectors(init: PlugboardConnectors.() -> Unit) : PlugboardConnectors {
+    @Dsl fun upToThirteenPlugboardConnectors(init: PlugboardConnectors.() -> Unit) : PlugboardConnectors {
         val plugboardConnectors = PlugboardConnectors()
         plugboardConnectors.init()
         connectors.addAll(plugboardConnectors.get())

@@ -63,10 +63,10 @@ class RotorTypeTest {
         DynamicTest.dynamicTest("Test factory creation of rotor type: '${rotorType}'.") {
             val rotor = rotorType.create()
             if (rotor is StepRotor) {
-                Enigma.CHARACTER_SET.forEach { position ->
-                    rotor.position = Position(position)
+                Letter.entries.forEach { position ->
+                    rotor.position = position
                     assertEquals(
-                        expected = position in expectedNotchPositions(rotorType),
+                        expected = position.character in expectedNotchPositions(rotorType),
                         actual = rotor.isInNotchedPosition(),
                         message = "Failed to ensure factory creates with correct notch positions."
                     )
@@ -93,7 +93,7 @@ class RotorTypeTest {
     fun `ensure factory creates rotor that enciphers correctly`() = RotorType.entries.map { rotorType ->
         DynamicTest.dynamicTest("Test factory creation of rotor type: '${rotorType}'.") {
             val rotor = rotorType.create()
-            Enigma.CHARACTER_SET.forEachIndexed { index, char ->
+            Letter.list().forEachIndexed { index, char ->
                 assertEquals(
                     expected = expectedCipherSets(rotorType)[index],
                     actual = rotor.encipher(char),
@@ -106,7 +106,7 @@ class RotorTypeTest {
     @Test
     fun `ensure factory creates with given position`() {
         RotorType.entries.forEach { rotorType ->
-            val rotor = rotorType.create(position = Position('L'))
+            val rotor = rotorType.create(position = Letter.L)
             assertEquals(
                 expected = 'L',
                 actual = rotor.position.character,
@@ -118,7 +118,7 @@ class RotorTypeTest {
     @Test
     fun `ensure factory creates with given ring setting`() {
         RotorType.entries.forEach { rotorType ->
-            val rotor = rotorType.create(ringSetting = RingSetting(24))
+            val rotor = rotorType.create(ringSetting = Ring.SETTING_24)
             assertEquals(
                 expected = 24,
                 actual = rotor.ringSetting.value,

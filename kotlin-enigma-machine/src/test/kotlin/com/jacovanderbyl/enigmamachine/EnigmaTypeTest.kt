@@ -11,10 +11,10 @@ class EnigmaTypeTest {
     private fun createIncompatibleRotor() : StepRotor = StepRotor(
         type = RotorType.ROTOR_V,
         cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-        notch = Notch(Position('A')),
+        notch = Notch(setOf(Letter.A)),
         compatibility = setOf(),
-        position = Position(),
-        ringSetting = RingSetting()
+        position = Letter.A,
+        ringSetting = Ring.SETTING_1
     )
 
     private fun createIncompatibleReflector() : Reflector = Reflector(

@@ -1,19 +1,16 @@
 package com.jacovanderbyl.enigmamachine.dsl
 
-import com.jacovanderbyl.enigmamachine.Position
-import com.jacovanderbyl.enigmamachine.RingSetting
-import com.jacovanderbyl.enigmamachine.Rotor
-import com.jacovanderbyl.enigmamachine.RotorType
+import com.jacovanderbyl.enigmamachine.*
 
 @Dsl
 open class Rotors {
     protected val rotors = mutableSetOf<Rotor>()
     fun get() : Set<Rotor> = rotors
 
-    fun addRotor(type: RotorType, ringSetting: Int?, position: Char?) {
+    fun addRotor(type: RotorType, ringSetting: Ring?, position: Letter?) {
         rotors.add(type.create(
-            ringSetting = if (ringSetting != null) RingSetting(ringSetting) else RingSetting(),
-            position = if (position != null) Position(position) else Position(),
+            ringSetting = ringSetting ?: Ring.SETTING_1,
+            position = position ?: Letter.A,
         ))
     }
 }

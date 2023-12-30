@@ -13,12 +13,13 @@ class StepRotor(
     cipherSetMap: CipherSetMap,
     val notch: Notch,
     compatibility: Set<EnigmaType>,
-    position: Position,
-    ringSetting: RingSetting
+    position: Letter,
+    ringSetting: Ring
 ) : Rotor(type, cipherSetMap, compatibility, position, ringSetting) {
     fun step() {
-        position = Position(characterSet[shiftIndex(position.index, shiftBy = 1)])
+        val stepToCharacter = characterSet[shiftIndex(position.index, shiftBy = 1)]
+        position = Letter.valueOf(stepToCharacter.toString())
     }
 
-    fun isInNotchedPosition() : Boolean = position.character in notch.characters
+    fun isInNotchedPosition() : Boolean = position.character in notch.positions.map { it.character }
 }

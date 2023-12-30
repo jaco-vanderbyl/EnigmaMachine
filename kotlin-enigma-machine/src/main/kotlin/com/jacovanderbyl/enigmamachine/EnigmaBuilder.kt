@@ -78,14 +78,19 @@ class EnigmaBuilder {
             }
 
             return RotorType.valueOf(rotorType(rotor)).create(
-                position = if (position != null) Position.fromString(position) else Position(),
-                ringSetting = if (ringSetting != null) RingSetting.fromString(ringSetting) else RingSetting()
+                position = if (position != null) Letter.valueOf(position) else Letter.A,
+                ringSetting = if (ringSetting != null) Ring.valueOf(ringSetting(ringSetting)) else Ring.SETTING_1
             )
         }
 
         private fun split(str: String?) : List<String> = when (str.isNullOrEmpty()) {
             true -> listOf()
             false -> str.filterNot { it.isWhitespace() }.split(",")
+        }
+
+        private fun ringSetting(ringSetting: String) : String = when (ringSetting.contains("SETTING_")) {
+            true -> ringSetting
+            false -> "SETTING_$ringSetting"
         }
 
         private fun enigmaType(type: String) : String = when (type.contains("ENIGMA_")) {

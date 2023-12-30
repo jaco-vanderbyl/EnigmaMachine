@@ -7,22 +7,22 @@ import kotlin.test.assertTrue
 
 class StepRotorTest {
     private val cipherSet = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
-    private val notchCharacters = setOf(Position('C'), Position('J'), Position('W'))
+    private val notchPositions = setOf(Letter.C, Letter.J, Letter.W)
 
     private fun createRotor() : StepRotor = StepRotor(
         type = RotorType.ROTOR_I,
         cipherSetMap = CipherSetMap(cipherSet),
-        notch = Notch(*notchCharacters.toTypedArray()),
+        notch = Notch(notchPositions),
         compatibility = setOf(EnigmaType.ENIGMA_I),
-        ringSetting = RingSetting(),
-        position = Position()
+        ringSetting = Ring.SETTING_1,
+        position = Letter.A
     )
 
     @Test
     fun `ensure step moves rotor forward one position`() {
         val rotor = createRotor()
 
-        Enigma.CHARACTER_SET.repeat(2).forEach { char ->
+        Letter.characterSet().repeat(2).forEach { char ->
             assertEquals(
                 expected = char,
                 actual = rotor.position.character,
@@ -38,7 +38,7 @@ class StepRotorTest {
 
         do {
             when (rotor.position.character) {
-                in notchCharacters.map { it.character } -> assertTrue(
+                in notchPositions.map { it.character } -> assertTrue(
                     actual = rotor.isInNotchedPosition(),
                     message = "Failed to confirm rotor is in notched position."
                 )
@@ -49,6 +49,6 @@ class StepRotorTest {
             }
 
             rotor.step()
-        } while (rotor.position.character != 'Z')
+        } while (rotor.position.character != Letter.Z.character)
     }
 }
