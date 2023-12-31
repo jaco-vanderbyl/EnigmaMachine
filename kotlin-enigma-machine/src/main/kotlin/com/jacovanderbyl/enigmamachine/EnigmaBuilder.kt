@@ -14,7 +14,7 @@ class EnigmaBuilder {
     }
     fun addType(name: String) : EnigmaBuilder {
         val typeName = enigmaTypeName(name)
-        this.enigmaType = EnigmaType.valueOf(typeName)
+        enigmaType = EnigmaType.valueOf(typeName)
         return this
     }
 
