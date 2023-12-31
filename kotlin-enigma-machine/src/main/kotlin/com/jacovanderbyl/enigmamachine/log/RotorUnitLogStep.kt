@@ -1,12 +1,12 @@
 package com.jacovanderbyl.enigmamachine.log
 
-import com.jacovanderbyl.enigmamachine.Enigma
+import com.jacovanderbyl.enigmamachine.Rotor
+import com.jacovanderbyl.enigmamachine.RotorUnit
 import com.jacovanderbyl.enigmamachine.StepRotor
 
-class EnigmaLogStep(
+class RotorUnitLogStep(
     val first: String,
     val second: String,
-    private val enigmaType: String,
     private val rotors: String,
     private val notches: String
 ) : Loggable {
@@ -17,19 +17,18 @@ class EnigmaLogStep(
                 "Rotor types: %s; Notch characters: %s",
         type,
         "$first -> $second",
-        enigmaType,
+        "ROTOR_UNIT",
         rotors,
         notches
     )
 
     companion object {
-        fun fromEnigma(first: String, second: String, enigma: Enigma) : Loggable = EnigmaLogStep(
-            first,
-            second,
-            enigma.type.name,
-            enigma.getRotors().map { it.type }.joinToString("—"),
-            enigma.getRotors().map {
-                if (it is StepRotor) it.notch.positions.map { it.character } else setOf("_")
+        fun fromRotorUnit(first: List<Rotor>, rotorUnit: RotorUnit) : Loggable = RotorUnitLogStep(
+            first.map { it.position }.joinToString(""),
+            rotorUnit.rotors.map { it.position }.joinToString(""),
+            rotorUnit.rotors.map { it.type }.joinToString("—"),
+            rotorUnit.rotors.map { rotor ->
+                if (rotor is StepRotor) rotor.notch.positions.map { it.character } else setOf("_")
             }.joinToString("—")
         )
     }

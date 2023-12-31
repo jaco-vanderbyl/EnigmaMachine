@@ -1,5 +1,8 @@
 package com.jacovanderbyl.enigmamachine
 
+import com.jacovanderbyl.enigmamachine.log.RotorUnitLogStep
+import com.jacovanderbyl.enigmamachine.log.Logger
+
 /**
  * Represents a rotor unit, consisting of a reflector and a set of rotors.
  *
@@ -17,6 +20,8 @@ package com.jacovanderbyl.enigmamachine
  * the rotors' position.
  */
 class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher {
+    var logger: Logger? = null
+
     init {
         require(rotors.none { rotor -> rotors.count { it.type == rotor.type } > 1 }) {
             "Duplicate rotor types are not allowed. Given: ${rotors.map { it.type }}."
@@ -73,8 +78,9 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      *     c) the rotor is in its notched position, and it's adjacent to the entry rotor.
      */
     fun stepRotors() {
-        var previousSteppedOutOfNotch = false
+        val rotorsBeforeStep = rotors.map { it }
 
+        var previousSteppedOutOfNotch = false
         rotors.filterIsInstance<StepRotor>().reversed().forEachIndexed { index, rotor ->
             val isEntryRotor = index == 0
             val isNextToEntryRotor = index == 1
@@ -85,6 +91,8 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
                 rotor.step()
             }
         }
+
+        logger?.add(RotorUnitLogStep.fromRotorUnit(rotorsBeforeStep, rotorUnit = this))
     }
 
     /**

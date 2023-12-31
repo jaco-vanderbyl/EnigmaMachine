@@ -1,6 +1,5 @@
 package com.jacovanderbyl.enigmamachine
 
-import com.jacovanderbyl.enigmamachine.log.EnigmaLogStep
 import com.jacovanderbyl.enigmamachine.log.Logger
 
 /**
@@ -27,15 +26,16 @@ class Enigma(
     var logger: Logger? = null
         set(value) {
             field = value
-            getReflector().logger = value
-            getRotors().forEach { it.logger = value }
+            rotorUnit.logger = value
+            rotorUnit.reflector.logger = value
+            rotorUnit.rotors.forEach { it.logger = value }
             plugboard.logger = value
         }
 
     /**
-     * Simulate enciphering of a single character.
+     * Simulate the enciphering of a single character.
      *
-     * The input for this function is like a key-press on the Enigma Machine
+     * The input for this function is like a key-press on the Enigma Machine,
      * and the output is like a letter display-lamp lighting up.
      *
      * Each key-press on an Enigma Machine causes the rotors to step (turn), so this function does that first.
@@ -46,20 +46,8 @@ class Enigma(
      *     3) Substituted letter is 'sent' back to the plugboard for final substitution.
      */
     override fun encipher(character: Char) : Char {
-        require(character in Letter.list()) {
-            "Invalid character. Valid: '${Letter.list()}'. Given: '${character}'."
-        }
-
-        val positions = if (logger is Logger) getPositionChars().joinToString("") else ""
         rotorUnit.stepRotors()
-        logger?.add(EnigmaLogStep.fromEnigma(positions, getPositionChars().joinToString(""), enigma = this))
-
-        var substituteCharacter = character
-        substituteCharacter = plugboard.encipher(substituteCharacter)
-        substituteCharacter = rotorUnit.encipher(substituteCharacter)
-        substituteCharacter = plugboard.encipher(substituteCharacter)
-
-        return substituteCharacter
+        return plugboard.encipher(rotorUnit.encipher(plugboard.encipher(character)))
     }
 
     fun encipher(plaintext: String) : String = plaintext.map { encipher(it) }.joinToString("")
@@ -90,9 +78,5 @@ class Enigma(
         plugboard.reset()
     }
 
-    fun getReflector() : Reflector = rotorUnit.reflector
-
     fun getRotors(): Set<Rotor> = rotorUnit.rotors
-
-    fun getPositionChars() : List<Char> = getRotors().map { it.position.character }
 }

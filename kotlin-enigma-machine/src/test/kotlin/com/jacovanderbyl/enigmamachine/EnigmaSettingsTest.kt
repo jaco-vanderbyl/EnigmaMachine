@@ -37,7 +37,7 @@ class EnigmaSettingsTest {
 
             assertEquals(
                 expected = positions.map { it.character },
-                actual = enigma.getPositionChars(),
+                actual = enigma.getRotors().map { it.position.character },
                 message = "Failed to ensure positions can be changed."
             )
         }
@@ -71,7 +71,7 @@ class EnigmaSettingsTest {
 
         assertEquals(
             expected = listOf('A', 'A', 'A'),
-            actual = enigmaSingle.getPositionChars(),
+            actual = enigmaSingle.getRotors().map { it.position.character },
             message = "Failed to ensure positions can be reset."
         )
     }
