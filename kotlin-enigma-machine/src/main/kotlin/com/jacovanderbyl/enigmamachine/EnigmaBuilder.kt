@@ -9,7 +9,7 @@ class EnigmaBuilder {
     private var connectors: Set<Connector>? = null
 
     fun addType(type: EnigmaType) : EnigmaBuilder {
-        this.enigmaType = type
+        enigmaType = type
         return this
     }
     fun addType(name: String) : EnigmaBuilder {
