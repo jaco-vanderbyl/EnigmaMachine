@@ -86,7 +86,7 @@ val enigmaI = EnigmaBuilder()
     .addRotors("ROTOR_I,ROTOR_II,ROTOR_III")
     .build()
 
-// Type name prefixes ('ENIGMA_', 'REFLECTOR', 'ROTOR_') may be omitted
+// Name prefixes ('ENIGMA_', 'REFLECTOR', 'ROTOR_') may be omitted
 val enigmaI = EnigmaBuilder()
     .addType("I")
     .addReflector("B")

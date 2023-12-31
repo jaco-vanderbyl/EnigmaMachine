@@ -80,7 +80,7 @@ class EnigmaBuilder {
     }
 
     fun build() : Enigma {
-        // Final configuration for build, using default values (of 'stock enigma') for omitted configuration.
+        // Create function-scope configuration from class-scope, using defaults for omitted configuration.
         val bEnigmaType = enigmaType ?: EnigmaType.ENIGMA_I
         val bReflector = reflector ?: ReflectorType.REFLECTOR_B.create()
         val bRotors = rotors ?: setOf(
@@ -92,7 +92,10 @@ class EnigmaBuilder {
         val bPositions = positions ?: List(bRotors.size) { Letter.A }
         val bConnectors = connectors ?: setOf()
 
-        // Validation
+        // Reset class-scope configuration
+        reset()
+
+        // Validate ring setting and position counts
         require(bRingSettings.size == bRotors.size) {
             "Invalid ring setting count. Number of ring settings must equal number of " +
                     "rotors: '${bRotors.size}'. Given: '${bRingSettings.size}'."
@@ -102,23 +105,18 @@ class EnigmaBuilder {
                     "Given: '${bPositions.size}'."
         }
 
-        // Apply rotor configuration
+        // Apply ring setting and position configuration to rotors
         bRingSettings.forEachIndexed { index, setting -> bRotors.elementAt(index).ringSetting = setting }
         bPositions.forEachIndexed { index, position -> bRotors.elementAt(index).position = position }
 
-        // Build enigma using configuration
-        val enigma = bEnigmaType.create(
+        // Build and return enigma
+        return bEnigmaType.create(
             rotorUnit = RotorUnit(
                 reflector = bReflector,
                 rotors = bRotors
             ),
             plugboard = Plugboard(*bConnectors.toTypedArray())
         )
-
-        // Reset configuration
-        reset()
-
-        return enigma
     }
 
     private fun splitCsv(str: String?) : List<String> = when (str.isNullOrEmpty()) {
