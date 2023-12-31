@@ -1,111 +1,148 @@
 package com.jacovanderbyl.enigmamachine
 
 class EnigmaBuilder {
-    companion object {
-        /**
-         * All params, except 'type' and 'reflector', accept comma-separated values.
-         *
-         * Example usage:
-         *     EnigmaBuilder.make(
-         *         type = "ENIGMA_I",
-         *         reflector = "B",
-         *         rotors = "I,V,III",
-         *         ringSettings = "14,9,24",
-         *         startingPositions = "W,N,Y",
-         *         plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
-         *     )
-         */
-        fun make(
-            type: String,
-            reflector: String,
-            rotors: String,
-            ringSettings: String? = null,
-            startingPositions: String? = null,
-            plugboardConnectors: String? = null
-        ) : Enigma {
-            require(enigmaType(type) in EnigmaType.list()) {
-                "Invalid enigma type. Valid: '${EnigmaType.list()}'. Given: '${type}'."
-            }
-            require(reflectorType(reflector) in ReflectorType.list()) {
-                "Invalid reflector type. Valid: '${ReflectorType.list()}'. Given: '${reflector}'."
-            }
+    private var enigmaType: EnigmaType? = null
+    private var reflector: Reflector? = null
+    private var rotors: Set<Rotor>? = null
+    private var ringSettings: List<Ring>? = null
+    private var positions: List<Letter>? = null
+    private var connectors: Set<Connector>? = null
 
-            return EnigmaType.valueOf(enigmaType(type)).create(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.valueOf(reflectorType(reflector)).create(),
-                    rotors = setOf(
-                        *makeRotors(
-                            split(rotors),
-                            split(startingPositions),
-                            split(ringSettings)
-                        ).toTypedArray()
-                    )
-                ),
-                plugboard = Plugboard(
-                    *Connector.fromStrings(
-                        split(plugboardConnectors)
-                    ).toTypedArray()
-                )
-            )
+    fun addType(type: EnigmaType) : EnigmaBuilder {
+        this.enigmaType = type
+        return this
+    }
+    fun addType(name: String) : EnigmaBuilder {
+        val typeName = enigmaTypeName(name)
+        this.enigmaType = EnigmaType.valueOf(typeName)
+        return this
+    }
+
+    fun addReflector(type: ReflectorType) : EnigmaBuilder {
+        reflector = type.create()
+        return this
+    }
+    fun addReflector(name: String) : EnigmaBuilder {
+        val typeName = reflectorTypeName(name)
+        reflector = ReflectorType.valueOf(typeName).create()
+        return this
+    }
+
+    fun addRotors(vararg types: RotorType) : EnigmaBuilder {
+        rotors = types.map { it.create() }.toSet()
+        return this
+    }
+    fun addRotors(csv: String) : EnigmaBuilder {
+        rotors = splitCsv(csv).map {
+            val typeName = rotorTypeName(it)
+            RotorType.valueOf(typeName).create()
+        }.toSet()
+        return this
+    }
+
+    fun addRotorRingSettings(vararg settings: Ring) : EnigmaBuilder {
+        ringSettings = settings.toList()
+        return this
+    }
+    fun addRotorRingSettings(csv: String) : EnigmaBuilder {
+        ringSettings = splitCsv(csv).map {
+            val settingName = ringSettingName(it)
+            Ring.valueOf(settingName)
+        }.toList()
+        return this
+    }
+
+    fun addRotorPositions(vararg positions: Letter) : EnigmaBuilder {
+        this.positions = positions.toList()
+        return this
+    }
+    fun addRotorPositions(csv: String) : EnigmaBuilder {
+        positions = splitCsv(csv).map { Letter.valueOf(it) }.toList()
+        return this
+    }
+
+    fun addPlugboardConnectors(vararg connectors: Connector) : EnigmaBuilder {
+        this.connectors = connectors.toSet()
+        return this
+    }
+    fun addPlugboardConnectors(csv: String) : EnigmaBuilder {
+        connectors = splitCsv(csv).map { Connector.fromString(it) }.toSet()
+        return this
+    }
+
+    fun reset() {
+        enigmaType = null
+        reflector = null
+        rotors = null
+        ringSettings = null
+        positions = null
+        connectors = null
+    }
+
+    fun build() : Enigma {
+        // Final configuration for build, using default values (of 'stock enigma') for omitted configuration.
+        val bEnigmaType = enigmaType ?: EnigmaType.ENIGMA_I
+        val bReflector = reflector ?: ReflectorType.REFLECTOR_B.create()
+        val bRotors = rotors ?: setOf(
+            RotorType.ROTOR_I.create(),
+            RotorType.ROTOR_II.create(),
+            RotorType.ROTOR_III.create()
+        )
+        val bRingSettings = ringSettings ?: List(bRotors.size) { Ring.SETTING_1 }
+        val bPositions = positions ?: List(bRotors.size) { Letter.A }
+        val bConnectors = connectors ?: setOf()
+
+        // Validation
+        require(bRingSettings.size == bRotors.size) {
+            "Invalid ring setting count. Number of ring settings must equal number of " +
+                    "rotors: '${bRotors.size}'. Given: '${bRingSettings.size}'."
+        }
+        require(bPositions.size == bRotors.size) {
+            "Invalid position count. Number of positions must equal number of rotors: '${bRotors.size}'. " +
+                    "Given: '${bPositions.size}'."
         }
 
-        private fun makeRotors(
-            rotors: List<String>,
-            positions: List<String>,
-            ringSettings: List<String>
-        ) : List<Rotor> {
-            if (positions.isNotEmpty()) {
-                require(rotors.size == positions.size) {
-                    "Invalid position count. Number of positions must equal number of rotors: '${rotors.size}'. " +
-                            "Given: '${positions.size}'."
-                }
-            }
-            if (ringSettings.isNotEmpty()) {
-                require(rotors.size == ringSettings.size) {
-                    "Invalid ring setting count. Number of ring settings must equal number of " +
-                            "rotors: '${rotors.size}'. Given: '${ringSettings.size}'."
-                }
-            }
+        // Apply rotor configuration
+        bRingSettings.forEachIndexed { index, setting -> bRotors.elementAt(index).ringSetting = setting }
+        bPositions.forEachIndexed { index, position -> bRotors.elementAt(index).position = position }
 
-            return rotors.mapIndexed { index, rotor ->
-                makeRotor(rotor, positions.getOrNull(index), ringSettings.getOrNull(index))
-            }
-        }
+        // Build enigma using configuration
+        val enigma = bEnigmaType.create(
+            rotorUnit = RotorUnit(
+                reflector = bReflector,
+                rotors = bRotors
+            ),
+            plugboard = Plugboard(*bConnectors.toTypedArray())
+        )
 
-        private fun makeRotor(rotor: String, position: String?, ringSetting: String?) : Rotor {
-            require(rotorType(rotor) in RotorType.list()) {
-                "Invalid rotor type. Valid: '${RotorType.list()}'. Given: '${rotor}'."
-            }
+        // Reset configuration
+        reset()
 
-            return RotorType.valueOf(rotorType(rotor)).create(
-                position = if (position != null) Letter.valueOf(position) else Letter.A,
-                ringSetting = if (ringSetting != null) Ring.valueOf(ringSetting(ringSetting)) else Ring.SETTING_1
-            )
-        }
+        return enigma
+    }
 
-        private fun split(str: String?) : List<String> = when (str.isNullOrEmpty()) {
-            true -> listOf()
-            false -> str.filterNot { it.isWhitespace() }.split(",")
-        }
+    private fun splitCsv(str: String?) : List<String> = when (str.isNullOrEmpty()) {
+        true -> listOf()
+        false -> str.filterNot { it.isWhitespace() }.split(",")
+    }
 
-        private fun ringSetting(ringSetting: String) : String = when (ringSetting.contains("SETTING_")) {
-            true -> ringSetting
-            false -> "SETTING_$ringSetting"
-        }
+    private fun enigmaTypeName(name: String) : String = when (name.contains("ENIGMA_")) {
+        true -> name
+        false -> "ENIGMA_$name"
+    }
 
-        private fun enigmaType(type: String) : String = when (type.contains("ENIGMA_")) {
-            true -> type
-            false -> "ENIGMA_$type"
-        }
+    private fun rotorTypeName(name: String) : String = when (name.contains("ROTOR_")) {
+        true -> name
+        false -> "ROTOR_$name"
+    }
 
-        private fun rotorType(rotorType: String) : String = when (rotorType.contains("ROTOR_")) {
-            true -> rotorType
-            false -> "ROTOR_$rotorType"
-        }
+    private fun reflectorTypeName(name: String) : String = when (name.contains("REFLECTOR_")) {
+        true -> name
+        false -> "REFLECTOR_$name"
+    }
 
-        private fun reflectorType(reflectorType: String) : String = when (reflectorType.contains("REFLECTOR_")) {
-            true -> reflectorType
-            false -> "REFLECTOR_$reflectorType"
-        }
+    private fun ringSettingName(name: String) : String = when (name.contains("SETTING_")) {
+        true -> name
+        false -> "SETTING_$name"
     }
 }

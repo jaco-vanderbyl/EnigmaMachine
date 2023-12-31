@@ -66,32 +66,37 @@ println(positions)      // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O,
 * No plugboard connectors
 
 ```kotlin
-import com.jacovanderbyl.enigmamachine.dsl.enigmaI
+// Using DSL builder
 val enigmaI = enigmaI {
     singleReflector { reflectorB() }
     threeRotors { rotorI(); rotorII(); rotorIII() }
 }
 
-// Alternatively
-import com.jacovanderbyl.enigmamachine.EnigmaBuilder
-val enigmaI = EnigmaBuilder.make(
-    type = "ENIGMA_I",
-    reflector = "REFLECTOR_B",
-    rotors = "ROTOR_I, ROTOR_II, ROTOR_III"
-)
+// Using alternative builder - with enums
+val enigmaI = EnigmaBuilder()
+    .addType(EnigmaType.ENIGMA_I)
+    .addReflector(ReflectorType.REFLECTOR_B)
+    .addRotors(RotorType.ROTOR_I, RotorType.ROTOR_II, RotorType.ROTOR_III)
+    .build()
 
-// Note that type prefixes ('ENIGMA_', 'REFLECTOR', 'ROTOR_', 'SETTING_') may be omitted.
-val enigmaI = EnigmaBuilder.make(
-    type = "I",
-    reflector = "B",
-    rotors = "I,II,III"
-)
+// Using alternative builder - with names
+val enigmaI = EnigmaBuilder()
+    .addType("ENIGMA_I")
+    .addReflector("REFLECTOR_B")
+    .addRotors("ROTOR_I,ROTOR_II,ROTOR_III")
+    .build()
+
+// Type name prefixes ('ENIGMA_', 'REFLECTOR', 'ROTOR_') may be omitted
+val enigmaI = EnigmaBuilder()
+    .addType("I")
+    .addReflector("B")
+    .addRotors("I,II,III")
+    .build()
 
 ```
 
 ### Build with an arrangement of rotors, ring settings, starting positions, and a reflector
 ```kotlin
-import com.jacovanderbyl.enigmamachine.dsl.enigmaM3
 val enigmaM3 = enigmaM3 {
     singleReflector { reflectorC() }
     threeRotors {
@@ -101,22 +106,27 @@ val enigmaM3 = enigmaM3 {
     }
 }
 
-// Alternatively
-import com.jacovanderbyl.enigmamachine.EnigmaBuilder
-val enigmaM3 = EnigmaBuilder.make(
-    type = "ENIGMA_M3",
-    reflector = "C",
-    rotors = "I,V,III",
-    ringSettings = "14,9,24",
-    startingPositions = "W,N,Y"
-)
+// Or
+val enigmaM3 = EnigmaBuilder()
+    .addType(EnigmaType.ENIGMA_M3)
+    .addReflector(ReflectorType.REFLECTOR_C)
+    .addRotors(RotorType.ROTOR_I, RotorType.ROTOR_V, RotorType.ROTOR_III)
+    .addRotorRingSettings(Ring.SETTING_14, Ring.SETTING_9, Ring.SETTING_24)
+    .addRotorPositions(Letter.W, Letter.N, Letter.Y)
+    .build()
 
-
+// Or
+val enigmaM3 = EnigmaBuilder()
+    .addType("ENIGMA_M3")
+    .addReflector("C")
+    .addRotors("I,V,III")
+    .addRotorRingSettings("14,9,24")
+    .addRotorPositions("W,N,Y")
+    .build()
 ```
 
 ### Build with plugboard connectors
 ```kotlin
-import com.jacovanderbyl.enigmamachine.dsl.enigmaM4
 val enigmaM4 = enigmaM4 {
     singleReflector { reflectorBThin() }
     fourRotors {
@@ -134,21 +144,35 @@ val enigmaM4 = enigmaM4 {
     }
 }
 
-// Alternatively
-import com.jacovanderbyl.enigmamachine.EnigmaBuilder
-val enigmaM4 = EnigmaBuilder.make(
-    type = "ENIGMA_M4",
-    reflector = "B_THIN",
-    rotors = "GAMMA,I,V,III",
-    ringSettings = "4,14,9,24",
-    startingPositions = "E,W,N,Y",
-    plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
-)
+// Or
+val enigma4 = EnigmaBuilder()
+    .addType(EnigmaType.ENIGMA_M4)
+    .addReflector(ReflectorType.REFLECTOR_B_THIN)
+    .addRotors(RotorType.ROTOR_GAMMA, RotorType.ROTOR_I, RotorType.ROTOR_V, RotorType.ROTOR_III)
+    .addRotorRingSettings(Ring.SETTING_4, Ring.SETTING_14, Ring.SETTING_9, Ring.SETTING_24)
+    .addRotorPositions(Letter.E, Letter.W, Letter.N, Letter.Y)
+    .addPlugboardConnectors(
+        Connector(Letter.S, Letter.Z), Connector(Letter.G, Letter.T),
+        Connector(Letter.D, Letter.V), Connector(Letter.K, Letter.U),
+        Connector(Letter.F, Letter.O), Connector(Letter.M, Letter.Y),
+        Connector(Letter.E, Letter.W), Connector(Letter.J, Letter.N),
+        Connector(Letter.I, Letter.X), Connector(Letter.L, Letter.Q),
+    )
+    .build()
+
+// Or
+val enigma4 = EnigmaBuilder()
+    .addType("ENIGMA_M4")
+    .addReflector("B_THIN")
+    .addRotors("GAMMA,I,V,III")
+    .addRotorRingSettings("4,14,9,24")
+    .addRotorPositions("E,W,N,Y")
+    .addPlugboardConnectors("SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ")
+    .build()
 ```
 
 ### Encipher plaintext and 'decipher' ciphertext
 ```kotlin
-import com.jacovanderbyl.enigmamachine.dsl.enigmaI
 val firstEnigmaI = enigmaI {
     singleReflector { reflectorB() }
     threeRotors { rotorI(); rotorII(); rotorIII() }
@@ -171,7 +195,6 @@ println(plaintext)      // prints: AAAAA
 ### In-memory logs of internal workings
 #### Print letter substitution journey
 ```kotlin
-import com.jacovanderbyl.enigmamachine.dsl.enigmaI
 val enigma = enigmaI {
     singleReflector { reflectorB() }
     threeRotors { rotorI(); rotorII(); rotorIII() }
@@ -201,7 +224,6 @@ SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
 
 #### Print all log types - example 1
 ```kotlin
-import com.jacovanderbyl.enigmamachine.dsl.enigmaI
 val enigma = enigmaI {
     singleReflector { reflectorB() }
     threeRotors { rotorI(); rotorII(); rotorIII() }
@@ -244,7 +266,6 @@ SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
 
 #### Print all log types - example 2
 ```kotlin
-import com.jacovanderbyl.enigmamachine.dsl.enigmaM4
 val enigma = enigmaM4 {
     singleReflector { reflectorCThin() }
     fourRotors {
@@ -305,7 +326,6 @@ SUBSTITUTE | Y -> M       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW 
 ```
 #### Print rotor stepping
 ```kotlin
-import com.jacovanderbyl.enigmamachine.dsl.enigmaI
 val enigma = enigmaI {
     singleReflector { reflectorB() }
     threeRotors {

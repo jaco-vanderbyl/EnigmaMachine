@@ -8,47 +8,93 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EnigmaBuilderTest {
-     @Test
-    fun `ensure build works with optional fields omitted`() {
-        val enigma = EnigmaBuilder.make(
-            type = "ENIGMA_I",
-            reflector = "B",
-            rotors = "I,V,III"
-        )
+    @Test
+    fun `ensure 'stock enigma' is built when all config is omitted`() {
+        val enigma = EnigmaBuilder().build()
         assertEquals(
-            expected = "SCSUX",
+            expected = "BDZGO",
             actual = enigma.encipher("AAAAA"),
             message = "Failed to ensure build works with optional fields omitted."
         )
     }
 
-    @Test
-    fun `ensure build works with optional fields`() {
-        val enigma = EnigmaBuilder.make(
-            type = "ENIGMA_I",
-            reflector = "B",
-            rotors = "I,V,III",
-            ringSettings = "14,9,24",
-            startingPositions = "W,N,Y",
-            plugboardConnectors = "SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ"
+     @Test
+    fun `ensure build works with ring settings, positions, and connectors omitted - stringly typed`() {
+        val enigma = EnigmaBuilder()
+            .addType("ENIGMA_I")
+            .addReflector("B")
+            .addRotors("I,V,III")
+            .build()
+        assertEquals(
+            expected = "SCSUX",
+            actual = enigma.encipher("AAAAA"),
+            message = "Failed to ensure build works with ring settings, positions, and connectors omitted."
         )
+    }
+    @Test
+    fun `ensure build works with ring settings, positions, and connectors omitted`() {
+        val enigma = EnigmaBuilder()
+            .addType(EnigmaType.ENIGMA_I)
+            .addReflector(ReflectorType.REFLECTOR_B)
+            .addRotors(RotorType.ROTOR_I, RotorType.ROTOR_V, RotorType.ROTOR_III)
+            .build()
+        assertEquals(
+            expected = "SCSUX",
+            actual = enigma.encipher("AAAAA"),
+            message = "Failed to ensure build works with ring settings, positions, and connectors omitted."
+        )
+    }
+
+    @Test
+    fun `ensure build works with all configuration - stringly typed`() {
+        val enigma = EnigmaBuilder()
+            .addType("ENIGMA_I")
+            .addReflector("B")
+            .addRotors("I,V,III")
+            .addRotorRingSettings("14,9,24")
+            .addRotorPositions("W,N,Y")
+            .addPlugboardConnectors("SZ,GT,DV,KU,FO,MY,EW,JN,IX,LQ")
+            .build()
         assertEquals(
             expected = "RRQMR",
             actual = enigma.encipher("AAAAA"),
-            message = "Failed to ensure build works with optional fields."
+            message = "Failed to ensure build works with all configuration."
+        )
+    }
+
+    @Test
+    fun `ensure build works with all configuration`() {
+        val enigma = EnigmaBuilder()
+            .addType(EnigmaType.ENIGMA_I)
+            .addReflector(ReflectorType.REFLECTOR_B)
+            .addRotors(RotorType.ROTOR_I, RotorType.ROTOR_V, RotorType.ROTOR_III)
+            .addRotorRingSettings(Ring.SETTING_14, Ring.SETTING_9, Ring.SETTING_24)
+            .addRotorPositions(Letter.W, Letter.N, Letter.Y)
+            .addPlugboardConnectors(
+                Connector(Letter.S, Letter.Z), Connector(Letter.G, Letter.T),
+                Connector(Letter.D, Letter.V), Connector(Letter.K, Letter.U),
+                Connector(Letter.F, Letter.O), Connector(Letter.M, Letter.Y),
+                Connector(Letter.E, Letter.W), Connector(Letter.J, Letter.N),
+                Connector(Letter.I, Letter.X), Connector(Letter.L, Letter.Q),
+            )
+            .build()
+        assertEquals(
+            expected = "RRQMR",
+            actual = enigma.encipher("AAAAA"),
+            message = "Failed to ensure build works with all configuration."
         )
     }
 
     @Test
     fun `ensure build works with CSV fields containing whitespace`() {
-        val enigma = EnigmaBuilder.make(
-            type = "ENIGMA_I",
-            reflector = "B",
-            rotors = " I, V, III ",
-            ringSettings = " 14, 9, 24 ",
-            startingPositions = " W , N , Y ",
-            plugboardConnectors = "SZ, GT, DV, KU, FO, MY, EW, JN, IX, LQ"
-        )
+        val enigma = EnigmaBuilder()
+            .addType("ENIGMA_I")
+            .addReflector("B")
+            .addRotors(" I, V, III ")
+            .addRotorRingSettings(" 14, 9, 24 ")
+            .addRotorPositions(" W , N , Y ")
+            .addPlugboardConnectors("SZ, GT, DV, KU, FO, MY, EW, JN, IX, LQ")
+            .build()
         assertEquals(
             expected = "RRQMR",
             actual = enigma.encipher("AAAAA"),
@@ -57,19 +103,59 @@ class EnigmaBuilderTest {
     }
 
     @Test
+    fun `ensure build works with stringly typed shorthand and full values`() {
+        val enigmaFirst = EnigmaBuilder()
+            .addType("I")
+            .addReflector("B")
+            .addRotors("I,V,III")
+            .addRotorRingSettings("14,9,24")
+            .build()
+        val enigmaSecond = EnigmaBuilder()
+            .addType("ENIGMA_I")
+            .addReflector("REFLECTOR_B")
+            .addRotors("ROTOR_I,ROTOR_V,ROTOR_III")
+            .addRotorRingSettings("SETTING_14,SETTING_9,SETTING_24")
+            .build()
+        assertEquals(
+            expected = enigmaFirst.encipher("AAAAA"),
+            actual = enigmaSecond.encipher("AAAAA"),
+            message = "Failed to ensure build works with stringly typed shorthand and full values."
+        )
+    }
+
+    @Test
+    fun `ensure configuration is reset after build`() {
+        val enigmaBuilder = EnigmaBuilder()
+        val enigmaFirst = enigmaBuilder
+            .addType("I")
+            .addReflector("B")
+            .addRotors("I,V,III")
+            .addRotorRingSettings("14,9,24")
+            .addPlugboardConnectors("SZ, GT, DV, KU, FO, MY, EW, JN, IX, LQ")
+            .build()
+        val enigmaSecond = enigmaBuilder.build()
+        assertEquals(
+            expected = "CDPRL",
+            actual = enigmaFirst.encipher("AAAAA"),
+            message = "Failed to ensure configuration is reset after build."
+        )
+        assertEquals(
+            expected = "BDZGO",
+            actual = enigmaSecond.encipher("AAAAA"),
+            message = "Failed to ensure configuration is reset after build."
+        )
+    }
+
+    @Test
     fun `ensure invalid enigma type throws`() {
         val exception = assertFailsWith<IllegalArgumentException>(
             block = {
-                EnigmaBuilder.make(
-                    type = "BOGUS_TYPE",
-                    reflector = "B",
-                    rotors = "I,V,III"
-                )
+                EnigmaBuilder().addType("BOGUS_TYPE").build()
             },
             message = "Failed to ensure invalid enigma type throws."
         )
         exception.message?.let {
-            assertContains(it, "invalid enigma type", ignoreCase = true)
+            assertContains(it, "no enum constant", ignoreCase = true)
         }
     }
 
@@ -77,16 +163,12 @@ class EnigmaBuilderTest {
     fun `ensure invalid reflector type throws`() {
         val exception = assertFailsWith<IllegalArgumentException>(
             block = {
-                EnigmaBuilder.make(
-                    type = "ENIGMA_I",
-                    reflector = "BOGUS_REFLECTOR",
-                    rotors = "I,V,III"
-                )
+                EnigmaBuilder().addReflector("BOGUS_REFLECTOR").build()
             },
             message = "Failed to ensure invalid reflector type throws."
         )
         exception.message?.let {
-            assertContains(it, "invalid reflector type", ignoreCase = true)
+            assertContains(it, "no enum constant", ignoreCase = true)
         }
     }
 
@@ -99,16 +181,12 @@ class EnigmaBuilderTest {
         DynamicTest.dynamicTest("Invalid rotor type '${rotors}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
-                    EnigmaBuilder.make(
-                        type = "ENIGMA_I",
-                        reflector = "B",
-                        rotors = rotors
-                    )
+                    EnigmaBuilder().addRotors(rotors).build()
                 },
                 message = "Failed to ensure invalid rotor type throws."
             )
             exception.message?.let {
-                assertContains(it, "Invalid rotor type", ignoreCase = true)
+                assertContains(it, "no enum constant", ignoreCase = true)
             }
         }
     }
@@ -122,12 +200,7 @@ class EnigmaBuilderTest {
         DynamicTest.dynamicTest("Invalid ring setting count '${ringSettings}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
-                    EnigmaBuilder.make(
-                        type = "ENIGMA_I",
-                        reflector = "B",
-                        rotors = "I,V,III",
-                        ringSettings = ringSettings
-                    )
+                    EnigmaBuilder().addRotorRingSettings(ringSettings).build()
                 },
                 message = "Failed to ensure invalid ring setting count throws."
             )
@@ -146,12 +219,7 @@ class EnigmaBuilderTest {
         DynamicTest.dynamicTest("Invalid position count '${positions}' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
-                    EnigmaBuilder.make(
-                        type = "ENIGMA_I",
-                        reflector = "B",
-                        rotors = "I,V,III",
-                        startingPositions = positions
-                    )
+                    EnigmaBuilder().addRotorPositions(positions).build()
                 },
                 message = "Failed to ensure invalid position count throws."
             )
