@@ -111,23 +111,11 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      * The reflector is also what enables an Enigma Machine to decipher the ciphertext produced by another machine
      * with the same configuration and settings.
      */
-    override fun encipher(character: Char) : Char {
-        // Simulate character substitutions for each rotor, moving from the entry rotor (right-most) to the left-most.
-        var substituteCharacter = character
-        for (rotor in rotors.reversed()) {
-            substituteCharacter = rotor.encipher(substituteCharacter)
-        }
-
-        // Simulate character substitution of reflector
-        substituteCharacter = reflector.encipher(substituteCharacter)
-
-        // Simulate character substitution for each rotor, moving from left-most to entry rotor.
-        for (rotor in rotors) {
-            substituteCharacter = rotor.encipher(substituteCharacter, reverse = true)
-        }
-
-        return substituteCharacter
-    }
+    override fun encipher(character: Char) : Char = rotors.runningFold(
+        initial = reflector.encipher(
+            rotors.reversed().runningFold(initial = character) { char, rotor -> rotor.encipher(char) }.last()
+        )
+    ) { char, rotor -> rotor.encipher(char, reverse = true) }.last()
 
     fun setPosition(rotorIndex: Int, position: Letter) {
         rotors.elementAt(rotorIndex).position = position
