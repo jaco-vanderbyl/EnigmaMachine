@@ -65,39 +65,43 @@ println(positions)      // prints: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O,
 * All rotor start positions set to default, i.e. 'A'
 * No plugboard connectors
 
+The following six examples all build the same 'stock' Enigma Machine. 
 ```kotlin
 // Using DSL builder
-val enigmaI = enigmaI {
+val firstEnigmaI = enigmaI {
     singleReflector { reflectorB() }
     threeRotors { rotorI(); rotorII(); rotorIII() }
 }
 
 // Using alternative builder - with enums
-val enigmaI = EnigmaBuilder()
+val secondEnigmaI = EnigmaBuilder()
     .addType(EnigmaType.ENIGMA_I)
     .addReflector(ReflectorType.REFLECTOR_B)
     .addRotors(RotorType.ROTOR_I, RotorType.ROTOR_II, RotorType.ROTOR_III)
     .build()
 
 // Using alternative builder - with names
-val enigmaI = EnigmaBuilder()
+val thirdEnigmaI = EnigmaBuilder()
     .addType("ENIGMA_I")
     .addReflector("REFLECTOR_B")
     .addRotors("ROTOR_I,ROTOR_II,ROTOR_III")
     .build()
 
 // Name prefixes ('ENIGMA_', 'REFLECTOR', 'ROTOR_') may be omitted
-val enigmaI = EnigmaBuilder()
+val fourthEnigmaI = EnigmaBuilder()
     .addType("I")
     .addReflector("B")
     .addRotors("I,II,III")
     .build()
 
+// Lastly, for a 'stock' Enigma Machine, configuration may be omitted altogether
+val fifthEnigmaI = enigmaI {}
+val sixthEnigmaI = EnigmaBuilder().addType(EnigmaType.ENIGMA_I).build()
 ```
 
 ### Build with an arrangement of rotors, ring settings, starting positions, and a reflector
 ```kotlin
-val enigmaM3 = enigmaM3 {
+val firstEnigmaM3 = enigmaM3 {
     singleReflector { reflectorC() }
     threeRotors {
         rotorI(Ring.SETTING_14, position = Letter.W)
@@ -107,7 +111,7 @@ val enigmaM3 = enigmaM3 {
 }
 
 // Or
-val enigmaM3 = EnigmaBuilder()
+val secondEnigmaM3 = EnigmaBuilder()
     .addType(EnigmaType.ENIGMA_M3)
     .addReflector(ReflectorType.REFLECTOR_C)
     .addRotors(RotorType.ROTOR_I, RotorType.ROTOR_V, RotorType.ROTOR_III)
@@ -116,7 +120,7 @@ val enigmaM3 = EnigmaBuilder()
     .build()
 
 // Or
-val enigmaM3 = EnigmaBuilder()
+val thirdEnigmaM3 = EnigmaBuilder()
     .addType("ENIGMA_M3")
     .addReflector("C")
     .addRotors("I,V,III")
@@ -127,7 +131,7 @@ val enigmaM3 = EnigmaBuilder()
 
 ### Build with plugboard connectors
 ```kotlin
-val enigmaM4 = enigmaM4 {
+val firstEnigmaM4 = enigmaM4 {
     singleReflector { reflectorBThin() }
     fourRotors {
         rotorGamma(Ring.SETTING_4, position = Letter.E)
@@ -145,7 +149,7 @@ val enigmaM4 = enigmaM4 {
 }
 
 // Or
-val enigma4 = EnigmaBuilder()
+val secondEnigmaM4 = EnigmaBuilder()
     .addType(EnigmaType.ENIGMA_M4)
     .addReflector(ReflectorType.REFLECTOR_B_THIN)
     .addRotors(RotorType.ROTOR_GAMMA, RotorType.ROTOR_I, RotorType.ROTOR_V, RotorType.ROTOR_III)
@@ -161,7 +165,7 @@ val enigma4 = EnigmaBuilder()
     .build()
 
 // Or
-val enigma4 = EnigmaBuilder()
+val thirdEnigmaM4 = EnigmaBuilder()
     .addType("ENIGMA_M4")
     .addReflector("B_THIN")
     .addRotors("GAMMA,I,V,III")
@@ -173,15 +177,8 @@ val enigma4 = EnigmaBuilder()
 
 ### Encipher plaintext and 'decipher' ciphertext
 ```kotlin
-val firstEnigmaI = enigmaI {
-    singleReflector { reflectorB() }
-    threeRotors { rotorI(); rotorII(); rotorIII() }
-}
-
-val secondEnigmaI = enigmaI {
-    singleReflector { reflectorB() }
-    threeRotors { rotorI(); rotorII(); rotorIII() }
-}
+val firstEnigmaI = enigmaI {}
+val secondEnigmaI = enigmaI {}
 
 val plaintextInput = "AAAAA"
 val ciphertext = firstEnigmaI.encipher(plaintextInput)
@@ -195,10 +192,7 @@ println(plaintext)      // prints: AAAAA
 ### In-memory logs of internal workings
 #### Print letter substitution journey
 ```kotlin
-val enigma = enigmaI {
-    singleReflector { reflectorB() }
-    threeRotors { rotorI(); rotorII(); rotorIII() }
-}
+val enigma = enigmaI {}
 enigma.logger = Logger()
 
 enigma.encipher('A')
@@ -224,10 +218,7 @@ SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
 
 #### Print all log types - example 1
 ```kotlin
-val enigma = enigmaI {
-    singleReflector { reflectorB() }
-    threeRotors { rotorI(); rotorII(); rotorIII() }
-}
+val enigma = enigmaI {}
 enigma.logger = Logger()
 
 enigma.encipher('A')
@@ -327,7 +318,6 @@ SUBSTITUTE | Y -> M       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW 
 #### Print rotor stepping
 ```kotlin
 val enigma = enigmaI {
-    singleReflector { reflectorB() }
     threeRotors {
         rotorI(position = Letter.A)
         rotorII(position = Letter.D)
