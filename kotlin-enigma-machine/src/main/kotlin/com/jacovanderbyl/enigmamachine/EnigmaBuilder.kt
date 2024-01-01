@@ -81,41 +81,41 @@ class EnigmaBuilder {
 
     fun build() : Enigma {
         // Create function-scope configuration from class-scope, using defaults for omitted configuration.
-        val bEnigmaType = enigmaType ?: EnigmaType.ENIGMA_I
-        val bReflector = reflector ?: ReflectorType.REFLECTOR_B.create()
-        val bRotors = rotors ?: setOf(
+        val cfgEnigmaType = enigmaType ?: EnigmaType.ENIGMA_I
+        val cfgReflector = reflector ?: ReflectorType.REFLECTOR_B.create()
+        val cfgRotors = rotors ?: setOf(
             RotorType.ROTOR_I.create(),
             RotorType.ROTOR_II.create(),
             RotorType.ROTOR_III.create()
         )
-        val bRingSettings = ringSettings ?: List(bRotors.size) { Ring.SETTING_1 }
-        val bPositions = positions ?: List(bRotors.size) { Letter.A }
-        val bConnectors = connectors ?: setOf()
+        val cfgRingSettings = ringSettings ?: List(cfgRotors.size) { Ring.SETTING_1 }
+        val cfgPositions = positions ?: List(cfgRotors.size) { Letter.A }
+        val cfgConnectors = connectors ?: setOf()
 
         // Reset class-scope configuration
         reset()
 
         // Validate ring setting and position counts
-        require(bRingSettings.size == bRotors.size) {
+        require(cfgRingSettings.size == cfgRotors.size) {
             "Invalid ring setting count. Number of ring settings must equal number of " +
-                    "rotors: '${bRotors.size}'. Given: '${bRingSettings.size}'."
+                    "rotors: '${cfgRotors.size}'. Given: '${cfgRingSettings.size}'."
         }
-        require(bPositions.size == bRotors.size) {
-            "Invalid position count. Number of positions must equal number of rotors: '${bRotors.size}'. " +
-                    "Given: '${bPositions.size}'."
+        require(cfgPositions.size == cfgRotors.size) {
+            "Invalid position count. Number of positions must equal number of rotors: '${cfgRotors.size}'. " +
+                    "Given: '${cfgPositions.size}'."
         }
 
         // Apply ring setting and position configuration to rotors
-        bRingSettings.forEachIndexed { index, setting -> bRotors.elementAt(index).ringSetting = setting }
-        bPositions.forEachIndexed { index, position -> bRotors.elementAt(index).position = position }
+        cfgRingSettings.forEachIndexed { index, setting -> cfgRotors.elementAt(index).ringSetting = setting }
+        cfgPositions.forEachIndexed { index, position -> cfgRotors.elementAt(index).position = position }
 
         // Build and return enigma
-        return bEnigmaType.create(
+        return cfgEnigmaType.create(
             rotorUnit = RotorUnit(
-                reflector = bReflector,
-                rotors = bRotors
+                reflector = cfgReflector,
+                rotors = cfgRotors
             ),
-            plugboard = Plugboard(*bConnectors.toTypedArray())
+            plugboard = Plugboard(*cfgConnectors.toTypedArray())
         )
     }
 

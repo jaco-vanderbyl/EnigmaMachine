@@ -7,7 +7,7 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class EnigmaTypeTest {
+class ContextTypeTest {
     private fun createIncompatibleRotor() : StepRotor = StepRotor(
         type = RotorType.ROTOR_V,
         cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),

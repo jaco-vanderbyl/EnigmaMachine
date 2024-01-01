@@ -7,7 +7,7 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class EnigmaSettingsTest {
+class EnigmaContextSettingsTest {
     private fun createStockEnigma(plugboard: Plugboard = Plugboard()) : Enigma = Enigma(
         type = EnigmaType.ENIGMA_I,
         rotorUnit = RotorUnit(

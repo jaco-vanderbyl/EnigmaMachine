@@ -1,18 +1,31 @@
 package com.jacovanderbyl.enigmamachine.dsl
 
-@Dsl
-class EnigmaM3 : Enigma() {
-    @Dsl fun singleReflector(init: EnigmaM3Reflectors.() -> Unit) : EnigmaM3Reflectors {
-        val enigmaM3Reflectors = EnigmaM3Reflectors()
-        enigmaM3Reflectors.init()
-        reflector = enigmaM3Reflectors.get()
-        return enigmaM3Reflectors
+import com.jacovanderbyl.enigmamachine.*
+
+class EnigmaM3 : EnigmaContext() {
+    @Dsl fun singleReflector(init: ReflectorsForEnigmaM3.() -> Unit) : ReflectorsForEnigmaM3 {
+        val context = ReflectorsForEnigmaM3()
+        context.init()
+        reflector = context.getReflector()
+        return context
     }
 
-    @Dsl fun threeRotors(init: EnigmaM3Rotors.() -> Unit) : EnigmaM3Rotors {
-        val enigmaM3Rotors = EnigmaM3Rotors()
-        enigmaM3Rotors.init()
-        rotors.addAll(enigmaM3Rotors.get())
-        return enigmaM3Rotors
+    @Dsl fun threeRotors(init: RotorsForEnigmaM3.() -> Unit) : RotorsForEnigmaM3 {
+        val context = RotorsForEnigmaM3()
+        context.init()
+        rotors = context.getRotors()
+        return context
     }
+
+    override fun buildEnigma() : Enigma = EnigmaType.ENIGMA_M3.create(
+        rotorUnit = RotorUnit(
+            reflector = reflector ?: ReflectorType.REFLECTOR_B.create(),
+            rotors = rotors ?: setOf(
+                RotorType.ROTOR_I.create(),
+                RotorType.ROTOR_II.create(),
+                RotorType.ROTOR_III.create(),
+            )
+        ),
+        plugboard = Plugboard(*run { connectors ?: setOf() }.toTypedArray())
+    )
 }

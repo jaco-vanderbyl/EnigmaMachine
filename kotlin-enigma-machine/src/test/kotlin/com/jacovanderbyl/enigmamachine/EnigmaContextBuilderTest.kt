@@ -7,7 +7,7 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class EnigmaBuilderTest {
+class EnigmaContextBuilderTest {
     @Test
     fun `ensure 'stock enigma' is built when all config is omitted`() {
         val enigma = EnigmaBuilder().build()

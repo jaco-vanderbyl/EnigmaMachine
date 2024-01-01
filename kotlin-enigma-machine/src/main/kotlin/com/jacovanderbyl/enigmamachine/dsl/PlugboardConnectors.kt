@@ -1,11 +1,13 @@
 package com.jacovanderbyl.enigmamachine.dsl
 
-import com.jacovanderbyl.enigmamachine.*
+import com.jacovanderbyl.enigmamachine.Connector
+import com.jacovanderbyl.enigmamachine.Letter
 
 @Dsl
 class PlugboardConnectors {
     private val connectors = mutableSetOf<Connector>()
-    fun get() : Set<Connector> = connectors
+
+    fun getConnectors() : Set<Connector>? = if (connectors.isEmpty()) null else connectors.toSet()
 
     @Dsl fun connect(first: Letter, second: Letter) {
         connectors.add(Connector(first, second))
