@@ -15,7 +15,7 @@ class RotorTest {
         cipherSetMap = CipherSetMap(cipherSet),
         compatibility = setOf(EnigmaType.ENIGMA_I),
         position = Letter.A,
-        ringSetting = Ring.SETTING_1
+        ringSetting = Rotor.Ring.SETTING_1
     )
 
     @Test
@@ -108,7 +108,7 @@ class RotorTest {
         DynamicTest.dynamicTest("Rotor should encipher '${it.key}' to '${it.value}}'.") {
             val rotor = createFixedRotor()
             rotor.position = Letter.G
-            rotor.ringSetting = Ring.SETTING_19
+            rotor.ringSetting = Rotor.Ring.SETTING_19
 
             assertEquals(
                 expected = it.value,
@@ -130,7 +130,7 @@ class RotorTest {
         cipherSetMap = CipherSetMap(cipherSet),
         notchPositions = notchPositions,
         compatibility = setOf(EnigmaType.ENIGMA_I),
-        ringSetting = Ring.SETTING_1,
+        ringSetting = Rotor.Ring.SETTING_1,
         position = Letter.A
     )
 

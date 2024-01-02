@@ -5,7 +5,7 @@ package com.jacovanderbyl.enigmamachine
  */
 enum class RotorType {
     ROTOR_I {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.StepRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.StepRotor(
             type = ROTOR_I,
             cipherSetMap = CipherSetMap("EKMFLGDQVZNTOWYHXUSPAIBRCJ"),
             notchPositions = setOf(Letter.Q),
@@ -15,7 +15,7 @@ enum class RotorType {
         )
     },
     ROTOR_II {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.StepRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.StepRotor(
             type = ROTOR_II,
             cipherSetMap = CipherSetMap("AJDKSIRUXBLHWTMCQGZNPYFVOE"),
             notchPositions = setOf(Letter.E),
@@ -25,7 +25,7 @@ enum class RotorType {
         )
     },
     ROTOR_III {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.StepRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.StepRotor(
             type = ROTOR_III,
             cipherSetMap = CipherSetMap("BDFHJLCPRTXVZNYEIWGAKMUSQO"),
             notchPositions = setOf(Letter.V),
@@ -35,7 +35,7 @@ enum class RotorType {
         )
     },
     ROTOR_IV {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.StepRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.StepRotor(
             type = ROTOR_IV,
             cipherSetMap = CipherSetMap("ESOVPZJAYQUIRHXLNFTGKDCMWB"),
             notchPositions = setOf(Letter.J),
@@ -45,7 +45,7 @@ enum class RotorType {
         )
     },
     ROTOR_V {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.StepRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.StepRotor(
             type = ROTOR_V,
             cipherSetMap = CipherSetMap("VZBRGITYUPSDNHLXAWMJQOFECK"),
             notchPositions = setOf(Letter.Z),
@@ -55,7 +55,7 @@ enum class RotorType {
         )
     },
     ROTOR_VI {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.StepRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.StepRotor(
             type = ROTOR_VI,
             cipherSetMap = CipherSetMap("JPGVOUMFYQBENHZRDKASXLICTW"),
             notchPositions = setOf(Letter.Z, Letter.M),
@@ -65,7 +65,7 @@ enum class RotorType {
         )
     },
     ROTOR_VII {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.StepRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.StepRotor(
             type = ROTOR_VII,
             cipherSetMap = CipherSetMap("NZJHGRCXMYSWBOUFAIVLPEKQDT"),
             notchPositions = setOf(Letter.Z, Letter.M),
@@ -75,7 +75,7 @@ enum class RotorType {
         )
     },
     ROTOR_VIII {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.StepRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.StepRotor(
             type = ROTOR_VIII,
             cipherSetMap = CipherSetMap("FKQHTLXOCBJSPDZRAMEWNIUYGV"),
             notchPositions = setOf(Letter.Z, Letter.M),
@@ -85,7 +85,7 @@ enum class RotorType {
         )
     },
     ROTOR_BETA {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.FixedRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.FixedRotor(
             type = ROTOR_BETA,
             cipherSetMap = CipherSetMap("LEYJVCNIXWPBQMDRTAKZGFUHOS"),
             compatibility = setOf(EnigmaType.ENIGMA_M4),
@@ -94,7 +94,7 @@ enum class RotorType {
         )
     },
     ROTOR_GAMMA {
-        override fun create(position: Letter, ringSetting: Ring) = Rotor.FixedRotor(
+        override fun create(position: Letter, ringSetting: Rotor.Ring) = Rotor.FixedRotor(
             type = ROTOR_GAMMA,
             cipherSetMap = CipherSetMap("FSOKANUERHMBTIYCWLQPZXVGJD"),
             compatibility = setOf(EnigmaType.ENIGMA_M4),
@@ -103,7 +103,7 @@ enum class RotorType {
         )
     };
 
-    abstract fun create(position: Letter = Letter.A, ringSetting: Ring = Ring.SETTING_1) : Rotor
+    abstract fun create(position: Letter = Letter.A, ringSetting: Rotor.Ring = Rotor.Ring.SETTING_1) : Rotor
 
     companion object {
         fun list() : List<String> = entries.map { it.name }

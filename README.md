@@ -47,7 +47,7 @@ invokes a specific version of Gradle declared in the build._
 val enigmaTypes = EnigmaType.list()
 val reflectorTypes = ReflectorType.list()
 val rotorTypes = RotorType.list()
-val ringSettings = Ring.list()
+val ringSettings = Rotor.Ring.list()
 val positions = Letter.list()
 
 println(enigmaTypes)    // prints: [ENIGMA_I, ENIGMA_M3, ENIGMA_M4]
@@ -104,9 +104,9 @@ val sixthEnigmaI = EnigmaBuilder().addType(EnigmaType.ENIGMA_I).build()
 val firstEnigmaM3 = enigmaM3 {
     singleReflector { reflectorC() }
     threeRotors {
-        rotorI(Ring.SETTING_14, position = Letter.W)
-        rotorV(Ring.SETTING_9, position = Letter.N)
-        rotorIII(Ring.SETTING_24, position = Letter.Y)
+        rotorI(Rotor.Ring.SETTING_14, position = Letter.W)
+        rotorV(Rotor.Ring.SETTING_9, position = Letter.N)
+        rotorIII(Rotor.Ring.SETTING_24, position = Letter.Y)
     }
 }
 
@@ -115,7 +115,7 @@ val secondEnigmaM3 = EnigmaBuilder()
     .addType(EnigmaType.ENIGMA_M3)
     .addReflector(ReflectorType.REFLECTOR_C)
     .addRotors(RotorType.ROTOR_I, RotorType.ROTOR_V, RotorType.ROTOR_III)
-    .addRotorRingSettings(Ring.SETTING_14, Ring.SETTING_9, Ring.SETTING_24)
+    .addRotorRingSettings(Rotor.Ring.SETTING_14, Rotor.Ring.SETTING_9, Rotor.Ring.SETTING_24)
     .addRotorPositions(Letter.W, Letter.N, Letter.Y)
     .build()
 
@@ -134,10 +134,10 @@ val thirdEnigmaM3 = EnigmaBuilder()
 val firstEnigmaM4 = enigmaM4 {
     singleReflector { reflectorBThin() }
     fourRotors {
-        rotorGamma(Ring.SETTING_4, position = Letter.E)
-        rotorI(Ring.SETTING_14, position = Letter.W)
-        rotorV(Ring.SETTING_9, position = Letter.N)
-        rotorIII(Ring.SETTING_24, position = Letter.Y)
+        rotorGamma(Rotor.Ring.SETTING_4, position = Letter.E)
+        rotorI(Rotor.Ring.SETTING_14, position = Letter.W)
+        rotorV(Rotor.Ring.SETTING_9, position = Letter.N)
+        rotorIII(Rotor.Ring.SETTING_24, position = Letter.Y)
     }
     upToThirteenPlugboardConnectors {
         connect(Letter.S, Letter.Z); connect(Letter.G, Letter.T)
@@ -153,7 +153,7 @@ val secondEnigmaM4 = EnigmaBuilder()
     .addType(EnigmaType.ENIGMA_M4)
     .addReflector(ReflectorType.REFLECTOR_B_THIN)
     .addRotors(RotorType.ROTOR_GAMMA, RotorType.ROTOR_I, RotorType.ROTOR_V, RotorType.ROTOR_III)
-    .addRotorRingSettings(Ring.SETTING_4, Ring.SETTING_14, Ring.SETTING_9, Ring.SETTING_24)
+    .addRotorRingSettings(Rotor.Ring.SETTING_4, Rotor.Ring.SETTING_14, Rotor.Ring.SETTING_9, Rotor.Ring.SETTING_24)
     .addRotorPositions(Letter.E, Letter.W, Letter.N, Letter.Y)
     .addPlugboardConnectors(
         Connector(Letter.S, Letter.Z), Connector(Letter.G, Letter.T),
@@ -262,10 +262,10 @@ Logger.enable()
 val enigma = enigmaM4 {
     singleReflector { reflectorCThin() }
     fourRotors {
-        rotorGamma(Ring.SETTING_5, position = Letter.P)
-        rotorI(Ring.SETTING_14, position = Letter.W)
-        rotorV(Ring.SETTING_9, position = Letter.N)
-        rotorIII(Ring.SETTING_24, position = Letter.B)
+        rotorGamma(Rotor.Ring.SETTING_5, position = Letter.P)
+        rotorI(Rotor.Ring.SETTING_14, position = Letter.W)
+        rotorV(Rotor.Ring.SETTING_9, position = Letter.N)
+        rotorIII(Rotor.Ring.SETTING_24, position = Letter.B)
     }
     upToThirteenPlugboardConnectors {
         connect(Letter.S, Letter.Z); connect(Letter.G, Letter.T)

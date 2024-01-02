@@ -69,7 +69,7 @@ class EnigmaBuilderTest {
             .addType(EnigmaType.ENIGMA_I)
             .addReflector(ReflectorType.REFLECTOR_B)
             .addRotors(RotorType.ROTOR_I, RotorType.ROTOR_V, RotorType.ROTOR_III)
-            .addRotorRingSettings(Ring.SETTING_14, Ring.SETTING_9, Ring.SETTING_24)
+            .addRotorRingSettings(Rotor.Ring.SETTING_14, Rotor.Ring.SETTING_9, Rotor.Ring.SETTING_24)
             .addRotorPositions(Letter.W, Letter.N, Letter.Y)
             .addPlugboardConnectors(
                 Connector(Letter.S, Letter.Z), Connector(Letter.G, Letter.T),

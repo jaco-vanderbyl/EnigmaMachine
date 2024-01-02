@@ -6,7 +6,7 @@ class EnigmaBuilder {
     private var enigmaType: EnigmaType? = null
     private var reflector: Reflector? = null
     private var rotors: Set<Rotor>? = null
-    private var ringSettings: List<Ring>? = null
+    private var ringSettings: List<Rotor.Ring>? = null
     private var positions: List<Letter>? = null
     private var connectors: Set<Connector>? = null
 
@@ -42,14 +42,14 @@ class EnigmaBuilder {
         return this
     }
 
-    fun addRotorRingSettings(vararg settings: Ring) : EnigmaBuilder {
+    fun addRotorRingSettings(vararg settings: Rotor.Ring) : EnigmaBuilder {
         ringSettings = settings.toList()
         return this
     }
     fun addRotorRingSettings(csv: String) : EnigmaBuilder {
         ringSettings = splitCsv(csv).map {
             val settingName = ringSettingName(it)
-            Ring.valueOf(settingName)
+            Rotor.Ring.valueOf(settingName)
         }.toList()
         return this
     }
@@ -90,7 +90,7 @@ class EnigmaBuilder {
             RotorType.ROTOR_II.create(),
             RotorType.ROTOR_III.create()
         )
-        val cfgRingSettings = ringSettings ?: List(cfgRotors.size) { Ring.SETTING_1 }
+        val cfgRingSettings = ringSettings ?: List(cfgRotors.size) { Rotor.Ring.SETTING_1 }
         val cfgPositions = positions ?: List(cfgRotors.size) { Letter.A }
         val cfgConnectors = connectors ?: setOf()
 

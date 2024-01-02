@@ -140,9 +140,9 @@ class RotorUnitTest {
             val rotorUnit = RotorUnit(
                 reflector = ReflectorType.REFLECTOR_B.create(),
                 rotors = setOf(
-                    RotorType.ROTOR_I.create(ringSetting = Ring.SETTING_9),
-                    RotorType.ROTOR_II.create(ringSetting = Ring.SETTING_17),
-                    RotorType.ROTOR_III.create(ringSetting = Ring.SETTING_22),
+                    RotorType.ROTOR_I.create(ringSetting = Rotor.Ring.SETTING_9),
+                    RotorType.ROTOR_II.create(ringSetting = Rotor.Ring.SETTING_17),
+                    RotorType.ROTOR_III.create(ringSetting = Rotor.Ring.SETTING_22),
                 )
             )
 

@@ -118,7 +118,7 @@ class RotorTypeTest {
     @Test
     fun `ensure factory creates with given ring setting`() {
         RotorType.entries.forEach { rotorType ->
-            val rotor = rotorType.create(ringSetting = Ring.SETTING_24)
+            val rotor = rotorType.create(ringSetting = Rotor.Ring.SETTING_24)
             assertEquals(
                 expected = 24,
                 actual = rotor.ringSetting.value,

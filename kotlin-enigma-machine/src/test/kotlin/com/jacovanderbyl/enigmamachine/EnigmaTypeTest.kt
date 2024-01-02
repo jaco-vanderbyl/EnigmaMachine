@@ -14,7 +14,7 @@ class EnigmaTypeTest {
         notchPositions = setOf(Letter.A),
         compatibility = setOf(),
         position = Letter.A,
-        ringSetting = Ring.SETTING_1
+        ringSetting = Rotor.Ring.SETTING_1
     )
 
     private fun createIncompatibleReflector() : Reflector = Reflector(
