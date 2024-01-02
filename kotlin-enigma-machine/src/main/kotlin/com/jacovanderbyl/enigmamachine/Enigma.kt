@@ -1,7 +1,5 @@
 package com.jacovanderbyl.enigmamachine
 
-import com.jacovanderbyl.enigmamachine.log.Logger
-
 /**
  * Represents an Enigma Machine with a plugboard and a rotor unit (which contains a reflector and a set of rotors).
  *
@@ -23,15 +21,6 @@ class Enigma(
     private val rotorUnit: RotorUnit,
     private val plugboard: Plugboard
 ) : CanEncipher {
-    var logger: Logger? = null
-        set(value) {
-            field = value
-            rotorUnit.logger = value
-            rotorUnit.reflector.logger = value
-            rotorUnit.rotors.forEach { it.logger = value }
-            plugboard.logger = value
-        }
-
     /**
      * Simulate the enciphering of a single character.
      *

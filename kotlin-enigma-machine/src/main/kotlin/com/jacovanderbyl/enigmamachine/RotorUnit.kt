@@ -1,6 +1,6 @@
 package com.jacovanderbyl.enigmamachine
 
-import com.jacovanderbyl.enigmamachine.log.RotorUnitLogStep
+import com.jacovanderbyl.enigmamachine.log.Log
 import com.jacovanderbyl.enigmamachine.log.Logger
 
 /**
@@ -20,8 +20,6 @@ import com.jacovanderbyl.enigmamachine.log.Logger
  * the rotors' position.
  */
 class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher {
-    var logger: Logger? = null
-
     init {
         require(rotors.none { rotor -> rotors.count { it.type == rotor.type } > 1 }) {
             "Duplicate rotor types are not allowed. Given: ${rotors.map { it.type }}."
@@ -92,7 +90,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
             }
         }
 
-        logger?.add(RotorUnitLogStep.fromRotorUnit(rotorsBeforeStep, rotorUnit = this))
+        Logger.add(Log.RotorUnitStep.create(rotorsBeforeStep, rotorUnit = this))
     }
 
     /**

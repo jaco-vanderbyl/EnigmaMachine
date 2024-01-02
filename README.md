@@ -192,12 +192,12 @@ println(plaintext)      // prints: AAAAA
 ### In-memory logs of internal workings
 #### Print letter substitution journey
 ```kotlin
-val enigma = enigmaI {}
-enigma.logger = Logger()
+Logger.enable()
 
+val enigma = enigmaI {}
 enigma.encipher('A')
 
-enigma.logger?.print(LogType.SUBSTITUTE)
+Logger.print(LogType.SUBSTITUTE)
 ```
 Prints:
 ```
@@ -218,12 +218,12 @@ SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
 
 #### Print all log types - example 1
 ```kotlin
-val enigma = enigmaI {}
-enigma.logger = Logger()
+Logger.enable()
 
+val enigma = enigmaI {}
 enigma.encipher('A')
 
-enigma.logger?.print()
+Logger.print()
 ```
 Prints:
 ```
@@ -257,6 +257,8 @@ SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
 
 #### Print all log types - example 2
 ```kotlin
+Logger.enable()
+
 val enigma = enigmaM4 {
     singleReflector { reflectorCThin() }
     fourRotors {
@@ -273,12 +275,9 @@ val enigma = enigmaM4 {
         connect(Letter.I, Letter.X); connect(Letter.L, Letter.Q)
     }
 }
-
-enigma.logger = Logger()
-
 enigma.encipher('A')
 
-enigma.logger?.print()
+Logger.print()
 ```
 Prints:
 ```
@@ -317,6 +316,9 @@ SUBSTITUTE | Y -> M       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW 
 ```
 #### Print rotor stepping
 ```kotlin
+Logger.enable()
+Logger.restrictTo(LogType.STEP) // Only record STEP logs to avoid the max log size limit.
+
 val enigma = enigmaI {
     threeRotors {
         rotorI(position = Letter.A)
@@ -324,12 +326,9 @@ val enigma = enigmaI {
         rotorIII(position = Letter.S)
     }
 }
-enigma.logger = Logger()
-enigma.logger?.restrictTo(LogType.STEP) // Only record STEP logs to avoid the max log size limit.
-
 enigma.encipher("AAAAAA")
 
-enigma.logger?.print(LogType.STEP)
+Logger.print(LogType.STEP)
 ```
 Prints:
 ```

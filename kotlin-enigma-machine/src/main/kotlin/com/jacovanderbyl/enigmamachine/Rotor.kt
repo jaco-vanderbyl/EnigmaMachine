@@ -1,9 +1,7 @@
 package com.jacovanderbyl.enigmamachine
 
+import com.jacovanderbyl.enigmamachine.log.Log
 import com.jacovanderbyl.enigmamachine.log.Logger
-import com.jacovanderbyl.enigmamachine.log.RotorLogDeshift
-import com.jacovanderbyl.enigmamachine.log.RotorLogShift
-import com.jacovanderbyl.enigmamachine.log.RotorLogSubstitute
 
 /**
  * Represents a rotor, used to substitute one letter with another.
@@ -16,7 +14,6 @@ open class Rotor(
     var ringSetting: Ring,
 ) : CanEncipherBidirectionally, HasCompatibility {
     protected val characterSet: String = Letter.characterSet()
-    var logger: Logger? = null
 
     /**
      * Substitute one character for another, simulating rotor wiring, position, and ring setting.
@@ -34,17 +31,17 @@ open class Rotor(
         val characterIndex = characterSet.indexOf(character)
         val characterIndexWithOffset = shiftIndex(characterIndex, shiftBy = offset())
         val characterWithOffset = characterSet[characterIndexWithOffset]
-        logger?.add(RotorLogShift.fromRotor(character, characterWithOffset, rotor = this))
+        Logger.add(Log.RotorShift.create(character, characterWithOffset, rotor = this))
 
         // Step 2 - Simulate wiring to substitute given character with new character. Allow bidirectional substitutions.
         val substituteCharacter = cipherSetMap.encipher(characterWithOffset, reverse)
-        logger?.add(RotorLogSubstitute.fromRotor(characterWithOffset, substituteCharacter, reverse, rotor = this))
+        Logger.add(Log.RotorSubstitute.create(characterWithOffset, substituteCharacter, reverse, rotor = this))
 
         // Step 3 - Revert offset (applied in step 1) to substitute character's index.
         val substituteCharacterIndex = characterSet.indexOf(substituteCharacter)
         val finalCharacterIndex = shiftIndex(substituteCharacterIndex, shiftBy = offset() * -1)
         val finalCharacter = characterSet[finalCharacterIndex]
-        logger?.add(RotorLogDeshift.fromRotor(substituteCharacter, finalCharacter, rotor = this))
+        Logger.add(Log.RotorDeshift.create(substituteCharacter, finalCharacter, rotor = this))
 
         return finalCharacter
     }

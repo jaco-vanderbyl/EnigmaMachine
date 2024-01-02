@@ -4,13 +4,33 @@ import com.jacovanderbyl.enigmamachine.EnigmaType
 import com.jacovanderbyl.enigmamachine.ReflectorType
 import com.jacovanderbyl.enigmamachine.RotorType
 
-class Logger(var maxLogSize: Int = 100) {
-    val logs = mutableListOf<Loggable>()
+object Logger {
+    private var isEnabled = false
+    var maxLogSize: Int = 100
+    val logTypeMax = LogType.entries.maxOf { it.name.length }
+    val typeMax = (RotorType.entries + ReflectorType.entries + EnigmaType.entries).maxOf { it.name.length }
+    val resultMax = EnigmaType.entries.maxOf { it.rotorCount } * 2 + 4
+    private val logs = mutableListOf<Loggable>()
     private val allowedLogTypes: MutableSet<LogType> = LogType.entries.toMutableSet()
 
+    fun enable() {
+        isEnabled = true
+    }
+
+    fun disable() {
+        isEnabled = false
+    }
+
     fun add(log: Loggable) {
-        if (log.type !in allowedLogTypes) return
-        if (logs.size >= maxLogSize) logs.removeFirst()
+        if (!isEnabled) {
+            return
+        }
+        if (log.type !in allowedLogTypes) {
+            return
+        }
+        if (logs.size >= maxLogSize) {
+            logs.removeFirst()
+        }
         logs.add(log)
     }
 
@@ -20,6 +40,9 @@ class Logger(var maxLogSize: Int = 100) {
     }
 
     fun print(vararg logTypes: LogType) {
+        if (!isEnabled) {
+            return
+        }
         val typeList = if (logTypes.isEmpty()) LogType.entries.toSet() else logTypes.toSet()
 
         println("Log Types requested for printing : $typeList.")
@@ -38,10 +61,4 @@ class Logger(var maxLogSize: Int = 100) {
         "ACTOR",
         "INFO"
     )
-
-    companion object {
-        val logTypeMax = LogType.entries.maxOf { it.name.length }
-        val typeMax = (RotorType.entries + ReflectorType.entries + EnigmaType.entries).maxOf { it.name.length }
-        val resultMax = EnigmaType.entries.maxOf { it.rotorCount } * 2 + 4
-    }
 }
