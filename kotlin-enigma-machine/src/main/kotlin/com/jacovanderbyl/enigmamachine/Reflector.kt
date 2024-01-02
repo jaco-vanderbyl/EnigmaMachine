@@ -14,14 +14,14 @@ class Reflector(
     val type: ReflectorType,
     private val cipherSetMap: CipherSetMap,
     private val compatibility: Set<EnigmaType>
-) : CanEncipher, HasCompatibility {
-    override fun encipher(character: Char) : Char {
+) {
+    fun encipher(character: Char) : Char {
         val substituteCharacter = cipherSetMap.encipher(character)
         Logger.add(Log.ReflectorSubstitute.create(character, substituteCharacter, reflector = this))
         return substituteCharacter
     }
 
-    override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
+    fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
 
     fun getCipherSetMaps() : Pair<String,String> = cipherSetMap.characterSet to cipherSetMap.cipherSet
 }

@@ -1,16 +1,18 @@
-package com.jacovanderbyl.enigmamachine.dsl
+package com.jacovanderbyl.enigmamachine.builder.dsl
 
 import com.jacovanderbyl.enigmamachine.*
 
 class EnigmaM4 : EnigmaContext() {
-    @Dsl fun singleReflector(init: ReflectorsForEnigmaM4.() -> Unit) : ReflectorsForEnigmaM4 {
+    @Dsl
+    fun singleReflector(init: ReflectorsForEnigmaM4.() -> Unit) : ReflectorsForEnigmaM4 {
         val context = ReflectorsForEnigmaM4()
         context.init()
         reflector = context.getReflector()
         return context
     }
 
-    @Dsl fun fourRotors(init: RotorsForEnigmaM4.() -> Unit) : RotorsForEnigmaM4 {
+    @Dsl
+    fun fourRotors(init: RotorsForEnigmaM4.() -> Unit) : RotorsForEnigmaM4 {
         val context = RotorsForEnigmaM4()
         context.init()
         rotors = context.getRotors()

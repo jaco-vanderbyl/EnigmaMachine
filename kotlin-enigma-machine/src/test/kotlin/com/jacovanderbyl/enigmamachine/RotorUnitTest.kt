@@ -10,7 +10,11 @@ class RotorUnitTest {
     @TestFactory
     fun `ensure duplicate rotor type throws`() = listOf(
         setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_I.create()),
-        setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create(), RotorType.ROTOR_II.create()),
+        setOf(RotorType.ROTOR_I.create(),
+            RotorType.ROTOR_II.create(),
+            RotorType.ROTOR_III.create(),
+            RotorType.ROTOR_II.create()
+        ),
     ).map { rotors ->
         DynamicTest.dynamicTest("Duplicate rotor type '${rotors.map { it.type } }' should throw.") {
             val exception = assertFailsWith<IllegalArgumentException>(

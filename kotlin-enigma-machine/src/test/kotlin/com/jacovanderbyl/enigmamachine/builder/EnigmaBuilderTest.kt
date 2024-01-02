@@ -1,5 +1,6 @@
-package com.jacovanderbyl.enigmamachine
+package com.jacovanderbyl.enigmamachine.builder
 
+import com.jacovanderbyl.enigmamachine.*
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
@@ -7,7 +8,7 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class EnigmaContextBuilderTest {
+class EnigmaBuilderTest {
     @Test
     fun `ensure 'stock enigma' is built when all config is omitted`() {
         val enigma = EnigmaBuilder().build()

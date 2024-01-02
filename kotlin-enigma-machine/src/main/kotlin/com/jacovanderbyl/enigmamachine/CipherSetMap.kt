@@ -9,7 +9,7 @@ package com.jacovanderbyl.enigmamachine
  *                           ↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕↕
  *     Cipher Set:           EKMFLGDQVZNTOWYHXUSPAIBRCJ
  */
-class CipherSetMap(val cipherSet: String) : CanEncipherBidirectionally {
+class CipherSetMap(val cipherSet: String) {
     val characterSet: String = Letter.characterSet()
 
     init {
@@ -18,7 +18,7 @@ class CipherSetMap(val cipherSet: String) : CanEncipherBidirectionally {
         }
     }
 
-    override fun encipher(character: Char, reverse: Boolean) : Char {
+    fun encipher(character: Char, reverse: Boolean = false) : Char {
         require(character in characterSet) {
             "Invalid character. Valid: '${characterSet}'. Given: '${character}'."
         }

@@ -6,15 +6,49 @@ import com.jacovanderbyl.enigmamachine.log.Logger
 /**
  * Represents a rotor, used to substitute one letter with another.
  */
-open class Rotor(
+sealed class Rotor(
     val type: RotorType,
     private val cipherSetMap: CipherSetMap,
     private val compatibility: Set<EnigmaType>,
     var position: Letter,
     var ringSetting: Ring,
-) : CanEncipherBidirectionally, HasCompatibility {
-    protected val characterSet: String = Letter.characterSet()
+) {
+    protected val characterSet: String = cipherSetMap.characterSet
 
+    /**
+     * Represents a rotor that does not step (turn). E.g., Emigma M4's BETA and GAMMA rotors.
+     */
+    class FixedRotor(
+        type: RotorType,
+        cipherSetMap: CipherSetMap,
+        compatibility: Set<EnigmaType>,
+        position: Letter,
+        ringSetting: Ring
+    ) : Rotor(type, cipherSetMap, compatibility, position, ringSetting)
+
+    /**
+     * Represents a rotor that can step (turn one position at a time).
+     *
+     * A single rotor performs a simple letter-substitution, but multiple rotors are mounted side by side on a spindle in
+     * the rotor unit, and the rotors turn with every letter substitution. From wikipedia: Enigma's security comes
+     * from using several rotors in series (usually three or four) and the regular stepping movement of the rotors,
+     * thus implementing a polyalphabetic substitution cipher.
+     */
+    class StepRotor(
+        type: RotorType,
+        cipherSetMap: CipherSetMap,
+        val notchPositions: Set<Letter>,
+        compatibility: Set<EnigmaType>,
+        position: Letter,
+        ringSetting: Ring
+    ) : Rotor(type, cipherSetMap, compatibility, position, ringSetting) {
+        fun step() {
+            val stepToCharacter = characterSet[shiftIndex(position.index, shiftBy = 1)]
+            position = Letter.valueOf(stepToCharacter.toString())
+        }
+
+        fun isInNotchedPosition() : Boolean = position.character in notchPositions.map { it.character }
+    }
     /**
      * Substitute one character for another, simulating rotor wiring, position, and ring setting.
      *
@@ -22,7 +56,7 @@ open class Rotor(
      *     https://crypto.stackexchange.com/a/71233
      *     https://crypto.stackexchange.com/a/81585
      */
-    override fun encipher(character: Char, reverse: Boolean) : Char {
+    fun encipher(character: Char, reverse: Boolean = false) : Char {
         require(character in characterSet) {
             "Invalid character. Valid: '${characterSet}'. Given: '${character}'."
         }
@@ -46,7 +80,7 @@ open class Rotor(
         return finalCharacter
     }
 
-    override fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
+    fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
 
     fun offset() : Int = position.index - ringSetting.index
 

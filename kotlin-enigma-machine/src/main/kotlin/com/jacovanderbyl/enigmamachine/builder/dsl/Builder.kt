@@ -1,4 +1,4 @@
-package com.jacovanderbyl.enigmamachine.dsl
+package com.jacovanderbyl.enigmamachine.builder.dsl
 
 import com.jacovanderbyl.enigmamachine.Enigma
 

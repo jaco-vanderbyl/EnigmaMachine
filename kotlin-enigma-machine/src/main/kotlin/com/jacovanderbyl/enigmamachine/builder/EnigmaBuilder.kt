@@ -1,4 +1,6 @@
-package com.jacovanderbyl.enigmamachine
+package com.jacovanderbyl.enigmamachine.builder
+
+import com.jacovanderbyl.enigmamachine.*
 
 class EnigmaBuilder {
     private var enigmaType: EnigmaType? = null

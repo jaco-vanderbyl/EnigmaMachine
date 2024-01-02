@@ -62,7 +62,7 @@ class RotorTypeTest {
     fun `ensure factory creates with correct notch positions`() = RotorType.entries.map { rotorType ->
         DynamicTest.dynamicTest("Test factory creation of rotor type: '${rotorType}'.") {
             val rotor = rotorType.create()
-            if (rotor is StepRotor) {
+            if (rotor is Rotor.StepRotor) {
                 Letter.entries.forEach { position ->
                     rotor.position = position
                     assertEquals(

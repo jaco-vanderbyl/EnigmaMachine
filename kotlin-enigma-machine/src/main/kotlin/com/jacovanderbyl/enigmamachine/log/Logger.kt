@@ -6,10 +6,10 @@ import com.jacovanderbyl.enigmamachine.RotorType
 
 object Logger {
     private var isEnabled = false
-    var maxLogSize: Int = 100
+    var maxLogSize = 100
     val logTypeMax = LogType.entries.maxOf { it.name.length }
     val typeMax = (RotorType.entries + ReflectorType.entries + EnigmaType.entries).maxOf { it.name.length }
-    val resultMax = EnigmaType.entries.maxOf { it.rotorCount } * 2 + 4
+    val resultMax = 12
     private val logs = mutableListOf<Loggable>()
     private val allowedLogTypes: MutableSet<LogType> = LogType.entries.toMutableSet()
 

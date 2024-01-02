@@ -19,7 +19,7 @@ import com.jacovanderbyl.enigmamachine.log.Logger
  * ENCIPHERING depends on the type of reflector, the number and type of rotors, the rotors' ring setting, and
  * the rotors' position.
  */
-class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher {
+class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) {
     init {
         require(rotors.none { rotor -> rotors.count { it.type == rotor.type } > 1 }) {
             "Duplicate rotor types are not allowed. Given: ${rotors.map { it.type }}."
@@ -79,7 +79,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
         val rotorsBeforeStep = rotors.map { it }
 
         var previousSteppedOutOfNotch = false
-        rotors.filterIsInstance<StepRotor>().reversed().forEachIndexed { index, rotor ->
+        rotors.filterIsInstance<Rotor.StepRotor>().reversed().forEachIndexed { index, rotor ->
             val isEntryRotor = index == 0
             val isNextToEntryRotor = index == 1
             val isNotchedAndNextToEntryRotor = rotor.isInNotchedPosition() && isNextToEntryRotor
@@ -109,7 +109,7 @@ class RotorUnit(val reflector: Reflector, val rotors: Set<Rotor>) : CanEncipher 
      * The reflector is also what enables an Enigma Machine to decipher the ciphertext produced by another machine
      * with the same configuration and settings.
      */
-    override fun encipher(character: Char) : Char = rotors.runningFold(
+    fun encipher(character: Char) : Char = rotors.runningFold(
         initial = reflector.encipher(
             rotors.reversed().runningFold(initial = character) { char, rotor -> rotor.encipher(char) }.last()
         )

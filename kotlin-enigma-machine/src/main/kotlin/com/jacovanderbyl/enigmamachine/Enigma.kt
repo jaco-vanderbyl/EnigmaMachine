@@ -15,12 +15,7 @@ package com.jacovanderbyl.enigmamachine
  *     - https://en.wikipedia.org/wiki/Enigma_machine
  *     - https://www.cryptomuseum.com/crypto/enigma/
  */
-
-class Enigma(
-    val type: EnigmaType,
-    private val rotorUnit: RotorUnit,
-    private val plugboard: Plugboard
-) : CanEncipher {
+class Enigma(val type: EnigmaType, private val rotorUnit: RotorUnit, private val plugboard: Plugboard) {
     /**
      * Simulate the enciphering of a single character.
      *
@@ -34,7 +29,7 @@ class Enigma(
      *     2) Substituted letter is 'sent' to the rotor unit for substitution.
      *     3) Substituted letter is 'sent' back to the plugboard for final substitution.
      */
-    override fun encipher(character: Char) : Char {
+    fun encipher(character: Char) : Char {
         rotorUnit.stepRotors()
         return plugboard.encipher(rotorUnit.encipher(plugboard.encipher(character)))
     }

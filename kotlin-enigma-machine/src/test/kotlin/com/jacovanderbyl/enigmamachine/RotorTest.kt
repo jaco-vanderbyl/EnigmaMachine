@@ -10,7 +10,7 @@ import kotlin.test.assertTrue
 class RotorTest {
     private val cipherSet = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
 
-    private fun createRotor() : Rotor = Rotor(
+    private fun createFixedRotor() : Rotor = Rotor.FixedRotor(
         type = RotorType.ROTOR_I,
         cipherSetMap = CipherSetMap(cipherSet),
         compatibility = setOf(EnigmaType.ENIGMA_I),
@@ -20,7 +20,7 @@ class RotorTest {
 
     @Test
     fun `ensure rotor position can be reset to default`() {
-        val rotor = createRotor()
+        val rotor = createFixedRotor()
         rotor.position = Letter.G
         rotor.resetPosition()
 
@@ -33,7 +33,7 @@ class RotorTest {
 
     @Test
     fun `ensure rotor compatibility works correctly`() {
-        val rotor = createRotor()
+        val rotor = createFixedRotor()
 
         assertTrue(
             message = "Failed to ensure rotor compatibility works correctly.",
@@ -55,7 +55,7 @@ class RotorTest {
         'Z' to 'J',
     ).map {
         DynamicTest.dynamicTest("Rotor should encipher '${it.key}' to '${it.value}}'.") {
-            val rotor = createRotor()
+            val rotor = createFixedRotor()
 
             assertEquals(
                 expected = it.value,
@@ -80,7 +80,7 @@ class RotorTest {
         'Z' to 'D',
     ).map {
         DynamicTest.dynamicTest("Rotor should encipher '${it.key}' to '${it.value}}'.") {
-            val rotor = createRotor()
+            val rotor = createFixedRotor()
             rotor.position = Letter.B
 
             assertEquals(
@@ -106,7 +106,7 @@ class RotorTest {
         'Z' to 'I',
     ).map {
         DynamicTest.dynamicTest("Rotor should encipher '${it.key}' to '${it.value}}'.") {
-            val rotor = createRotor()
+            val rotor = createFixedRotor()
             rotor.position = Letter.G
             rotor.ringSetting = Ring.SETTING_19
 
@@ -121,5 +121,50 @@ class RotorTest {
                 message = "Failed to ensure rotor enciphers in reverse with set position and set ring setting."
             )
         }
+    }
+
+    private val notchPositions = setOf(Letter.C, Letter.J, Letter.W)
+
+    private fun createStepRotor() = Rotor.StepRotor(
+        type = RotorType.ROTOR_I,
+        cipherSetMap = CipherSetMap(cipherSet),
+        notchPositions = notchPositions,
+        compatibility = setOf(EnigmaType.ENIGMA_I),
+        ringSetting = Ring.SETTING_1,
+        position = Letter.A
+    )
+
+    @Test
+    fun `ensure step moves rotor forward one position`() {
+        val rotor = createStepRotor()
+
+        Letter.characterSet().repeat(2).forEach { char ->
+            assertEquals(
+                expected = char,
+                actual = rotor.position.character,
+                message = "Failed to ensure step moves rotor forward one position."
+            )
+            rotor.step()
+        }
+    }
+
+    @Test
+    fun `ensure getting whether the rotor is in notched position works correctly`() {
+        val rotor = createStepRotor()
+
+        do {
+            when (rotor.position.character) {
+                in notchPositions.map { it.character } -> assertTrue(
+                    actual = rotor.isInNotchedPosition(),
+                    message = "Failed to confirm rotor is in notched position."
+                )
+                else -> assertFalse(
+                    actual = rotor.isInNotchedPosition(),
+                    message = "Failed to confirm rotor is not in notched position."
+                )
+            }
+
+            rotor.step()
+        } while (rotor.position.character != Letter.Z.character)
     }
 }

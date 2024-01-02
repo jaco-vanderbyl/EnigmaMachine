@@ -176,7 +176,7 @@ sealed class Log : Loggable {
                 rotorUnit.rotors.map { it.position }.joinToString(""),
                 rotorUnit.rotors.map { it.type }.joinToString("—"),
                 rotorUnit.rotors.map { rotor ->
-                    if (rotor is StepRotor) rotor.notch.positions.map { it.character } else setOf("_")
+                    if (rotor is Rotor.StepRotor) rotor.notchPositions.map { it.character } else setOf("_")
                 }.joinToString("—")
             )
         }

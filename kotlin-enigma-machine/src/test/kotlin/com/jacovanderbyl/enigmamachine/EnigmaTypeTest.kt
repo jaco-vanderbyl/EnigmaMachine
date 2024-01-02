@@ -7,11 +7,11 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class ContextTypeTest {
-    private fun createIncompatibleRotor() : StepRotor = StepRotor(
+class EnigmaTypeTest {
+    private fun createIncompatibleRotor() = Rotor.StepRotor(
         type = RotorType.ROTOR_V,
         cipherSetMap = CipherSetMap("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-        notch = Notch(setOf(Letter.A)),
+        notchPositions = setOf(Letter.A),
         compatibility = setOf(),
         position = Letter.A,
         ringSetting = Ring.SETTING_1
