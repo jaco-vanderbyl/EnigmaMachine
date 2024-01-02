@@ -8,7 +8,7 @@ class EnigmaBuilder {
     private var rotors: Set<Rotor>? = null
     private var ringSettings: List<Rotor.Ring>? = null
     private var positions: List<Letter>? = null
-    private var connectors: Set<Connector>? = null
+    private var connectors: Set<Plugboard.Connector>? = null
 
     fun addType(type: EnigmaType) : EnigmaBuilder {
         enigmaType = type
@@ -63,12 +63,12 @@ class EnigmaBuilder {
         return this
     }
 
-    fun addPlugboardConnectors(vararg connectors: Connector) : EnigmaBuilder {
-        this.connectors = connectors.toSet()
+    fun addPlugboardConnectors(vararg connectors: Pair<Letter,Letter>) : EnigmaBuilder {
+        this.connectors = connectors.map{ Plugboard.Connector(it.first, it.second) }.toSet()
         return this
     }
     fun addPlugboardConnectors(csv: String) : EnigmaBuilder {
-        connectors = splitCsv(csv).map { Connector.fromString(it) }.toSet()
+        connectors = splitCsv(csv).map { Plugboard.Connector.fromString(it) }.toSet()
         return this
     }
 

@@ -140,11 +140,11 @@ val firstEnigmaM4 = enigmaM4 {
         rotorIII(Rotor.Ring.SETTING_24, position = Letter.Y)
     }
     upToThirteenPlugboardConnectors {
-        connect(Letter.S, Letter.Z); connect(Letter.G, Letter.T)
-        connect(Letter.D, Letter.V); connect(Letter.K, Letter.U)
-        connect(Letter.F, Letter.O); connect(Letter.M, Letter.Y)
-        connect(Letter.E, Letter.W); connect(Letter.J, Letter.N)
-        connect(Letter.I, Letter.X); connect(Letter.L, Letter.Q)
+        connect(Letter.S to Letter.Z); connect(Letter.G to Letter.T)
+        connect(Letter.D to Letter.V); connect(Letter.K to Letter.U)
+        connect(Letter.F to Letter.O); connect(Letter.M to Letter.Y)
+        connect(Letter.E to Letter.W); connect(Letter.J to Letter.N)
+        connect(Letter.I to Letter.X); connect(Letter.L to Letter.Q)
     }
 }
 
@@ -156,11 +156,11 @@ val secondEnigmaM4 = EnigmaBuilder()
     .addRotorRingSettings(Rotor.Ring.SETTING_4, Rotor.Ring.SETTING_14, Rotor.Ring.SETTING_9, Rotor.Ring.SETTING_24)
     .addRotorPositions(Letter.E, Letter.W, Letter.N, Letter.Y)
     .addPlugboardConnectors(
-        Connector(Letter.S, Letter.Z), Connector(Letter.G, Letter.T),
-        Connector(Letter.D, Letter.V), Connector(Letter.K, Letter.U),
-        Connector(Letter.F, Letter.O), Connector(Letter.M, Letter.Y),
-        Connector(Letter.E, Letter.W), Connector(Letter.J, Letter.N),
-        Connector(Letter.I, Letter.X), Connector(Letter.L, Letter.Q),
+        Letter.S to Letter.Z, Letter.G to Letter.T,
+        Letter.D to Letter.V, Letter.K to Letter.U,
+        Letter.F to Letter.O, Letter.M to Letter.Y,
+        Letter.E to Letter.W, Letter.J to Letter.N,
+        Letter.I to Letter.X, Letter.L to Letter.Q,
     )
     .build()
 

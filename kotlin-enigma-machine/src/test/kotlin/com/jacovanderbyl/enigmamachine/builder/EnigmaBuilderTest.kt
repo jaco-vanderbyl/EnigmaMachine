@@ -72,11 +72,11 @@ class EnigmaBuilderTest {
             .addRotorRingSettings(Rotor.Ring.SETTING_14, Rotor.Ring.SETTING_9, Rotor.Ring.SETTING_24)
             .addRotorPositions(Letter.W, Letter.N, Letter.Y)
             .addPlugboardConnectors(
-                Connector(Letter.S, Letter.Z), Connector(Letter.G, Letter.T),
-                Connector(Letter.D, Letter.V), Connector(Letter.K, Letter.U),
-                Connector(Letter.F, Letter.O), Connector(Letter.M, Letter.Y),
-                Connector(Letter.E, Letter.W), Connector(Letter.J, Letter.N),
-                Connector(Letter.I, Letter.X), Connector(Letter.L, Letter.Q),
+                Letter.S to Letter.Z, Letter.G to Letter.T,
+                Letter.D to Letter.V, Letter.K to Letter.U,
+                Letter.F to Letter.O, Letter.M to Letter.Y,
+                Letter.E to Letter.W, Letter.J to Letter.N,
+                Letter.I to Letter.X, Letter.L to Letter.Q,
             )
             .build()
         assertEquals(

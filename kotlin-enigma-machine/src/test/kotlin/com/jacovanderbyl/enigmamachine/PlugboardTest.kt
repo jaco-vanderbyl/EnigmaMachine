@@ -10,7 +10,7 @@ import kotlin.test.assertFailsWith
 class PlugboardTest {
     private val validConnectors = listOf(
         listOf(),
-        listOf(Connector(Letter.A, Letter.B), Connector(Letter.C, Letter.D)),
+        listOf(Plugboard.Connector(Letter.A, Letter.B), Plugboard.Connector(Letter.C, Letter.D)),
     )
 
     @TestFactory
@@ -35,7 +35,7 @@ class PlugboardTest {
         }
     }
 
-    private fun encipherTest(plugboard: Plugboard, connectorList: List<Connector>) {
+    private fun encipherTest(plugboard: Plugboard, connectorList: List<Plugboard.Connector>) {
         // Test connected characters encipher correctly
         connectorList.forEach { connector ->
             assertEquals(
@@ -65,7 +65,7 @@ class PlugboardTest {
 
     @Test
     fun `ensure connectors can be reset`() {
-        val plugboard = Plugboard(Connector(Letter.A, Letter.B))
+        val plugboard = Plugboard(Plugboard.Connector(Letter.A, Letter.B))
         plugboard.reset()
 
         assertEquals(
@@ -95,10 +95,10 @@ class PlugboardTest {
 
     @TestFactory
     fun `ensure duplicate connectors throws`() = listOf(
-        listOf(Connector(Letter.A, Letter.B), Connector(Letter.A, Letter.Z)),
-        listOf(Connector(Letter.A, Letter.B), Connector(Letter.B, Letter.Z)),
-        listOf(Connector(Letter.A, Letter.B), Connector(Letter.Z, Letter.A)),
-        listOf(Connector(Letter.A, Letter.B), Connector(Letter.Z, Letter.B)),
+        listOf(Plugboard.Connector(Letter.A, Letter.B), Plugboard.Connector(Letter.A, Letter.Z)),
+        listOf(Plugboard.Connector(Letter.A, Letter.B), Plugboard.Connector(Letter.B, Letter.Z)),
+        listOf(Plugboard.Connector(Letter.A, Letter.B), Plugboard.Connector(Letter.Z, Letter.A)),
+        listOf(Plugboard.Connector(Letter.A, Letter.B), Plugboard.Connector(Letter.Z, Letter.B)),
     ).map { connectors ->
         DynamicTest.dynamicTest(
             "Duplicate connectors '${connectors.map { "${it.first}${it.second}" } }' should throw."
@@ -109,6 +109,53 @@ class PlugboardTest {
             )
             exception.message?.let {
                 assertContains(it, "duplicate connector", ignoreCase = true)
+            }
+        }
+    }
+
+    @Test
+    fun `ensure invalid character pair throws - first and second must be different`() {
+        val exception = assertFailsWith<IllegalArgumentException>(
+            block = { Plugboard.Connector(first = Letter.A, second = Letter.A) },
+            message = "Failed to ensure first and second are different."
+        )
+        exception.message?.let {
+            assertContains(it, "invalid character pair", ignoreCase = true)
+        }
+    }
+
+    @Test
+    fun `ensure named constructor works`() {
+        val connector = Plugboard.Connector.fromString("AB")
+        assertEquals(
+            expected = "AB",
+            actual = "${connector.first}${connector.second}",
+            message = "Failed to ensure named constructor works."
+        )
+    }
+
+    @Test
+    fun `ensure named constructor works with string list`() {
+        val connectorList = Plugboard.Connector.fromStrings(listOf("AB", "CD", "EF"))
+        assertEquals(
+            expected = listOf("AB", "CD", "EF"),
+            actual = connectorList.map { "${it.first}${it.second}" },
+            message = "Failed to ensure named constructor works with string list."
+        )
+    }
+
+    @TestFactory
+    fun `ensure invalid string length throws`() = listOf(
+        "A",
+        "ABC"
+    ).map { characterPair ->
+        DynamicTest.dynamicTest("Invalid string length '${characterPair.length}' should throw.") {
+            val exception = assertFailsWith<IllegalArgumentException>(
+                block = { Plugboard.Connector.fromString(characterPair) },
+                message = "Failed to ensure invalid string length throws."
+            )
+            exception.message?.let {
+                assertContains(it, "invalid string length", ignoreCase = true)
             }
         }
     }

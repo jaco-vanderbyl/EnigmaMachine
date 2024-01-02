@@ -1,15 +1,12 @@
 package com.jacovanderbyl.enigmamachine.builder.dsl
 
-import com.jacovanderbyl.enigmamachine.Connector
-import com.jacovanderbyl.enigmamachine.Enigma
-import com.jacovanderbyl.enigmamachine.Reflector
-import com.jacovanderbyl.enigmamachine.Rotor
+import com.jacovanderbyl.enigmamachine.*
 
 @Dsl
 abstract class EnigmaContext {
     protected var reflector: Reflector? = null
     protected var rotors: Set<Rotor>? = null
-    protected var connectors: Set<Connector>? = null
+    protected var connectors: Set<Plugboard.Connector>? = null
 
     @Dsl
     fun upToThirteenPlugboardConnectors(init: PlugboardConnectors.() -> Unit) : PlugboardConnectors {

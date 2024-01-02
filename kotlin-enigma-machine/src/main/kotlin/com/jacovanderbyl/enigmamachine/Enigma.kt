@@ -49,11 +49,11 @@ class Enigma(val type: EnigmaType, private val rotorUnit: RotorUnit, private val
         rotorUnit.resetPositions()
     }
 
-    fun addConnectors(vararg connectors: Connector) {
+    fun addConnectors(vararg connectors: Plugboard.Connector) {
         plugboard.addConnectors(*connectors)
     }
 
-    fun replaceConnectors(vararg connectors: Connector) {
+    fun replaceConnectors(vararg connectors: Plugboard.Connector) {
         resetConnectors()
         plugboard.addConnectors(*connectors)
     }

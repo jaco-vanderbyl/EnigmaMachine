@@ -80,7 +80,7 @@ class EnigmaSettingsTest {
     fun `ensure plugboard can be reset`() {
         val plugboard = Plugboard()
         val enigma = createStockEnigma(plugboard)
-        enigma.addConnectors(Connector(first = Letter.A, Letter.B))
+        enigma.addConnectors(Plugboard.Connector(first = Letter.A, Letter.B))
         enigma.resetConnectors()
 
         assertEquals(
@@ -93,9 +93,9 @@ class EnigmaSettingsTest {
     private val plugboardSingle = Plugboard()
     private val enigmaSingle = createStockEnigma(plugboardSingle)
     private val connectorsList = listOf(
-        listOf(Connector(Letter.A, Letter.B), Connector(Letter.C, Letter.D)),
-        listOf(Connector(Letter.E, Letter.F), Connector(Letter.G, Letter.H)),
-        listOf(Connector(Letter.I, Letter.J), Connector(Letter.K, Letter.L)),
+        listOf(Plugboard.Connector(Letter.A, Letter.B), Plugboard.Connector(Letter.C, Letter.D)),
+        listOf(Plugboard.Connector(Letter.E, Letter.F), Plugboard.Connector(Letter.G, Letter.H)),
+        listOf(Plugboard.Connector(Letter.I, Letter.J), Plugboard.Connector(Letter.K, Letter.L)),
     )
 
     @TestFactory

@@ -125,10 +125,11 @@ class EnigmaEncipherTest {
                     )
                 ),
                 plugboard = Plugboard(
-                    Connector(Letter.A, Letter.B), Connector(Letter.C, Letter.D), Connector(Letter.E, Letter.F),
-                    Connector(Letter.G, Letter.H), Connector(Letter.I, Letter.J), Connector(Letter.K, Letter.L),
-                    Connector(Letter.M, Letter.N), Connector(Letter.O, Letter.P), Connector(Letter.Q, Letter.R),
-                    Connector(Letter.S, Letter.T)
+                    Plugboard.Connector(Letter.A, Letter.B), Plugboard.Connector(Letter.C, Letter.D),
+                    Plugboard.Connector(Letter.E, Letter.F), Plugboard.Connector(Letter.G, Letter.H),
+                    Plugboard.Connector(Letter.I, Letter.J), Plugboard.Connector(Letter.K, Letter.L),
+                    Plugboard.Connector(Letter.M, Letter.N), Plugboard.Connector(Letter.O, Letter.P),
+                    Plugboard.Connector(Letter.Q, Letter.R), Plugboard.Connector(Letter.S, Letter.T)
                 ),
                 type = EnigmaType.ENIGMA_M3
             )
@@ -144,7 +145,9 @@ class EnigmaEncipherTest {
                     )
                 ),
                 plugboard = Plugboard(
-                    Connector(Letter.U, Letter.V), Connector(Letter.W, Letter.X), Connector(Letter.Y, Letter.Z)
+                    Plugboard.Connector(Letter.U, Letter.V),
+                    Plugboard.Connector(Letter.W, Letter.X),
+                    Plugboard.Connector(Letter.Y, Letter.Z),
                 ),
                 type = EnigmaType.ENIGMA_M3
             )
@@ -161,7 +164,9 @@ class EnigmaEncipherTest {
                     )
                 ),
                 plugboard = Plugboard(
-                    Connector(Letter.U, Letter.V), Connector(Letter.W, Letter.X), Connector(Letter.Y, Letter.Z)
+                    Plugboard.Connector(Letter.U, Letter.V),
+                    Plugboard.Connector(Letter.W, Letter.X),
+                    Plugboard.Connector(Letter.Y, Letter.Z),
                 ),
                 type = EnigmaType.ENIGMA_M4
             )
@@ -178,7 +183,9 @@ class EnigmaEncipherTest {
                     )
                 ),
                 plugboard = Plugboard(
-                    Connector(Letter.U, Letter.V), Connector(Letter.W, Letter.X), Connector(Letter.Y, Letter.Z)
+                    Plugboard.Connector(Letter.U, Letter.V),
+                    Plugboard.Connector(Letter.W, Letter.X),
+                    Plugboard.Connector(Letter.Y, Letter.Z),
                 ),
                 type = EnigmaType.ENIGMA_M4
             )
