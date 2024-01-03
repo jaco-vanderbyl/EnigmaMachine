@@ -336,7 +336,7 @@ if (logger is Printable) logger.print()
 ```
 Prints:
 ```
-Log Types requested for printing : [STEP].
+Log Types requested for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
 Log Types available for printing : [STEP].
 
 LOG TYPE   | RESULT       | ACTOR            | INFO
