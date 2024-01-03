@@ -52,8 +52,8 @@ sealed class Log : Loggable {
                 first,
                 second,
                 reflector.type.name,
-                reflector.getCipherSetMaps().first,
-                reflector.getCipherSetMaps().second,
+                reflector.cipherSetMaps.first,
+                reflector.cipherSetMaps.second,
             )
         }
     }
@@ -147,8 +147,8 @@ sealed class Log : Loggable {
                 first,
                 second,
                 rotor.type.name,
-                rotor.getCipherSetMaps().first,
-                rotor.getCipherSetMaps().second,
+                rotor.cipherSetMaps.first,
+                rotor.cipherSetMaps.second,
                 reverse
             )
         }

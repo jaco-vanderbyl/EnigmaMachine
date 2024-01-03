@@ -129,8 +129,6 @@ sealed class Rotor(
         position = Letter.A
     }
 
-    fun getCipherSetMaps() : Pair<String,String> = cipherSetMap.characterSet to cipherSetMap.cipherSet
-
     protected fun shiftIndex(index: Int, shiftBy: Int) : Int {
         val shiftedIndex = index + shiftBy % characterSet.length
 
@@ -140,4 +138,7 @@ sealed class Rotor(
             else                                -> shiftedIndex
         }
     }
+
+    // For logging.
+    val cipherSetMaps: Pair<String,String> = cipherSetMap.characterSet to cipherSetMap.cipherSet
 }

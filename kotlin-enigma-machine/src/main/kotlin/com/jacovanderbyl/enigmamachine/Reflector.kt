@@ -23,5 +23,6 @@ class Reflector(
 
     fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility
 
-    fun getCipherSetMaps() : Pair<String,String> = cipherSetMap.characterSet to cipherSetMap.cipherSet
+    // For logging.
+    val cipherSetMaps: Pair<String,String> = cipherSetMap.characterSet to cipherSetMap.cipherSet
 }

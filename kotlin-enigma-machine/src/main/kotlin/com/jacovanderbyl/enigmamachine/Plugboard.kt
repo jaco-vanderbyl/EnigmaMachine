@@ -10,7 +10,6 @@ import com.jacovanderbyl.enigmamachine.log.Logger
  * The plugboard adds significant cryptographic strength to the machine.
  */
 class Plugboard(vararg connectors: Connector) {
-    val connectorList = connectors.toList()
     private val connectorMap = mutableMapOf<Char,Char>()
 
     init { addConnectors(*connectors) }
@@ -66,4 +65,7 @@ class Plugboard(vararg connectors: Connector) {
     fun reset() {
         connectorMap.clear()
     }
+
+    // For logging.
+    val connectorList = connectors.toList()
 }
