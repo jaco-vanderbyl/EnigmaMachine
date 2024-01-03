@@ -16,9 +16,9 @@ class Reflector(
     private val compatibility: Set<EnigmaType>
 ) {
     fun encipher(character: Char) : Char {
-        val substituteCharacter = cipherSetMap.encipher(character)
-        Logger.get()?.write(Log.ReflectorSubstitute.create(character, substituteCharacter, reflector = this))
-        return substituteCharacter
+        val substituteChar = cipherSetMap.encipher(character)
+        Logger.get()?.write(Log.ReflectorSubstitute.create(character, substituteChar, reflector = this))
+        return substituteChar
     }
 
     fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility

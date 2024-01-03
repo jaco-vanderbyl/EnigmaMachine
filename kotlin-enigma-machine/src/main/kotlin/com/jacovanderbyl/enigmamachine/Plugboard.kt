@@ -46,9 +46,9 @@ class Plugboard(vararg connectors: Connector) {
             "Invalid character. Valid: '${Letter.list()}'. Given: '${character}'."
         }
 
-        val substituteCharacter = connectorMap.getOrDefault(character, character)
-        Logger.get()?.write(Log.PlugboardSubstitute.create(character, substituteCharacter, plugboard = this))
-        return substituteCharacter
+        val substituteChar = connectorMap.getOrDefault(character, character)
+        Logger.get()?.write(Log.PlugboardSubstitute.create(character, substituteChar, plugboard = this))
+        return substituteChar
     }
 
     fun addConnectors(vararg connectors: Connector) {
