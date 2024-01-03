@@ -1,7 +1,7 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Serves as Enigma Factory.
+ * Serves as the Enigma Factory.
  */
 enum class EnigmaType {
     ENIGMA_I {

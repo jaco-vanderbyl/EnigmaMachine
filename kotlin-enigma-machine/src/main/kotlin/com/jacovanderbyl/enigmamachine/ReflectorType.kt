@@ -1,7 +1,7 @@
 package com.jacovanderbyl.enigmamachine
 
 /**
- * Serves as Reflector Factory.
+ * Serves as the Reflector Factory.
  */
 enum class ReflectorType {
     REFLECTOR_B {
