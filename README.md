@@ -340,10 +340,10 @@ Log Types requested for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
 Log Types available for printing : [STEP].
 
 LOG TYPE   | RESULT       | ACTOR            | INFO
-STEP       | ADS -> ADT   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | ADT -> ADU   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | ADU -> ADV   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | ADV -> AEW   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | AEW -> BFX   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | BFX -> BFY   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADS -> ADT   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADT -> ADU   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADU -> ADV   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADV -> AEW   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | AEW -> BFX   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | BFX -> BFY   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
 ```
