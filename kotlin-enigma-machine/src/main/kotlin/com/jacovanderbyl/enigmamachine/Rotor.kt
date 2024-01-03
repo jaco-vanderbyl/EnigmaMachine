@@ -47,7 +47,7 @@ sealed class Rotor(
             position = Letter.valueOf(stepToCharacter.toString())
         }
 
-        fun isInNotchedPosition() : Boolean = position.character in notchPositions.map { it.character }
+        fun isInNotchedPosition() : Boolean = position in notchPositions
     }
 
     /**
