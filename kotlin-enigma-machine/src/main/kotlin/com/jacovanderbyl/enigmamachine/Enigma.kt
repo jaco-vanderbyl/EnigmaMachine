@@ -164,6 +164,6 @@ class Enigma(
             }
         }
 
-        Logger.add(Log.EnigmaStep.create(rotorsBeforeStep, rotors.map { it }, enigma = this))
+        Logger.get()?.write(Log.EnigmaStep.create(rotorsBeforeStep, rotors.map { it }, enigma = this))
     }
 }

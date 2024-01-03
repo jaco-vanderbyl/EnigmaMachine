@@ -17,7 +17,7 @@ class Reflector(
 ) {
     fun encipher(character: Char) : Char {
         val substituteCharacter = cipherSetMap.encipher(character)
-        Logger.add(Log.ReflectorSubstitute.create(character, substituteCharacter, reflector = this))
+        Logger.get()?.write(Log.ReflectorSubstitute.create(character, substituteCharacter, reflector = this))
         return substituteCharacter
     }
 

@@ -1,7 +1,7 @@
 package com.jacovanderbyl.enigmamachine.log
 
 sealed interface Loggable {
-    val type: LogType
+    val type: Log.Type
 
     fun line(): String
 }

@@ -192,12 +192,13 @@ println(plaintext)      // prints: AAAAA
 ### In-memory logs of internal workings
 #### Print letter substitution journey
 ```kotlin
-Logger.enable()
+Logger.enable(Logger.Strategy.IN_MEMORY)
 
 val enigma = enigmaI {}
 enigma.encipher('A')
 
-Logger.print(LogType.SUBSTITUTE)
+val logger = Logger.get()
+if (logger is Printable) logger.print(Log.Type.SUBSTITUTE)
 ```
 Prints:
 ```
@@ -218,12 +219,13 @@ SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
 
 #### Print all log types - example 1
 ```kotlin
-Logger.enable()
+Logger.enable(Logger.Strategy.IN_MEMORY)
 
 val enigma = enigmaI {}
 enigma.encipher('A')
 
-Logger.print()
+val logger = Logger.get()
+if (logger is Printable) logger.print()
 ```
 Prints:
 ```
@@ -257,7 +259,7 @@ SUBSTITUTE | B -> B       | PLUGBOARD        | No connectors
 
 #### Print all log types - example 2
 ```kotlin
-Logger.enable()
+Logger.enable(Logger.Strategy.IN_MEMORY)
 
 val enigma = enigmaM4 {
     singleReflector { reflectorCThin() }
@@ -268,16 +270,17 @@ val enigma = enigmaM4 {
         rotorIII(Rotor.Ring.SETTING_24, position = Letter.B)
     }
     upToThirteenPlugboardConnectors {
-        connect(Letter.S, Letter.Z); connect(Letter.G, Letter.T)
-        connect(Letter.D, Letter.V); connect(Letter.K, Letter.U)
-        connect(Letter.F, Letter.O); connect(Letter.M, Letter.Y)
-        connect(Letter.E, Letter.W); connect(Letter.J, Letter.N)
-        connect(Letter.I, Letter.X); connect(Letter.L, Letter.Q)
+        connect(Letter.S to Letter.Z); connect(Letter.G to Letter.T)
+        connect(Letter.D to Letter.V); connect(Letter.K to Letter.U)
+        connect(Letter.F to Letter.O); connect(Letter.M to Letter.Y)
+        connect(Letter.E to Letter.W); connect(Letter.J to Letter.N)
+        connect(Letter.I to Letter.X); connect(Letter.L to Letter.Q)
     }
 }
 enigma.encipher('A')
 
-Logger.print()
+val logger = Logger.get()
+if (logger is Printable) logger.print()
 ```
 Prints:
 ```
@@ -316,8 +319,9 @@ SUBSTITUTE | Y -> M       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW 
 ```
 #### Print rotor stepping
 ```kotlin
-Logger.enable()
-Logger.restrictTo(LogType.STEP) // Only record STEP logs to avoid the max log size limit.
+Logger.enable(Logger.Strategy.IN_MEMORY)
+val logger = Logger.get()
+logger?.restrictTo(Log.Type.STEP)
 
 val enigma = enigmaI {
     threeRotors {
@@ -328,7 +332,7 @@ val enigma = enigmaI {
 }
 enigma.encipher("AAAAAA")
 
-Logger.print(LogType.STEP)
+if (logger is Printable) logger.print()
 ```
 Prints:
 ```

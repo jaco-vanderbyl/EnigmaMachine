@@ -103,22 +103,22 @@ sealed class Rotor(
         }
 
         // Step 1 - Apply offset to given character's index, to accommodate rotor's current position and ring setting.
-        val characterIndex = characterSet.indexOf(character)
-        val characterIndexWithOffset = shiftIndex(characterIndex, shiftBy = offset())
-        val characterWithOffset = characterSet[characterIndexWithOffset]
-        Logger.add(Log.RotorShift.create(character, characterWithOffset, rotor = this))
+        val charIndex = characterSet.indexOf(character)
+        val charIndexWithOffset = shiftIndex(charIndex, shiftBy = offset())
+        val charWithOffset = characterSet[charIndexWithOffset]
+        Logger.get()?.write(Log.RotorShift.create(character, charWithOffset, rotor = this))
 
         // Step 2 - Simulate wiring to substitute given character with new character. Allow bidirectional substitutions.
-        val substituteCharacter = cipherSetMap.encipher(characterWithOffset, reverse)
-        Logger.add(Log.RotorSubstitute.create(characterWithOffset, substituteCharacter, reverse, rotor = this))
+        val substituteChar = cipherSetMap.encipher(charWithOffset, reverse)
+        Logger.get()?.write(Log.RotorSubstitute.create(charWithOffset, substituteChar, reverse, rotor = this))
 
         // Step 3 - Revert offset (applied in step 1) to substitute character's index.
-        val substituteCharacterIndex = characterSet.indexOf(substituteCharacter)
-        val finalCharacterIndex = shiftIndex(substituteCharacterIndex, shiftBy = offset() * -1)
-        val finalCharacter = characterSet[finalCharacterIndex]
-        Logger.add(Log.RotorDeshift.create(substituteCharacter, finalCharacter, rotor = this))
+        val substituteCharIndex = characterSet.indexOf(substituteChar)
+        val finalCharIndex = shiftIndex(substituteCharIndex, shiftBy = offset() * -1)
+        val finalChar = characterSet[finalCharIndex]
+        Logger.get()?.write(Log.RotorDeshift.create(substituteChar, finalChar, rotor = this))
 
-        return finalCharacter
+        return finalChar
     }
 
     fun isCompatible(enigmaType: EnigmaType) : Boolean = enigmaType in compatibility

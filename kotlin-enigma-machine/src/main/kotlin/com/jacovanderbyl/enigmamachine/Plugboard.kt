@@ -47,7 +47,7 @@ class Plugboard(vararg connectors: Connector) {
         }
 
         val substituteCharacter = connectorMap.getOrDefault(character, character)
-        Logger.add(Log.PlugboardSubstitute.create(character, substituteCharacter, plugboard = this))
+        Logger.get()?.write(Log.PlugboardSubstitute.create(character, substituteCharacter, plugboard = this))
         return substituteCharacter
     }
 

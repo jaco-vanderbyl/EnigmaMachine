@@ -3,15 +3,17 @@ package com.jacovanderbyl.enigmamachine.log
 import com.jacovanderbyl.enigmamachine.*
 
 sealed class Log : Loggable {
+    enum class Type { STEP, SUBSTITUTE, SHIFT, DE_SHIFT }
+
     class PlugboardSubstitute(
         private val first: Char,
         private val second: Char,
         private val connectors: String
     ) : Log() {
-        override val type: LogType = LogType.SUBSTITUTE
+        override val type: Type = Type.SUBSTITUTE
 
         override fun line(): String = String.format(
-            "%-${Logger.logTypeMax}s | %-${Logger.resultMax}s | %-${Logger.typeMax}s | %s",
+            "%-${logTypeMax}s | %-${resultMax}s | %-${typeMax}s | %s",
             type,
             "$first -> $second",
             "PLUGBOARD",
@@ -34,10 +36,10 @@ sealed class Log : Loggable {
         private val characterSet: String,
         private val cipherSet: String
     ) : Log() {
-        override val type: LogType = LogType.SUBSTITUTE
+        override val type: Type = Type.SUBSTITUTE
 
         override fun line(): String = String.format(
-            "%-${Logger.logTypeMax}s | %-${Logger.resultMax}s | %-${Logger.typeMax}s | Cipher set map: %s => %s",
+            "%-${logTypeMax}s | %-${resultMax}s | %-${typeMax}s | Cipher set map: %s => %s",
             type,
             "$first -> $second",
             reflectorType,
@@ -62,10 +64,10 @@ sealed class Log : Loggable {
         private val rotorType: String,
         private val offset: Int,
     ) : Log() {
-        override val type: LogType = LogType.DE_SHIFT
+        override val type: Type = Type.DE_SHIFT
 
         override fun line(): String = String.format(
-            "%-${Logger.logTypeMax}s | %-${Logger.resultMax}s | %-${Logger.typeMax}s | Rotor offset: %s",
+            "%-${logTypeMax}s | %-${resultMax}s | %-${typeMax}s | Rotor offset: %s",
             type,
             "$first .. $second",
             rotorType,
@@ -92,10 +94,10 @@ sealed class Log : Loggable {
         private val ringSetting: Int,
         private val ringSettingIndex: Int,
     ) : Log() {
-        override val type: LogType = LogType.SHIFT
+        override val type: Type = Type.SHIFT
 
         override fun line(): String = String.format(
-            "%-${Logger.logTypeMax}s | %-${Logger.resultMax}s | %-${Logger.typeMax}s | " +
+            "%-${logTypeMax}s | %-${resultMax}s | %-${typeMax}s | " +
                     "Rotor offset: %s = offset %s (Position %s) minus offset %s (Ring Setting %s)",
             type,
             "$first .. $second",
@@ -129,10 +131,10 @@ sealed class Log : Loggable {
         private val cipherSet: String,
         private val reverse: Boolean
     ) : Log() {
-        override val type: LogType = LogType.SUBSTITUTE
+        override val type: Type = Type.SUBSTITUTE
 
         override fun line(): String = String.format(
-            "%-${Logger.logTypeMax}s | %-${Logger.resultMax}s | %-${Logger.typeMax}s | Cipher set map: %s => %s",
+            "%-${logTypeMax}s | %-${resultMax}s | %-${typeMax}s | Cipher set map: %s => %s",
             type,
             "$first -> $second",
             rotorType,
@@ -159,10 +161,10 @@ sealed class Log : Loggable {
         private val rotors: String,
         private val notches: String
     ) : Log() {
-        override val type: LogType = LogType.STEP
+        override val type: Type = Type.STEP
 
         override fun line(): String = String.format(
-            "%-${Logger.logTypeMax}s | %-${Logger.resultMax}s | %-${Logger.typeMax}s | " +
+            "%-${logTypeMax}s | %-${resultMax}s | %-${typeMax}s | " +
                     "Rotor types: %s; Notch characters: %s",
             type,
             "$first -> $second",
@@ -182,5 +184,11 @@ sealed class Log : Loggable {
                 }.joinToString("—")
             )
         }
+    }
+
+    companion object {
+        val logTypeMax = Type.entries.maxOf { it.name.length }
+        val typeMax = (RotorType.entries + ReflectorType.entries + EnigmaType.entries).maxOf { it.name.length }
+        val resultMax = 12
     }
 }
