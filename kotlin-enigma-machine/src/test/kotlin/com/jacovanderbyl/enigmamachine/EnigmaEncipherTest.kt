@@ -22,23 +22,19 @@ class EnigmaEncipherTest {
 
     private fun createStockEnigma() : Enigma = Enigma(
         type = EnigmaType.ENIGMA_I,
-        rotorUnit = RotorUnit(
-            reflector = ReflectorType.REFLECTOR_B.create(),
-            rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create())
-        ),
+        reflector = ReflectorType.REFLECTOR_B.create(),
+        rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create()),
         plugboard = Plugboard()
     )
 
     private fun createEnigma(fileName: String) : Enigma = when (fileName) {
         "B-I-II-III-A-A-A-1-1-1" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_B.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_I.create(),
-                        RotorType.ROTOR_II.create(),
-                        RotorType.ROTOR_III.create()
-                    )
+                reflector = ReflectorType.REFLECTOR_B.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_I.create(),
+                    RotorType.ROTOR_II.create(),
+                    RotorType.ROTOR_III.create()
                 ),
                 plugboard = Plugboard(),
                 type = EnigmaType.ENIGMA_M3
@@ -46,13 +42,11 @@ class EnigmaEncipherTest {
         }
         "B-I-II-III-Q-E-V-1-1-1" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_B.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_I.create(position = Letter.Q),
-                        RotorType.ROTOR_II.create(position = Letter.E),
-                        RotorType.ROTOR_III.create(position = Letter.V)
-                    )
+                reflector = ReflectorType.REFLECTOR_B.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_I.create(position = Letter.Q),
+                    RotorType.ROTOR_II.create(position = Letter.E),
+                    RotorType.ROTOR_III.create(position = Letter.V)
                 ),
                 plugboard = Plugboard(),
                 type = EnigmaType.ENIGMA_M3
@@ -60,13 +54,11 @@ class EnigmaEncipherTest {
         }
         "B-I-II-III-A-A-A-5-11-24" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_B.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_I.create(ringSetting = Rotor.Ring.SETTING_5),
-                        RotorType.ROTOR_II.create(ringSetting = Rotor.Ring.SETTING_11),
-                        RotorType.ROTOR_III.create(ringSetting = Rotor.Ring.SETTING_24)
-                    )
+                reflector = ReflectorType.REFLECTOR_B.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_I.create(ringSetting = Rotor.Ring.SETTING_5),
+                    RotorType.ROTOR_II.create(ringSetting = Rotor.Ring.SETTING_11),
+                    RotorType.ROTOR_III.create(ringSetting = Rotor.Ring.SETTING_24)
                 ),
                 plugboard = Plugboard(),
                 type = EnigmaType.ENIGMA_M3
@@ -74,13 +66,11 @@ class EnigmaEncipherTest {
         }
         "B-I-II-III-Q-E-V-5-11-24" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_B.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_I.create(position = Letter.Q, ringSetting = Rotor.Ring.SETTING_5),
-                        RotorType.ROTOR_II.create(position = Letter.E, ringSetting = Rotor.Ring.SETTING_11),
-                        RotorType.ROTOR_III.create(position = Letter.V, ringSetting = Rotor.Ring.SETTING_24)
-                    )
+                reflector = ReflectorType.REFLECTOR_B.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_I.create(position = Letter.Q, ringSetting = Rotor.Ring.SETTING_5),
+                    RotorType.ROTOR_II.create(position = Letter.E, ringSetting = Rotor.Ring.SETTING_11),
+                    RotorType.ROTOR_III.create(position = Letter.V, ringSetting = Rotor.Ring.SETTING_24)
                 ),
                 plugboard = Plugboard(),
                 type = EnigmaType.ENIGMA_M3
@@ -88,13 +78,11 @@ class EnigmaEncipherTest {
         }
         "B-IV-V-VI-A-B-C-1-2-3" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_B.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_IV.create(),
-                        RotorType.ROTOR_V.create(position = Letter.B, ringSetting = Rotor.Ring.SETTING_2),
-                        RotorType.ROTOR_VI.create(position = Letter.C, ringSetting = Rotor.Ring.SETTING_3)
-                    )
+                reflector = ReflectorType.REFLECTOR_B.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_IV.create(),
+                    RotorType.ROTOR_V.create(position = Letter.B, ringSetting = Rotor.Ring.SETTING_2),
+                    RotorType.ROTOR_VI.create(position = Letter.C, ringSetting = Rotor.Ring.SETTING_3)
                 ),
                 plugboard = Plugboard(),
                 type = EnigmaType.ENIGMA_M3
@@ -102,13 +90,11 @@ class EnigmaEncipherTest {
         }
         "C-VI-VII-VIII-Z-R-S-26-8-15" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_C.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
-                        RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
-                        RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
-                    )
+                reflector = ReflectorType.REFLECTOR_C.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
+                    RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
+                    RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
                 ),
                 plugboard = Plugboard(),
                 type = EnigmaType.ENIGMA_M3
@@ -116,13 +102,11 @@ class EnigmaEncipherTest {
         }
         "C-VI-VII-VIII-Z-R-S-26-8-15-AB-CD-EF-GH-IJ-KL-MN-OP-QR-ST" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_C.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
-                        RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
-                        RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
-                    )
+                reflector = ReflectorType.REFLECTOR_C.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
+                    RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
+                    RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
                 ),
                 plugboard = Plugboard(
                     Plugboard.Connector(Letter.A, Letter.B), Plugboard.Connector(Letter.C, Letter.D),
@@ -136,13 +120,11 @@ class EnigmaEncipherTest {
         }
         "C-VI-VII-VIII-Z-R-S-26-8-15-UV-WX-YZ" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_C.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
-                        RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
-                        RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
-                    )
+                reflector = ReflectorType.REFLECTOR_C.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
+                    RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
+                    RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
                 ),
                 plugboard = Plugboard(
                     Plugboard.Connector(Letter.U, Letter.V),
@@ -154,14 +136,12 @@ class EnigmaEncipherTest {
         }
         "B_THIN-BETA-VI-VII-VIII-E-Z-R-S-10-26-8-15-UV-WX-YZ" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_B_THIN.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_BETA.create(position = Letter.E, ringSetting = Rotor.Ring.SETTING_10),
-                        RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
-                        RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
-                        RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
-                    )
+                reflector = ReflectorType.REFLECTOR_B_THIN.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_BETA.create(position = Letter.E, ringSetting = Rotor.Ring.SETTING_10),
+                    RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
+                    RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
+                    RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
                 ),
                 plugboard = Plugboard(
                     Plugboard.Connector(Letter.U, Letter.V),
@@ -173,14 +153,12 @@ class EnigmaEncipherTest {
         }
         "C_THIN-GAMMA-VI-VII-VIII-E-Z-R-S-10-26-8-15-UV-WX-YZ" -> {
             Enigma(
-                rotorUnit = RotorUnit(
-                    reflector = ReflectorType.REFLECTOR_C_THIN.create(),
-                    rotors = setOf(
-                        RotorType.ROTOR_GAMMA.create(position = Letter.E, ringSetting = Rotor.Ring.SETTING_10),
-                        RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
-                        RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
-                        RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
-                    )
+                reflector = ReflectorType.REFLECTOR_C_THIN.create(),
+                rotors = setOf(
+                    RotorType.ROTOR_GAMMA.create(position = Letter.E, ringSetting = Rotor.Ring.SETTING_10),
+                    RotorType.ROTOR_VI.create(position = Letter.Z, ringSetting = Rotor.Ring.SETTING_26),
+                    RotorType.ROTOR_VII.create(position = Letter.R, ringSetting = Rotor.Ring.SETTING_8),
+                    RotorType.ROTOR_VIII.create(position = Letter.S, ringSetting = Rotor.Ring.SETTING_15)
                 ),
                 plugboard = Plugboard(
                     Plugboard.Connector(Letter.U, Letter.V),

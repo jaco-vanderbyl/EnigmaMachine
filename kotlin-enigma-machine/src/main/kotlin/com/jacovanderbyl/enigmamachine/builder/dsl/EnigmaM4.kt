@@ -20,14 +20,12 @@ class EnigmaM4 : EnigmaContext() {
     }
 
     override fun buildEnigma() : Enigma = EnigmaType.ENIGMA_M4.create(
-        rotorUnit = RotorUnit(
-            reflector = reflector ?: ReflectorType.REFLECTOR_B_THIN.create(),
-            rotors = rotors ?: setOf(
-                RotorType.ROTOR_GAMMA.create(),
-                RotorType.ROTOR_I.create(),
-                RotorType.ROTOR_II.create(),
-                RotorType.ROTOR_III.create(),
-            )
+        reflector = reflector ?: ReflectorType.REFLECTOR_B_THIN.create(),
+        rotors = rotors ?: setOf(
+            RotorType.ROTOR_GAMMA.create(),
+            RotorType.ROTOR_I.create(),
+            RotorType.ROTOR_II.create(),
+            RotorType.ROTOR_III.create(),
         ),
         plugboard = Plugboard(*run { connectors ?: setOf() }.toTypedArray())
     )

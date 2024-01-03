@@ -10,10 +10,8 @@ import kotlin.test.assertFailsWith
 class EnigmaSettingsTest {
     private fun createStockEnigma(plugboard: Plugboard = Plugboard()) : Enigma = Enigma(
         type = EnigmaType.ENIGMA_I,
-        rotorUnit = RotorUnit(
-            reflector = ReflectorType.REFLECTOR_B.create(),
-            rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create())
-        ),
+        reflector = ReflectorType.REFLECTOR_B.create(),
+        rotors = setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create(), RotorType.ROTOR_III.create()),
         plugboard = plugboard
     )
 
@@ -26,21 +24,16 @@ class EnigmaSettingsTest {
         )
     }
 
-    @TestFactory
-    fun `ensure positions can be changed`() = listOf(
-        listOf(Letter.X, Letter.Y, Letter.Z),
-        listOf(Letter.A, Letter.B, Letter.C),
-    ).map { positions ->
-        DynamicTest.dynamicTest("Test setting positions to: '${positions}'.") {
-            val enigma = createStockEnigma()
-            enigma.setPositions(*positions.toTypedArray())
+    @Test
+    fun `ensure positions can be changed`() {
+        val enigma = createStockEnigma()
+        enigma.setPositions(Letter.X, Letter.Y, Letter.Z)
 
-            assertEquals(
-                expected = positions.map { it.character },
-                actual = enigma.getRotors().map { it.position.character },
-                message = "Failed to ensure positions can be changed."
-            )
-        }
+        assertEquals(
+            expected = "PLSMW",
+            actual = enigma.encipher("AAAAA"),
+            message = "Failed to ensure positions can be changed."
+        )
     }
 
     @TestFactory
@@ -70,8 +63,8 @@ class EnigmaSettingsTest {
         enigma.resetPositions()
 
         assertEquals(
-            expected = listOf('A', 'A', 'A'),
-            actual = enigmaSingle.getRotors().map { it.position.character },
+            expected = "BDZGO",
+            actual = enigma.encipher("AAAAA"),
             message = "Failed to ensure positions can be reset."
         )
     }

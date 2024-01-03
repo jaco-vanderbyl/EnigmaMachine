@@ -5,50 +5,59 @@ package com.jacovanderbyl.enigmamachine
  */
 enum class EnigmaType {
     ENIGMA_I {
-        override fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma {
-            requireRotorCount(ENIGMA_I, rotorUnit, count = 3)
-            requireCompatibility(ENIGMA_I, rotorUnit)
+        override fun create(reflector: Reflector, rotors: Set<Rotor>, plugboard: Plugboard) : Enigma {
+            requireRotorCount(ENIGMA_I, rotors, count = 3)
+            requireNoDuplicateRotors(rotors)
+            requireCompatibility(ENIGMA_I, reflector, rotors)
 
-            return Enigma(ENIGMA_I, rotorUnit, plugboard)
+            return Enigma(ENIGMA_I, reflector, rotors, plugboard)
         }
     },
     ENIGMA_M3 {
-        override fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma {
-            requireRotorCount(ENIGMA_M3, rotorUnit, count = 3)
-            requireCompatibility(ENIGMA_M3, rotorUnit)
+        override fun create(reflector: Reflector, rotors: Set<Rotor>, plugboard: Plugboard) : Enigma {
+            requireRotorCount(ENIGMA_M3, rotors, count = 3)
+            requireNoDuplicateRotors(rotors)
+            requireCompatibility(ENIGMA_M3, reflector, rotors)
 
-            return Enigma(ENIGMA_M3, rotorUnit, plugboard)
+            return Enigma(ENIGMA_M3, reflector, rotors, plugboard)
         }
     },
     ENIGMA_M4 {
-        override fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma {
-            requireRotorCount(ENIGMA_M4, rotorUnit, count = 4)
-            requireCompatibility(ENIGMA_M4, rotorUnit)
+        override fun create(reflector: Reflector, rotors: Set<Rotor>, plugboard: Plugboard) : Enigma {
+            requireRotorCount(ENIGMA_M4, rotors, count = 4)
+            requireNoDuplicateRotors(rotors)
+            requireCompatibility(ENIGMA_M4, reflector, rotors)
             requireRotorTypeForM4(
-                rotor = rotorUnit.rotors.first(),
+                rotor = rotors.first(),
                 allowedTypes = setOf(RotorType.ROTOR_BETA, RotorType.ROTOR_GAMMA)
             )
 
-            return Enigma(ENIGMA_M4, rotorUnit, plugboard)
+            return Enigma(ENIGMA_M4, reflector, rotors, plugboard)
         }
     };
 
-    abstract fun create(rotorUnit: RotorUnit, plugboard: Plugboard) : Enigma
+    abstract fun create(reflector: Reflector, rotors: Set<Rotor>, plugboard: Plugboard) : Enigma
 
-    protected fun requireRotorCount(type: EnigmaType, rotorUnit: RotorUnit, count: Int) {
-        require(rotorUnit.rotors.count() == count) {
-            "Invalid rotor count. '${type}' must have '${count}' rotors. Given: '${rotorUnit.rotors.count()}'."
+    protected fun requireRotorCount(type: EnigmaType, rotors: Set<Rotor>, count: Int) {
+        require(rotors.count() == count) {
+            "Invalid rotor count. '${type}' must have '${count}' rotors. Given: '${rotors.count()}'."
         }
     }
 
-    protected fun requireCompatibility(type: EnigmaType, rotorUnit: RotorUnit) {
-        rotorUnit.rotors.forEach { rotor ->
+    protected fun requireNoDuplicateRotors(rotors: Set<Rotor>) {
+        require(rotors.none { rotor -> rotors.count { it.type == rotor.type } > 1 }) {
+            "Duplicate rotor types are not allowed. Given: ${rotors.map { it.type }}."
+        }
+    }
+
+    protected fun requireCompatibility(type: EnigmaType, reflector: Reflector, rotors: Set<Rotor>) {
+        rotors.forEach { rotor ->
             require(rotor.isCompatible(type)) {
                 "Incompatible rotor. '${rotor.type}' rotor is not compatible with '${type}'."
             }
         }
-        require(rotorUnit.reflector.isCompatible(type)) {
-            "Incompatible reflector. '${rotorUnit.reflector.type}' reflector is not compatible with '${type}'."
+        require(reflector.isCompatible(type)) {
+            "Incompatible reflector. '${reflector.type}' reflector is not compatible with '${type}'."
         }
     }
 

@@ -231,7 +231,7 @@ Log Types requested for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
 Log Types available for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
 
 LOG TYPE   | RESULT       | ACTOR            | INFO
-STEP       | AAA -> AAB   | ROTOR_UNIT       | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | AAA -> AAB   | ENIGMA_I         | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
 SUBSTITUTE | A -> A       | PLUGBOARD        | No connectors
 SHIFT      | A .. B       | ROTOR_III        | Rotor offset: 1 = offset 1 (Position B) minus offset 0 (Ring Setting 1)
 SUBSTITUTE | B -> D       | ROTOR_III        | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => BDFHJLCPRTXVZNYEIWGAKMUSQO
@@ -285,7 +285,7 @@ Log Types requested for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
 Log Types available for printing : [STEP, SUBSTITUTE, SHIFT, DE_SHIFT].
 
 LOG TYPE   | RESULT       | ACTOR            | INFO
-STEP       | PWNB -> PWNC | ROTOR_UNIT       | Rotor types: ROTOR_GAMMA—ROTOR_VI—ROTOR_V—ROTOR_VIII; Notch characters: [_]—[Z, M]—[Z]—[Z, M]
+STEP       | PWNB -> PWNC | ENIGMA_M4        | Rotor types: ROTOR_GAMMA—ROTOR_VI—ROTOR_V—ROTOR_VIII; Notch characters: [_]—[Z, M]—[Z]—[Z, M]
 SUBSTITUTE | A -> A       | PLUGBOARD        | Connectors: SZ GT DV KU FO MY EW JN IX LQ 
 SHIFT      | A .. F       | ROTOR_VIII       | Rotor offset: -21 = offset 2 (Position C) minus offset 23 (Ring Setting 24)
 SUBSTITUTE | F -> L       | ROTOR_VIII       | Cipher set map: ABCDEFGHIJKLMNOPQRSTUVWXYZ => FKQHTLXOCBJSPDZRAMEWNIUYGV
@@ -336,10 +336,10 @@ Log Types requested for printing : [STEP].
 Log Types available for printing : [STEP].
 
 LOG TYPE   | RESULT       | ACTOR            | INFO
-STEP       | ADS -> ADT   | ROTOR_UNIT       | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | ADT -> ADU   | ROTOR_UNIT       | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | ADU -> ADV   | ROTOR_UNIT       | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | ADV -> AEW   | ROTOR_UNIT       | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | AEW -> BFX   | ROTOR_UNIT       | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
-STEP       | BFX -> BFY   | ROTOR_UNIT       | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADS -> ADT   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADT -> ADU   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADU -> ADV   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | ADV -> AEW   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | AEW -> BFX   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
+STEP       | BFX -> BFY   | ENIGMA_I        | Rotor types: ROTOR_I—ROTOR_II—ROTOR_III; Notch characters: [Q]—[E]—[V]
 ```

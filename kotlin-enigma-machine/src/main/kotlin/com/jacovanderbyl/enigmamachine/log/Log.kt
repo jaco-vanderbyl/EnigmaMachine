@@ -152,9 +152,10 @@ sealed class Log : Loggable {
         }
     }
 
-    class RotorUnitStep(
+    class EnigmaStep(
         private val first: String,
         private val second: String,
+        private val enigmaType: String,
         private val rotors: String,
         private val notches: String
     ) : Log() {
@@ -165,17 +166,18 @@ sealed class Log : Loggable {
                     "Rotor types: %s; Notch characters: %s",
             type,
             "$first -> $second",
-            "ROTOR_UNIT",
+            enigmaType,
             rotors,
             notches
         )
 
         companion object {
-            fun create(first: List<Rotor>, rotorUnit: RotorUnit) : Log = RotorUnitStep(
+            fun create(first: List<Rotor>, second: List<Rotor>, enigma: Enigma) : Log = EnigmaStep(
                 first.map { it.position }.joinToString(""),
-                rotorUnit.rotors.map { it.position }.joinToString(""),
-                rotorUnit.rotors.map { it.type }.joinToString("—"),
-                rotorUnit.rotors.map { rotor ->
+                second.map { it.position }.joinToString(""),
+                enigma.type.name,
+                first.map { it.type }.joinToString("—"),
+                first.map { rotor ->
                     if (rotor is Rotor.StepRotor) rotor.notchPositions.map { it.character } else setOf("_")
                 }.joinToString("—")
             )

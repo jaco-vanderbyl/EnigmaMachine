@@ -113,10 +113,8 @@ class EnigmaBuilder {
 
         // Build and return enigma
         return cfgEnigmaType.create(
-            rotorUnit = RotorUnit(
-                reflector = cfgReflector,
-                rotors = cfgRotors
-            ),
+            reflector = cfgReflector,
+            rotors = cfgRotors,
             plugboard = Plugboard(*cfgConnectors.toTypedArray())
         )
     }

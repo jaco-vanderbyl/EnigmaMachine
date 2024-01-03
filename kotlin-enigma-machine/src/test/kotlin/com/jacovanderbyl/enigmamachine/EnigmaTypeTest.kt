@@ -86,6 +86,24 @@ class EnigmaTypeTest {
         else -> throw IllegalArgumentException()
     }
 
+    private fun invalidRotorDuplicates(enigmaType: EnigmaType) : List<Set<Rotor>> = when (enigmaType) {
+        EnigmaType.ENIGMA_I -> listOf(
+            setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create()),
+        )
+        EnigmaType.ENIGMA_M3 -> listOf(
+            setOf(RotorType.ROTOR_I.create(), RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create()),
+        )
+        EnigmaType.ENIGMA_M4 -> listOf(
+            setOf(
+                RotorType.ROTOR_BETA.create(),
+                RotorType.ROTOR_I.create(),
+                RotorType.ROTOR_I.create(),
+                RotorType.ROTOR_III.create(),
+            ),
+        )
+        else -> throw IllegalArgumentException()
+    }
+
     private fun incompatibleRotors(enigmaType: EnigmaType) : List<Set<Rotor>> = when (enigmaType) {
         EnigmaType.ENIGMA_I -> listOf(
                 setOf(createIncompatibleRotor(), RotorType.ROTOR_I.create(), RotorType.ROTOR_II.create()),
@@ -138,10 +156,8 @@ class EnigmaTypeTest {
     fun `ensure factory creates with correct type`() = EnigmaType.entries.map { enigmaType ->
         DynamicTest.dynamicTest("Test factory creation of enigma type: '${enigmaType}'.") {
             val enigma = enigmaType.create(
-                rotorUnit = RotorUnit(
-                    reflector = validReflector(enigmaType),
-                    rotors = validRotors(enigmaType)
-                ),
+                reflector = validReflector(enigmaType),
+                rotors = validRotors(enigmaType),
                 plugboard = Plugboard()
             )
             assertEquals(
@@ -156,10 +172,8 @@ class EnigmaTypeTest {
     fun `ensure factory creates enigma that enciphers correctly`() = EnigmaType.entries.map { enigmaType ->
         DynamicTest.dynamicTest("Test factory creation of enigma type: '${enigmaType}'.") {
             val enigma = enigmaType.create(
-                rotorUnit = RotorUnit(
-                    reflector = validReflector(enigmaType),
-                    rotors = validRotors(enigmaType)
-                ),
+                reflector = validReflector(enigmaType),
+                rotors = validRotors(enigmaType),
                 plugboard = Plugboard()
             )
             assertEquals(
@@ -182,10 +196,8 @@ class EnigmaTypeTest {
                     val exception = assertFailsWith<IllegalArgumentException>(
                         block = {
                             enigmaType.create(
-                                rotorUnit = RotorUnit(
-                                    reflector = validReflector(enigmaType),
-                                    rotors = rotors
-                                ),
+                                reflector = validReflector(enigmaType),
+                                rotors = rotors,
                                 plugboard = Plugboard()
                             )
                         },
@@ -211,10 +223,8 @@ class EnigmaTypeTest {
                     val exception = assertFailsWith<IllegalArgumentException>(
                         block = {
                             enigmaType.create(
-                                rotorUnit = RotorUnit(
-                                    reflector = validReflector(enigmaType),
-                                    rotors = rotors
-                                ),
+                                reflector = validReflector(enigmaType),
+                                rotors = rotors,
                                 plugboard = Plugboard()
                             )
                         },
@@ -236,10 +246,8 @@ class EnigmaTypeTest {
             val exception = assertFailsWith<IllegalArgumentException>(
                 block = {
                     enigmaType.create(
-                        rotorUnit = RotorUnit(
-                            reflector = createIncompatibleReflector(),
-                            rotors = validRotors(enigmaType)
-                        ),
+                        reflector = createIncompatibleReflector(),
+                        rotors = validRotors(enigmaType),
                         plugboard = Plugboard()
                     )
                 },
@@ -256,14 +264,12 @@ class EnigmaTypeTest {
         val exception = assertFailsWith<IllegalArgumentException>(
             block = {
                 EnigmaType.ENIGMA_M4.create(
-                    rotorUnit = RotorUnit(
-                        reflector = validReflector(EnigmaType.ENIGMA_M4),
-                        rotors = setOf(
-                            RotorType.ROTOR_V.create(),
-                            RotorType.ROTOR_VI.create(),
-                            RotorType.ROTOR_VII.create(),
-                            RotorType.ROTOR_VIII.create(),
-                        )
+                    reflector = validReflector(EnigmaType.ENIGMA_M4),
+                    rotors = setOf(
+                        RotorType.ROTOR_V.create(),
+                        RotorType.ROTOR_VI.create(),
+                        RotorType.ROTOR_VII.create(),
+                        RotorType.ROTOR_VIII.create(),
                     ),
                     plugboard = Plugboard()
                 )
@@ -282,5 +288,32 @@ class EnigmaTypeTest {
             actual = EnigmaType.list(),
             message = "Failed to ensure list of available enigma types is correct."
         )
+    }
+
+    @TestFactory
+    fun `ensure duplicate rotor type throws`() : List<DynamicTest> {
+        val tests = mutableListOf<DynamicTest>()
+
+        EnigmaType.entries.forEach { enigmaType ->
+            tests += invalidRotorDuplicates(enigmaType).map { rotors ->
+                DynamicTest.dynamicTest("Duplicate rotors for enigma '${enigmaType}' should throw.") {
+                    val exception = assertFailsWith<IllegalArgumentException>(
+                        block = {
+                            enigmaType.create(
+                                reflector = validReflector(enigmaType),
+                                rotors = rotors,
+                                plugboard = Plugboard()
+                            )
+                        },
+                        message = "Failed to ensure duplicate rotor type throws."
+                    )
+                    exception.message?.let {
+                        assertContains(it, "duplicate rotor", ignoreCase = true)
+                    }
+                }
+            }
+        }
+
+        return tests.toList()
     }
 }
